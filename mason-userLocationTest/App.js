@@ -18,6 +18,7 @@ export default class App extends Component {
     }
   }
   render() {
+    // this is essentially the loading page until the map populates
     if (!this.state.region.locationResult) {
       return (
         <View style={styles.loadingTitle}>
@@ -28,8 +29,10 @@ export default class App extends Component {
     } else {
       return (
         <View style={styles.container}>
+          {/* this component is what hosts the map */}
           <MapView
             ref={map => this.map = map}
+            // if you are using ios and remove provider, the map will load an Apple maps instance
             provider={'google'}
             style={styles.map}
             initialRegion={this.state.region}
@@ -38,6 +41,7 @@ export default class App extends Component {
             followsUserLocation={true}
             loadingEnabled={true}
           >
+            {/* inside some components there are children that can add other elements. This adds a rudimentary user marker */}
             <MapView.Marker
               coordinate={
                 this.state.markers
@@ -51,9 +55,6 @@ export default class App extends Component {
   }
   componentDidMount() {
     setInterval(this._getLocationAsync, 3000);
-    // this.setState({
-    //   marginBottom: 0
-    // })
     console.log('this is working?')
   }
   componentWillUnmount() {
@@ -87,7 +88,10 @@ export default class App extends Component {
 
 }
 
+// expo has a built in method of getting the dimensions of whatever device you are using
 const { width, height } = Dimensions.get("window")
+
+// styling is at the bottom of document, though if we are using global settings it can be kept in at constants folder
 const styles = StyleSheet.create({
   loadingTitle: {
     height: '75%',
