@@ -5,7 +5,9 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <Text>Welcome to our project, people!</Text>
+        <Text>First, create your own branch</Text>
+        <Text>After you commit that, then we can merge it to our dev branch</Text>
       </View>
     );
   }
