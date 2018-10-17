@@ -3,5 +3,5 @@ module.exports = {
         "jest": true,
         "es6": true
     },
-    "extends": "airbnb"
+    "extends": "universe/native"
 };
