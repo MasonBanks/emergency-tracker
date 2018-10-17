@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import firebase from 'firebase';
-import { AppLoading } from 'expo';
+import { AppLoading, StatusBar } from 'expo';
 import { config } from './config/firebase-config';
+
 
 firebase.initializeApp(config);
 
@@ -14,21 +15,16 @@ export default class App extends React.Component {
     if (!this.state.isLoadingComplete) {
       return (
         <AppLoading
-        startAsync={this._loadResourcesAsync}
-        onError={this._handleLoadingError}
-        onFinish={this._handleFinishLoading}
-        >
-        </AppLoading>
+          startAsync={this._loadResourcesAsync}
+          onError={this._handleLoadingError}
+          onFinish={this._handleFinishLoading}
+        />
       )
     } else {
       return (
         <View style={styles.container}>
-          <View style={styles.loadingTitle}>
-            <Image source={require('./assets/images/safensound2.png')} style={styles.imageFormat} />
-          </View>
-          <Text>Welcome to our project</Text>
-          <Text>First, create your own branch</Text>
-          <Text>After you commit that, then we can merge it to our dev branch</Text>
+          {/* {<StatusBar barStyle="default" />} */}
+          <Text>Hello!</Text>
         </View>
       );
     }
