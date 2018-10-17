@@ -6,16 +6,22 @@ const { database } = firebase;
 
 // these two functions will need to change to accept a userID
 exports.enterBuilding = (bool) => {
-  database().ref('/users/0').update({ inBuilding: bool });
+  database()
+    .ref('/users/0')
+    .update({ inBuilding: bool });
 };
 
 // these two functions will need to change to accept a userID
 exports.enterSafeZone = (bool) => {
-  database().ref('/users/0').update({ inSafeZone: bool });
+  database()
+    .ref('/users/0')
+    .update({ inSafeZone: bool });
 };
 
 exports.createUser = (fName, lName, email, password) => {
-  firebase.auth().createUserWithEmailAndPassword(email, password)
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
     .then(({ user }) => {
       const { uid } = user;
       const newUser = {
@@ -26,7 +32,9 @@ exports.createUser = (fName, lName, email, password) => {
         inSafeZone: false,
         isAdmin: false,
       };
-      database().ref('/users').push(newUser)
+      database()
+        .ref('/users')
+        .push(newUser)
         .then(({ path }) => console.log(path));
     })
     .catch((error) => {
@@ -37,4 +45,11 @@ exports.createUser = (fName, lName, email, password) => {
       }
       console.log(error);
     });
+};
+
+exports.getAllUsers = () => {
+  firebase
+    .database()
+    .ref('/users')
+    .on('value', data => data.val());
 };
