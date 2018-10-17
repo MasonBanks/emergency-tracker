@@ -74,30 +74,27 @@ let options = {
       <View
       style={{ flexGrow: 1, alignItems: "center", justifyContent: "center" }}
       >
-  
-
       <Text>{!this.state.latitude && "Loading..."}</Text>
-
-<Text>safezone</Text>
-{!this.state.inSafeZone?<Image
-  source={require('./assets/images/cross.png')}
-  height="40"
-  weight="40"
-/>:<Image
-  source={require('./assets/images/tick.png')}
-  height="40"
-  weight="40"
-/>}
-<Text>building</Text>
-{!this.state.inBuilding?<Image
-  source={require('./assets/images/cross.png')}
-  height="40"
-  weight="40"
-/>:<Image
-  source={require('./assets/images/tick.png')}
-  height="40"
-  weight="40"
-/>}
+          <Text>safezone!</Text>
+          {!this.state.inSafeZone?<Image
+            source={require('./assets/images/cross.png')}
+            height="40"
+            weight="40"
+          />:<Image
+            source={require('./assets/images/tick.png')}
+            height="40"
+            weight="40"
+          />}
+          <Text>building</Text>
+          {!this.state.inBuilding?<Image
+            source={require('./assets/images/cross.png')}
+            height="40"
+            weight="40"
+          />:<Image
+            source={require('./assets/images/tick.png')}
+            height="40"
+            weight="40"
+          />}
 
   <Text>{this.state.latitude}</Text>
   <Text>{this.state.longitude}</Text>
