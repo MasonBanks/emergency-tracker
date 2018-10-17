@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Mason",
+    "admin": true,
+    "firstAidTrained": false,
+    "avatar_url": "https://i.imgur.com/garJAIX.png"
+  },
+  {
+    "name": "Turiya",
+    "admin": true,
+    "firstAidTrained": true,
+    "avatar_url": "https://vignette.wikia.nocookie.net/kong/images/4/47/Noodle_y_mike.jpg/revision/latest/scale-to-width-down/542?cb=20180821010623"
+  },
+  {
+    "name": "Danny",
+    "admin": false,
+    "firstAidTrained": false,
+    "avatar_url": "https://i.stack.imgur.com/f2H3p.jpg?s=328&g=1"
+  },
+  {
+    "name": "Rui",
+    "admin": false,
+    "firstAidTrained": true,
+    "avatar_url": "https://i.imgur.com/6YH9QYr.png"
+  },
+  {
+    "name": "Will",
+    "admin": false,
+    "firstAidTrained": false,
+    "avatar_url": "https://avatars2.githubusercontent.com/u/39624752?s=400&v=4"
+  },
+  {
+    "name": "Paul",
+    "admin": false,
+    "firstAidTrained": false,
+    "avatar_url": "https://avatars0.githubusercontent.com/u/19927131?s=400&v=4"
+  }
+]
