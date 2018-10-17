@@ -14,20 +14,18 @@ exports.enterSafeZone = (bool) => {
   database().ref('/users/0').update({ inSafeZone: bool });
 };
 
-exports.createUser = (fName, lName, email, password) => {
+exports.createUser = (firstName, lastName, email, password) => {
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(({ user }) => {
-      const { uid } = user;
       const newUser = {
-        uid,
-        fName,
-        lName,
+        firstName,
+        lastName,
         inBuilding: false,
         inSafeZone: false,
         isAdmin: false,
+        isFirstAider: false,
       };
-      database().ref('/users').push(newUser)
-        .then(({ path }) => console.log(path));
+      database().ref(`/users/${user.uid}`).set(newUser);
     })
     .catch((error) => {
       if (error.code === 'auth/weak-password') {
@@ -37,4 +35,22 @@ exports.createUser = (fName, lName, email, password) => {
       }
       console.log(error);
     });
+};
+
+exports.login = (email, password) => {
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(({ user }) => {
+      const { uid } = user;
+      this.getUserById(uid);
+    })
+    .catch(console.log);
+};
+
+exports.getUserById = (id) => {
+  database().ref('/users').orderByKey().equalTo(id)
+    .once('value')
+    .then((data) => {
+      console.log(data.val() ? data.val() : `${id} doesn't exist in db`);
+    })
+    .catch(console.log);
 };
