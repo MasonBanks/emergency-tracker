@@ -1,3 +1,4 @@
+
 import React from "react";
 import { StyleSheet, Text, View, Image, Animated } from "react-native";
 import safeZoneGeoJSON from "./data/geoJSON.json";
@@ -115,4 +116,3 @@ const styles = StyleSheet.create({
     aspectRatio: 1
   }
 });
-
