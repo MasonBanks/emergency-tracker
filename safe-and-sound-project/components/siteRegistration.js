@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
 });
 
 export default class SiteRegistration extends React.Component {
-
   writeNewSite = (userId, siteName, address, safeZone, buildingZone) => {
     database().ref(`sites/${userId}`).set({
       siteName,
@@ -36,7 +35,4 @@ export default class SiteRegistration extends React.Component {
       </View>
     );
   }
-
 }
-
-
