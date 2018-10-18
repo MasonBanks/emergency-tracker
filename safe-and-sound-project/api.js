@@ -16,64 +16,71 @@ exports.enterSafeZone = (bool) => {
 
 exports.createUser = (firstName, lastName, email, password) => {
   firebase.auth().createUserWithEmailAndPassword(email, password)
-  .then(({ user }) => {
-    const { uid } = user;
-    
-    const newUser = {
-      firstName,
-      lastName,
-      email,
-      inBuilding: false,
-      inSafeZone: false,
-      isAdmin: false,
-      isFirstAider: false,
-    };
+    .then(({ user }) => {
+      const { uid } = user;
 
-    database().ref(`/users/${uid}`).set(newUser)
-    .then(() => {
-      this.getUserById(uid)
+      const newUser = {
+        firstName,
+        lastName,
+        email,
+        inBuilding: false,
+        inSafeZone: false,
+        isAdmin: false,
+        isFirstAider: false,
+      };
+
+      database().ref(`/users/${uid}`).set(newUser)
+        .then(() => {
+          this.getUserById(uid);
+        })
+        .catch(console.log);
     })
-    .catch(console.log)
-  })
-  .catch((error) => {
-    if (error.code === 'auth/weak-password') {
-      console.log('The password is too weak.');
-    } else {
-      console.log(error.message);
-    }
-    console.log(error);
-  });
+    .catch((error) => {
+      if (error.code === 'auth/weak-password') {
+        console.log('The password is too weak.');
+      } else {
+        console.log(error.message);
+      }
+      console.log(error);
+    });
 };
 
+
+getUserById = (id) => {
+  database().ref('/users').orderByKey().equalTo(id)
+    .once('value')
+    .then((data) => {
+      return data.val() ? data.val() : alert(`${data.email} doesn't exist within database`)
+      // console.log(data.val() ? data.val() : `${id} doesn't exist in db`);
+    })
+    .catch(err =>
+      alert(err)
+    );
+};
 exports.login = (email, password) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(({ user }) => {
       const { uid } = user;
-      this.getUserById(uid);
+      console.log('success!')
+      getUserById(uid);
     })
-    .catch(console.log);
-};
-
-exports.getUserById = (id) => {
-  database().ref('/users').orderByKey().equalTo(id).once('value')
-  .then((data) => {
-    console.log(data.val() ? data.val() : `${id} doesn't exist in db`);
-  })
-  .catch(console.log);
+    .catch(err =>
+      alert(err)
+    );
 };
 
 exports.toggleAdminStatus = (uid) => {
   database().ref(`/users/${uid}/isAdmin`).once('value')
-  .then((data) => {
-    const currentStatus = data.val();
-    database().ref(`/users/${uid}`).update({ isAdmin: !currentStatus })
-  })
-}
+    .then((data) => {
+      const currentStatus = data.val();
+      database().ref(`/users/${uid}`).update({ isAdmin: !currentStatus });
+    });
+};
 
 exports.toggleFirstAiderStatus = (uid) => {
   database().ref(`/users/${uid}/isFirstAider`).once('value')
-  .then((data) => {
-    const currentStatus = data.val();
-    database().ref(`/users/${uid}`).update({ isFirstAider: !currentStatus })
-  })
-}
+    .then((data) => {
+      const currentStatus = data.val();
+      database().ref(`/users/${uid}`).update({ isFirstAider: !currentStatus });
+    });
+};
