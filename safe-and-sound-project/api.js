@@ -51,7 +51,8 @@ exports.login = (email, password) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(({ user }) => {
       const { uid } = user;
-      this.getUserById(uid);
+      console.log('success!');
+      getUserById(uid);
     })
     .catch(console.log);
 };
@@ -63,6 +64,9 @@ exports.getUserById = (id) => {
       console.log(data.val() ? data.val() : `${id} doesn't exist in db`);
     })
     .catch(console.log);
+  // .catch(err =>
+  //   alert(err)
+  // );
 };
 
 exports.toggleAdminStatus = (uid) => {

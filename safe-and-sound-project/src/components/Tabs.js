@@ -8,7 +8,7 @@ const styles = {
   ...baseStyles,
   container: {
     flex: 1,
-    flexDirection: 'column-reverse',
+    flexDirection: 'column',
   },
   header: {
     backgroundColor: '#f6f3a7',
@@ -172,7 +172,12 @@ export default class Tabs extends React.Component {
               }}
               text="Settings"
             />
-            <Button style={styles.button} textStyle={styles.buttonText} onPress={this.pressMenu} text="MENU" />
+            <Button
+              style={styles.button}
+              textStyle={styles.buttonText}
+              onPress={this.pressMenu}
+              text="MENU"
+            />
           </View>
           <View>
             <Animated.View style={[styles.underline, { transform: [{ translateX }, { scaleX }] }]} />
@@ -180,9 +185,9 @@ export default class Tabs extends React.Component {
           <View style={styles.textWrap}>
             <Text style={styles.componentText}>&lt;Tabs /&gt;</Text>
             <Text style={styles.tipText}>
-push[screen](
+              push[screen](
               {JSON.stringify(screenAnimation)}
-)
+              )
             </Text>
           </View>
         </View>

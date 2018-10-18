@@ -1,6 +1,7 @@
 import React from 'react';
+import { TextInput } from 'react-native';
 import { Consumer } from '../../ContextStore';
-
+import { login } from '../../../api';
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
 

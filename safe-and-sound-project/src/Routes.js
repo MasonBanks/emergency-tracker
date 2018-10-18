@@ -36,6 +36,7 @@ class Routes extends React.Component {
       animation: undefined,
       from: undefined,
       to: undefined,
+      email: undefined,
     };
     this.drawer = React.createRef();
   }
@@ -88,13 +89,18 @@ class Routes extends React.Component {
                 router={(router) => {
                   this.setRouter(router);
                 }}
+
               />
             )}
 
             {authenticated && (
               <Drawer
                 renderNavigationView={() => (
-                  <Sidenav setAuth={setAuth} router={this.state.router} closeDrawer={this.closeDrawer} />
+                  <Sidenav
+                    setAuth={setAuth}
+                    router={this.state.router}
+                    closeDrawer={this.closeDrawer}
+                  />
                 )}
                 ref={this.drawer}
               >

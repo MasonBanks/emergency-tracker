@@ -13,6 +13,7 @@ module.exports = {
         "react/no-unused-state": "warn",
         "react/prop-types": "warn",
         "react/destructuring-assignment": "warn",
+        "global-require": "warn",
         "max-len": "warn",
         "import/no-unresolved": "warn",
         "no-unused-vars": "warn",
