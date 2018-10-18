@@ -85,7 +85,7 @@ function seedUsers(n) {
           });
       }
     });
-};
+}
 
 function eraseAndReseed(n) {
   database().ref('users').set(null)
