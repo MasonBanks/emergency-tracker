@@ -13,9 +13,14 @@
   "dependencies": {
     "expo": "^30.0.1",
     "firebase": "^5.5.4",
+    "prop-types": "^15.6.2",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
-    "react-native-maps": "^0.22.0"
+    "react-native-animatable-promise": "^1.2.4",
+    "react-native-drawer-layout-polyfill": "^2.0.0",
+    "react-native-easy-router": "^2.5.0",
+    "react-native-maps": "^0.22.0",
+    "react-native-scripts": "^2.0.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
