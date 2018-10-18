@@ -9,6 +9,7 @@ module.exports = {
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "no-undef": "off",
-        "prefer-destructuring": "off"
+        "prefer-destructuring": "off",
+        "global-require": "warn"
     }
 };
