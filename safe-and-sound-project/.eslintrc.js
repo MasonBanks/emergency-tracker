@@ -14,6 +14,7 @@ module.exports = {
         "react/prop-types": "warn",
         "react/destructuring-assignment": "warn",
         "max-len": "warn",
-        "import/no-unresolved": "warn"
+        "import/no-unresolved": "warn",
+        "global-require": "warn"
     }
 };

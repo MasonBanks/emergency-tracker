@@ -3,9 +3,9 @@ import React from 'react';
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
 
-const animation = {type: 'top', duration: 1000};
+const animation = { type: 'top', duration: 1000 };
 
-export default ({router}) => (
+export default ({ router }) => (
   <Screen backgroundColor="#1b3764" title="Home">
     <Button
       onPress={() => {

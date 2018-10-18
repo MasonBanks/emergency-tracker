@@ -1,12 +1,12 @@
 import React from 'react';
-import {Consumer} from '../../ContextStore';
+import { Consumer } from '../../ContextStore';
 
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
 
-export default ({router}) => (
+export default ({ router }) => (
   <Consumer>
-    {({setAuth}) => (
+    {({ setAuth }) => (
       <Screen backgroundColor="#155e63" title="Login">
         <Button
           onPress={() => {
