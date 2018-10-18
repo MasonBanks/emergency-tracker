@@ -5,14 +5,14 @@ firebase.initializeApp(config);
 const { database } = firebase;
 
 // these two functions will need to change to accept a userID
-exports.enterBuilding = bool => {
+exports.enterBuilding = (bool) => {
   database()
     .ref('/users/0')
     .update({ inBuilding: bool });
 };
 
 // these two functions will need to change to accept a userID
-exports.enterSafeZone = bool => {
+exports.enterSafeZone = (bool) => {
   database()
     .ref('/users/0')
     .update({ inSafeZone: bool });
@@ -30,14 +30,14 @@ exports.createUser = (fName, lName, email, password) => {
         lName,
         inBuilding: false,
         inSafeZone: false,
-        isAdmin: false
+        isAdmin: false,
       };
       database()
         .ref('/users')
         .push(newUser)
         .then(({ path }) => console.log(path));
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.code === 'auth/weak-password') {
         console.log('The password is too weak.');
       } else {
@@ -51,7 +51,11 @@ exports.getAllUsers = () => {
   firebase
     .database()
     .ref('/users')
-    .on('value', data => data.val(console.log(data.val())));
+    .once('value')
+    .then((data) => {
+      console.log(data.val());
+    })
+    .catch(console.log);
 };
 
 exports.updateUserDetails = (user, details) => {
