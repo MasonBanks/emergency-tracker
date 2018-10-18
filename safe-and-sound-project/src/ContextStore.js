@@ -6,9 +6,9 @@ const initialState = {
   },
 };
 
-const {Provider, Consumer} = React.createContext({
+const { Provider, Consumer } = React.createContext({
   ...initialState,
   setAuth: () => {},
 });
 
-export {initialState, Provider, Consumer};
+export { initialState, Provider, Consumer };

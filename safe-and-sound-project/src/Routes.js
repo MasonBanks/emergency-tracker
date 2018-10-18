@@ -22,7 +22,7 @@ const animations = {
     },
     {
       opacity: 1,
-      transform: [{ scale: 1 }]
+      transform: [{ scale: 1 }],
     },
     true,
   ],
@@ -96,13 +96,15 @@ class Routes extends React.Component {
                 renderNavigationView={() => (
                   <Sidenav setAuth={setAuth} router={this.state.router} closeDrawer={this.closeDrawer} />
                 )}
-                ref={this.drawer}>
+                ref={this.drawer}
+              >
                 <Tabs
                   router={this.state.router}
                   openDrawer={this.openDrawer}
                   from={this.state.from}
                   to={this.state.to}
-                  transition={this.state.animation}>
+                  transition={this.state.animation}
+                >
                   <EasyRouter
                     routes={{
                       Home,
