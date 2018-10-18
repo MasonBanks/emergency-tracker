@@ -9,4 +9,4 @@ const api = require('./api');
 
 // api.createUser(fName, lName, email, 'test123')
 
-api.toggleAdminStatus('JShUp1fTjMZq9qXINwDkGKFLrzp2')
+api.toggleFirstAiderStatus('JShUp1fTjMZq9qXINwDkGKFLrzp2')
