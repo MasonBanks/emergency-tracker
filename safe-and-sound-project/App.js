@@ -5,7 +5,7 @@ import { config } from './config/firebase-config';
 import { Provider, initialState } from './src/ContextStore';
 import Routes from './src/Routes';
 
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
 
 
 export default class App extends React.Component {
