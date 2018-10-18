@@ -1,4 +1,3 @@
-
 import React from "react";
 import { StyleSheet, Text, View, Image, Animated } from "react-native";
 import safeZoneGeoJSON from "./data/geoJSON.json";
@@ -76,7 +75,7 @@ let options = {
       style={{ flexGrow: 1, alignItems: "center", justifyContent: "center" }}
       >
       <Text>{!this.state.latitude && "Loading..."}</Text>
-          <Text>safezone!!!</Text>
+          <Text>safezone!!!!!!</Text>
           {!this.state.inSafeZone?<Image
             source={require('./assets/images/cross.png')}
             height="40"
