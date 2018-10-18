@@ -1,9 +1,24 @@
 import React from 'react';
-import { View, Image, StyleSheet, Dimensions } from 'react-native';
+import {
+  View, Image, StyleSheet, Dimensions,
+} from 'react-native';
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
 
 const animation = { type: 'fade', duration: 1200 };
+
+const { width, height } = Dimensions.get('window');
+const styles = StyleSheet.create({
+  logoContainer: {
+    flex: 1,
+    height,
+    width,
+    alignItems: 'center',
+  },
+  // logo: {
+  //   resizeMode: 'contain'
+  // }
+});
 
 export default ({ router }) => (
   <View style={styles.logoContainer}>
@@ -13,22 +28,8 @@ export default ({ router }) => (
         onPress={() => {
           router.push.Login({}, animation);
         }}
-        text={`Login`}
+        text="Login"
       />
     </Screen>
   </View>
 );
-
-
-const { width, height } = Dimensions.get('window')
-const styles = StyleSheet.create({
-  logoContainer: {
-    flex: 1,
-    height: height,
-    width: width,
-    alignItems: 'center',
-  },
-  // logo: {
-  //   resizeMode: 'contain'
-  // }
-})

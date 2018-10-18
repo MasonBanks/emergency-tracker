@@ -182,9 +182,9 @@ export default class Tabs extends React.Component {
           <View>
             <Animated.View
               style={[styles.underline,
-              {
-                transform: [{ translateX }, { scaleX }],
-              }]
+                {
+                  transform: [{ translateX }, { scaleX }],
+                }]
               }
             />
           </View>

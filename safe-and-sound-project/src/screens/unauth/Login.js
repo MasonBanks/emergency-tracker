@@ -1,6 +1,6 @@
 import React from 'react';
+import { TextInput } from 'react-native';
 import { Consumer } from '../../ContextStore';
-import { TextInput } from 'react-native'
 
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
@@ -13,7 +13,7 @@ export default ({ router }) => (
           width: 175,
           height: 30,
           borderColor: 'gray',
-          borderWidth: 1
+          borderWidth: 1,
         }}
         />
         <Button

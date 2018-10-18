@@ -12,6 +12,7 @@ module.exports = {
         "prefer-destructuring": "warn",
         "react/no-unused-state": "warn",
         "react/prop-types": "warn",
-        "react/destructuring-assignment": "warn"
+        "react/destructuring-assignment": "warn",
+        "global-require": "warn"
     }
 };
