@@ -1,5 +1,5 @@
 import React from 'react';
-import {Animated, View, Text} from 'react-native';
+import { Animated, View, Text } from 'react-native';
 import easingFunctions from 'react-native-animatable-promise/easing';
 import baseStyles from './styles';
 import Button from './Button';
@@ -8,7 +8,7 @@ const styles = {
   ...baseStyles,
   container: {
     flex: 1,
-    flexDirection: 'column-reverse',
+    flexDirection: 'column',
   },
   header: {
     backgroundColor: '#f6f3a7',
@@ -57,7 +57,7 @@ const styles = {
   },
 };
 
-const screenAnimation = {type: 'effect', duration: 900, easing: 'ease-in-out-back'};
+const screenAnimation = { type: 'effect', duration: 900, easing: 'ease-in-out-back' };
 
 export default class Tabs extends React.Component {
   constructor(props) {
@@ -69,10 +69,10 @@ export default class Tabs extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {from, to, transition: {easing, duration} = {}} = this.props;
+    const { from, to, transition: { easing, duration } = {} } = this.props;
     if (from && to && from !== to && (from !== prevProps.from || to !== prevProps.to)) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({animation: new Animated.Value(0)}, () => {
+      this.setState({ animation: new Animated.Value(0) }, () => {
         Animated.timing(this.state.animation, {
           toValue: 1,
           easing: easingFunctions[easing],
@@ -85,9 +85,9 @@ export default class Tabs extends React.Component {
 
   onLayout = (screen, e) => {
     const {
-      nativeEvent: {layout},
+      nativeEvent: { layout },
     } = e;
-    this.setState((oldState) => ({
+    this.setState(oldState => ({
       layouts: {
         ...oldState.layouts,
         [screen]: layout,
@@ -96,8 +96,8 @@ export default class Tabs extends React.Component {
   };
 
   getPos = (screen) => {
-    const {layouts} = this.state;
-    return layouts[screen] || {x: -10000, width: 0};
+    const { layouts } = this.state;
+    return layouts[screen] || { x: -10000, width: 0 };
   };
 
   pressMenu = () => {
@@ -105,30 +105,28 @@ export default class Tabs extends React.Component {
   };
 
   goto = async (screen) => {
-    const {router: {push} = {}} = this.props;
+    const { router: { push } = {} } = this.props;
     await push[screen]({}, screenAnimation);
   };
 
   render() {
-    const {children, from, to} = this.props;
-    const {animation} = this.state;
+    const { children, from, to } = this.props;
+    const { animation } = this.state;
 
     const fromPos = this.getPos(from);
     const toPos = this.getPos(to);
-    const translateX =
-      !from || from === to
-        ? toPos.x + toPos.width / 2 || -10000
-        : animation.interpolate({
-            inputRange: [0, 1],
-            outputRange: [fromPos.x + fromPos.width / 2, toPos.x + toPos.width / 2],
-          });
-    const scaleX =
-      !from || from === to
-        ? toPos.width || 0
-        : animation.interpolate({
-            inputRange: [0, 1],
-            outputRange: [fromPos.width, toPos.width],
-          });
+    const translateX = !from || from === to
+      ? toPos.x + toPos.width / 2 || -10000
+      : animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [fromPos.x + fromPos.width / 2, toPos.x + toPos.width / 2],
+      });
+    const scaleX = !from || from === to
+      ? toPos.width || 0
+      : animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [fromPos.width, toPos.width],
+      });
 
     return (
       <View style={styles.container}>
@@ -174,14 +172,29 @@ export default class Tabs extends React.Component {
               }}
               text="Settings"
             />
-            <Button style={styles.button} textStyle={styles.buttonText} onPress={this.pressMenu} text="MENU" />
+            <Button
+              style={styles.button}
+              textStyle={styles.buttonText}
+              onPress={this.pressMenu}
+              text="MENU"
+            />
           </View>
           <View>
-            <Animated.View style={[styles.underline, {transform: [{translateX}, {scaleX}]}]} />
+            <Animated.View
+              style={[styles.underline,
+              {
+                transform: [{ translateX }, { scaleX }],
+              }]
+              }
+            />
           </View>
           <View style={styles.textWrap}>
             <Text style={styles.componentText}>&lt;Tabs /&gt;</Text>
-            <Text style={styles.tipText}>push[screen]({JSON.stringify(screenAnimation)})</Text>
+            <Text style={styles.tipText}>
+              push[screen](
+              {JSON.stringify(screenAnimation)}
+              )
+            </Text>
           </View>
         </View>
       </View>

@@ -3,9 +3,9 @@ import React from 'react';
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
 
-const animation = {type: 'bottom', duration: 500};
+const animation = { type: 'bottom', duration: 500 };
 
-export default ({router}) => (
+export default ({ router }) => (
   <Screen backgroundColor="#5f1854" title="Profile">
     <Button
       onPress={() => {
@@ -17,7 +17,7 @@ export default ({router}) => (
       onPress={() => {
         router.pop();
       }}
-      text="pop()"
+      text="back"
     />
   </Screen>
 );
