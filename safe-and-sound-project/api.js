@@ -1,5 +1,6 @@
 const firebase = require('firebase');
 const { config } = require('./config/firebase-config');
+
 const { database } = firebase;
 firebase.initializeApp(config);
 
@@ -44,7 +45,6 @@ exports.createUser = (firstName, lastName, email, password) => {
       console.log(error);
     });
 };
-
 
 
 exports.login = (email, password) => {

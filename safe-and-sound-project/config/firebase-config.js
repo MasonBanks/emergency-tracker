@@ -6,9 +6,9 @@ exports.config = {
   databaseURL: 'https://safe-and-sound-app-fbe3e.firebaseio.com/',
   storageBucket: 'gs://safe-and-sound-app-fbe3e.appspot.com',
   apiKey: 'AIzaSyBYE8Z-jNX8NArzBD1mPQHZorfQstPSuRg',
-}
+};
 
 exports.adminConfig = {
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://safe-and-sound-app-fbe3e.firebaseio.com"
-}
+  databaseURL: 'https://safe-and-sound-app-fbe3e.firebaseio.com',
+};
