@@ -69,3 +69,11 @@ exports.toggleAdminStatus = (uid) => {
     database().ref(`/users/${uid}`).update({ isAdmin: !currentStatus })
   })
 }
+
+exports.toggleFirstAiderStatus = (uid) => {
+  database().ref(`/users/${uid}/isFirstAider`).once('value')
+  .then((data) => {
+    const currentStatus = data.val();
+    database().ref(`/users/${uid}`).update({ isFirstAider: !currentStatus })
+  })
+}
