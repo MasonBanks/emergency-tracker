@@ -61,3 +61,11 @@ exports.getUserById = (id) => {
   })
   .catch(console.log);
 };
+
+exports.toggleAdminStatus = (uid) => {
+  database().ref(`/users/${uid}/isAdmin`).once('value')
+  .then((data) => {
+    const currentStatus = data.val();
+    database().ref(`/users/${uid}`).update({ isAdmin: !currentStatus })
+  })
+}
