@@ -5,8 +5,8 @@ const initialState = {
     authenticated: false,
   },
   mode: {
-    emergency: false
-  }
+    emergency: false,
+  },
 };
 
 const {

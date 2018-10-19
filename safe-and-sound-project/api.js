@@ -99,3 +99,8 @@ exports.toggleEmergencyStatus = (mode) => {
         });
     });
 };
+exports.getSafeZone = () => database().ref('/site/safeZone').once('value')
+  .then(data => data);
+
+exports.getBuilding = () => database().ref('/site/buildingZone').once('value')
+  .then(data => data);
