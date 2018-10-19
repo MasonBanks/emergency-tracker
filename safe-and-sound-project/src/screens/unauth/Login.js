@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import { Consumer } from '../../ContextStore';
+import { authContext } from '../../ContextStore';
 
 import { login } from '../../../api';
 
@@ -22,7 +22,7 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <Consumer>
+      <authContext.Consumer>
         {({ setAuth }) => (
           <Screen backgroundColor="#155e63" title="Login">
             <TextInput
@@ -71,7 +71,7 @@ export default class Login extends React.Component {
             />
           </Screen>
         )}
-      </Consumer>
+      </authContext.Consumer>
     );
   }
 }

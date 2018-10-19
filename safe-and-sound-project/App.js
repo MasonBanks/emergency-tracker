@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import firebase from 'firebase';
-import { Provider, initialState } from './src/ContextStore';
+import { AuthProvider } from './src/ContextStore/authContext';
+import { ModeProvider } from './src/ContextStore/modeContext';
+import { initialState } from './src/ContextStore/initialState';
 import Routes from './src/Routes';
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
@@ -15,7 +17,6 @@ console.warn = message => {
 };
 
 const { database } = firebase;
-
 
 export default class App extends React.Component {
   constructor(props) {
@@ -35,32 +36,28 @@ export default class App extends React.Component {
     }));
   };
 
-  // setEmergency = (newMode) => {
-  //   this.setState((oldState) => ({
-  //     mode: {
-  //       ...oldState.mode,
-  //       emergency,
-  //     },
-  //   }));
-  // };
+  setMode = (emergency) => {
+    this.setState((oldState) => ({
+      mode: {
+        ...oldState.mode,
+        emergency,
+      },
+    }));
+  };
 
   componentDidMount() {
     database().ref('/site').child('isEmergency').on('value', (snapshot) => {
-      this.setState({
-        emergencyListener: snapshot.val()
-      })
+      console.log(snapshot, '<<<<<<<<<')
     });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-
   }
 
   render() {
     return (
-      <Provider value={this.state}>
-        <Routes />
-      </Provider>
-    );
+      <AuthProvider>
+        <ModeProvider>
+          <Routes />
+        </ModeProvider>
+      </AuthProvider>
+    )
   }
 }

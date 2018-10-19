@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import EasyRouter from 'react-native-easy-router';
 
-import { Consumer } from './ContextStore';
+import { authContext, modeContext } from './ContextStore';
 
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
@@ -73,8 +73,8 @@ class Routes extends React.Component {
 
   render() {
     return (
-      <Consumer>
-        {({ setAuth, auth: { authenticated } }) => (
+      <authContext.Consumer>
+        {({ setAuth, authenticated }) => (
           <View style={{ backgroundColor: 'black', flex: 1 }}>
             {!authenticated && (
               <EasyRouter
@@ -130,7 +130,7 @@ class Routes extends React.Component {
             )}
           </View>
         )}
-      </Consumer>
+      </authContext.Consumer>
     );
   }
 }
