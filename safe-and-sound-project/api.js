@@ -1,43 +1,50 @@
 const firebase = require('firebase');
 const { config } = require('./config/firebase-config');
 
-firebase.initializeApp(config);
 const { database } = firebase;
+firebase.initializeApp(config);
 
 // these two functions will need to change to accept a userID
-exports.enterBuilding = (bool) => {
+exports.enterBuilding = bool => {
   database()
     .ref('/users/0')
     .update({ inBuilding: bool });
 };
 
 // these two functions will need to change to accept a userID
-exports.enterSafeZone = (bool) => {
+exports.enterSafeZone = bool => {
   database()
     .ref('/users/0')
     .update({ inSafeZone: bool });
 };
 
-exports.createUser = (fName, lName, email, password) => {
+exports.createUser = (firstName, lastName, email, password) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(({ user }) => {
       const { uid } = user;
+
       const newUser = {
         uid,
-        fName,
-        lName,
+        firstName,
+        lastName,
+        email,
         inBuilding: false,
         inSafeZone: false,
         isAdmin: false,
+        isFirstAider: false
       };
+
       database()
-        .ref('/users')
-        .push(newUser)
-        .then(({ path }) => console.log(path));
+        .ref(`/users/${uid}`)
+        .set(newUser)
+        .then(() => {
+          this.getUserById(uid);
+        })
+        .catch(console.log);
     })
-    .catch((error) => {
+    .catch(error => {
       if (error.code === 'auth/weak-password') {
         console.log('The password is too weak.');
       } else {
@@ -47,19 +54,53 @@ exports.createUser = (fName, lName, email, password) => {
     });
 };
 
-exports.getAllUsers = () => {
+exports.login = (email, password) => {
   firebase
-    .database()
-    .ref('/users')
-    .once('value')
-    .then((data) => {
-      console.log(data.val());
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then(({ user }) => {
+      const { uid } = user;
+      console.log('success!');
+      getUserById(uid);
     })
     .catch(console.log);
 };
 
-exports.updateUserDetails = (user, details) => {
+exports.getUserById = id => {
   database()
-    .ref(`/users/${user}`)
-    .update(details);
+    .ref('/users')
+    .orderByKey()
+    .equalTo(id)
+    .once('value')
+    .then(data => {
+      console.log(data.val() ? data.val() : `${id} doesn't exist in db`);
+    })
+    .catch(console.log);
+  // .catch(err =>
+  //   alert(err)
+  // );
+};
+
+exports.toggleAdminStatus = uid => {
+  database()
+    .ref(`/users/${uid}/isAdmin`)
+    .once('value')
+    .then(data => {
+      const currentStatus = data.val();
+      database()
+        .ref(`/users/${uid}`)
+        .update({ isAdmin: !currentStatus });
+    });
+};
+
+exports.toggleFirstAiderStatus = uid => {
+  database()
+    .ref(`/users/${uid}/isFirstAider`)
+    .once('value')
+    .then(data => {
+      const currentStatus = data.val();
+      database()
+        .ref(`/users/${uid}`)
+        .update({ isFirstAider: !currentStatus });
+    });
 };

@@ -10,6 +10,15 @@ module.exports = {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "no-undef": "off",
         "prefer-destructuring": "warn",
-        "react/no-unused-state": "warn"
+        "react/no-unused-state": "warn",
+        "react/prop-types": "warn",
+        "react/destructuring-assignment": "warn",
+        "global-require": "warn",
+        "max-len": "warn",
+        "import/no-unresolved": "warn",
+        "no-unused-vars": "warn",
+        "global-require": "warn",
+        "react/prop-types": "off",
+        "no-plusplus": "warn"
     }
 };
