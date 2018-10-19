@@ -2,7 +2,7 @@ import React from 'react';
 import { TextInput } from 'react-native';
 import { Consumer } from '../../ContextStore';
 
-import { login } from '../../../api'
+import { login } from '../../../api';
 
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
@@ -12,9 +12,10 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
-    }
+      password: '',
+    };
   }
+
   render() {
     return (
       <Consumer>
@@ -28,9 +29,9 @@ export default class Login extends React.Component {
                 borderWidth: 1,
               }}
               placeholder="email"
-              onChangeText={(email) => this.setState({ email })}
+              onChangeText={email => this.setState({ email })}
               value={this.state.email}
-              autoCapitalize='none'
+              autoCapitalize="none"
             />
             <TextInput
               style={{
@@ -40,18 +41,21 @@ export default class Login extends React.Component {
                 borderWidth: 1,
               }}
               placeholder="password"
-              onChangeText={(password) => this.setState({ password })}
+              onChangeText={password => this.setState({ password })}
               value={this.state.password}
-              secureTextEntry={true}
-              autoCapitalize='none'
+              secureTextEntry
+              autoCapitalize="none"
             />
             <Button
               onPress={() => {
-                login(this.state.email, this.state.password)
-                // .then(success => {
-                //   console.log(success)
-                //   // setAuth(true);
-                // })
+                this._handleSignIn(this.state.email, this.state.password)
+                  .then(data => {
+                    if (data) {
+                      setAuth(true)
+                    } else {
+                      console.log('incorrect login details')
+                    }
+                  })
               }}
               text="Sign in"
             />
@@ -64,6 +68,9 @@ export default class Login extends React.Component {
           </Screen>
         )}
       </Consumer>
-    )
+    );
   }
-};
+  _handleSignIn(email, password) {
+    return login(email, password)
+  }
+}

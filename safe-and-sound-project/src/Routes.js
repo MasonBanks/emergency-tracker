@@ -36,7 +36,7 @@ class Routes extends React.Component {
       animation: undefined,
       from: undefined,
       to: undefined,
-      email: undefined
+      email: undefined,
     };
     this.drawer = React.createRef();
   }
@@ -89,7 +89,7 @@ class Routes extends React.Component {
                 router={(router) => {
                   this.setRouter(router);
                 }}
-                
+
               />
             )}
 

@@ -37,7 +37,7 @@ exports.createUser = (firstName, lastName, email, password) => {
     })
     .catch((error) => {
       if (error.code === 'auth/weak-password') {
-        console.log('The password is too weak.');
+        alert('The password is too weak.');
       } else {
         console.log(error.message);
       }
@@ -45,28 +45,26 @@ exports.createUser = (firstName, lastName, email, password) => {
     });
 };
 
-
 getUserById = (id) => {
-  database().ref('/users').orderByKey().equalTo(id)
+  return database().ref('/users').orderByKey().equalTo(id)
     .once('value')
-    .then((data) => {
-      return data.val() ? data.val() : alert(`${data.email} doesn't exist within database`)
-      // console.log(data.val() ? data.val() : `${id} doesn't exist in db`);
+    .then(data => {
+      if (data) {
+        return data
+      } else {
+        alert(`${data.fname} doesn't exist within database`)
+      }
     })
-    .catch(err =>
-      alert(err)
-    );
+    .catch(err => alert(err));
 };
+
 exports.login = (email, password) => {
-  firebase.auth().signInWithEmailAndPassword(email, password)
+  return firebase.auth().signInWithEmailAndPassword(email, password)
     .then(({ user }) => {
       const { uid } = user;
-      console.log('success!')
-      getUserById(uid);
+      return getUserById(uid);
     })
-    .catch(err =>
-      alert(err)
-    );
+    .catch(err => alert(err));
 };
 
 exports.toggleAdminStatus = (uid) => {
