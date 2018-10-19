@@ -180,13 +180,7 @@ export default class Tabs extends React.Component {
             />
           </View>
           <View>
-            <Animated.View
-              style={[styles.underline,
-                {
-                  transform: [{ translateX }, { scaleX }],
-                }]
-              }
-            />
+            <Animated.View style={[styles.underline, { transform: [{ translateX }, { scaleX }] }]} />
           </View>
           <View style={styles.textWrap}>
             <Text style={styles.componentText}>&lt;Tabs /&gt;</Text>

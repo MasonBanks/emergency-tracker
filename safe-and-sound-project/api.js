@@ -1,8 +1,8 @@
 const firebase = require('firebase');
 const { config } = require('./config/firebase-config');
 
-firebase.initializeApp(config);
 const { database } = firebase;
+firebase.initializeApp(config);
 
 // these two functions will need to change to accept a userID
 exports.enterBuilding = (bool) => {
@@ -20,6 +20,7 @@ exports.createUser = (firstName, lastName, email, password) => {
       const { uid } = user;
 
       const newUser = {
+        uid,
         firstName,
         lastName,
         email,
@@ -52,7 +53,7 @@ getUserById = (id) => {
       if (data) {
         return data
       } else {
-        alert(`${data.fname} doesn't exist within database`)
+        alert(`Submitted information does not exist within database`)
       }
     })
     .catch(err => alert(err));

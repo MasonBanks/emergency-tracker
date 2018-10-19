@@ -15,7 +15,9 @@ export default class Login extends React.Component {
       password: '',
     };
   }
-
+  handleSignIn(email, password) {
+    return login(email, password)
+  }
   render() {
     return (
       <Consumer>
@@ -48,7 +50,7 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                this._handleSignIn(this.state.email, this.state.password)
+                this.handleSignIn(this.state.email, this.state.password)
                   .then(data => {
                     if (data) {
                       setAuth(true)
@@ -69,8 +71,5 @@ export default class Login extends React.Component {
         )}
       </Consumer>
     );
-  }
-  _handleSignIn(email, password) {
-    return login(email, password)
   }
 }
