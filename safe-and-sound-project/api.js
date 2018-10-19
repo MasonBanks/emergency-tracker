@@ -79,3 +79,24 @@ exports.toggleFirstAiderStatus = (uid) => {
       database().ref(`/users/${uid}`).update({ isFirstAider: !currentStatus });
     });
 };
+
+exports.readEmergencyStatus = () => database().ref('/site').child('isEmergency').on('value', (snapshot) => {
+  const mode = snapshot.val();
+  console.log(`current status: ${snapshot.val()}`);
+  return snapshot.val();
+});
+
+exports.toggleEmergencyStatus = (mode) => {
+  database().ref('/site').child('isEmergency').once('value')
+    .then((data) => {
+      console.log(`current emergency status: ${data.val()}`);
+      const currentStatus = data.val();
+      database().ref('/site').child('isEmergency').set(!currentStatus)
+        .then(() => {
+          database().ref('/site').child('isEmergency').once('value')
+            .then(() => {
+              console.log(`Emergency status set to ${data.val()}`);
+            });
+        });
+    });
+};

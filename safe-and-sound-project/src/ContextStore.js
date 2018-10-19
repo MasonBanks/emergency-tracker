@@ -4,11 +4,19 @@ const initialState = {
   auth: {
     authenticated: false,
   },
+  mode: {
+    emergency: false,
+  },
 };
 
-const { Provider, Consumer } = React.createContext({
+const {
+  Provider, Consumer, Idle, Emergency,
+} = React.createContext({
   ...initialState,
-  setAuth: () => {},
+  setAuth: () => { },
+  setMode: () => { },
 });
 
-export { initialState, Provider, Consumer };
+export {
+  initialState, Provider, Consumer, Idle, Emergency,
+};

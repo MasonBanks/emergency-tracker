@@ -14,6 +14,7 @@ export default class App extends React.Component {
     this.state = {
       ...initialState,
       setAuth: this.setAuth,
+      setMode: this.setMode
     };
   }
 
@@ -22,6 +23,15 @@ export default class App extends React.Component {
       auth: {
         ...oldState.auth,
         authenticated,
+      },
+    }));
+  };
+
+  setMode = (emergency) => {
+    this.setState((oldState) => ({
+      mode: {
+        ...oldState.mode,
+        emergency,
       },
     }));
   };
