@@ -19,8 +19,8 @@ const styles = {
     flex: 1,
     height: 200,
     width: 100,
-    padding: 10
-  }
+    padding: 10,
+  },
 };
 
 export default styles;
