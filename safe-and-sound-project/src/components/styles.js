@@ -15,6 +15,12 @@ const styles = {
     fontSize: 20,
     textAlign: 'center',
   },
+  mapContainer: {
+    flex: 1,
+    height: 200,
+    width: 100,
+    padding: 10
+  }
 };
 
 export default styles;

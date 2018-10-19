@@ -11,7 +11,7 @@ const styles = {
     flexDirection: 'column',
   },
   header: {
-    backgroundColor: '#f6f3a7',
+    backgroundColor: '#f7faff',
   },
   tabs: {
     flexDirection: 'row',
@@ -51,7 +51,7 @@ const styles = {
   textWrap: {
     flexDirection: 'row',
     paddingTop: 5,
-    paddingBottom: 5,
+    paddingBottom: 10,
     paddingLeft: 10,
     paddingRight: 10,
   },
@@ -183,12 +183,12 @@ export default class Tabs extends React.Component {
             <Animated.View style={[styles.underline, { transform: [{ translateX }, { scaleX }] }]} />
           </View>
           <View style={styles.textWrap}>
-            <Text style={styles.componentText}>&lt;Tabs /&gt;</Text>
+            {/* <Text style={styles.componentText}>&lt;Tabs /&gt;</Text>
             <Text style={styles.tipText}>
               push[screen](
               {JSON.stringify(screenAnimation)}
               )
-            </Text>
+            </Text> */}
           </View>
         </View>
       </View>
