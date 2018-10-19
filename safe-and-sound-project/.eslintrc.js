@@ -17,6 +17,10 @@ module.exports = {
         "max-len": "warn",
         "import/no-unresolved": "warn",
         "class-methods-use-this": "warn",
-        "consistent-return": "warn"
+        "consistent-return": "warn",
+        "no-unused-vars": "warn",
+        "global-require": "warn",
+        "react/prop-types": "off",
+        "no-plusplus": "warn"
     }
 };

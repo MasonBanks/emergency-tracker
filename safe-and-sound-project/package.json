@@ -3,16 +3,19 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "start": "expo start",
+    "start": "npm run seed & expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "test": "node_modules/.bin/jest",
     "eject": "expo eject",
-    "precommit": "eslint --fix ."
+    "precommit": "eslint --fix .",
+    "seed": "node ./seed/seed.js"
   },
   "dependencies": {
     "expo": "^30.0.1",
+    "faker": "^4.1.0",
     "firebase": "^5.5.4",
+    "firebase-admin": "^6.0.0",
     "prop-types": "^15.6.2",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
