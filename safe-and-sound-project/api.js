@@ -80,12 +80,10 @@ exports.toggleFirstAiderStatus = (uid) => {
     });
 };
 
-exports.emergencyStatusListener = () => {
-  return database().ref('/site').child('isEmergency').on('value', (snapshot) => {
-    console.log(`current status: ${snapshot.val()}`);
-    console.log(snapshot);
-  });
-}
+exports.emergencyStatusListener = () => database().ref('/site').child('isEmergency').on('value', (snapshot) => {
+  console.log(`current status: ${snapshot.val()}`);
+  console.log(snapshot);
+});
 
 exports.toggleEmergencyStatus = (mode) => {
   database().ref('/site').child('isEmergency').once('value')

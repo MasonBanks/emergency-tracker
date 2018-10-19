@@ -3,6 +3,16 @@ import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import firebase from 'firebase';
 import { Provider, initialState } from './src/ContextStore';
 import Routes from './src/Routes';
+import { YellowBox } from 'react-native';
+import _ from 'lodash';
+
+YellowBox.ignoreWarnings(['Setting a timer']);
+const _console = _.clone(console);
+console.warn = message => {
+  if (message.indexOf('Setting a timer') <= -1) {
+    _console.warn(message);
+  }
+};
 
 const { database } = firebase;
 
@@ -25,14 +35,14 @@ export default class App extends React.Component {
     }));
   };
 
-  setEmergency = (newMode) => {
-    this.setState((oldState) => ({
-      mode: {
-        ...oldState.mode,
-        emergency,
-      },
-    }));
-  };
+  // setEmergency = (newMode) => {
+  //   this.setState((oldState) => ({
+  //     mode: {
+  //       ...oldState.mode,
+  //       emergency,
+  //     },
+  //   }));
+  // };
 
   componentDidMount() {
     database().ref('/site').child('isEmergency').on('value', (snapshot) => {
@@ -43,11 +53,7 @@ export default class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.emergencyListener !== prevState.emergencyListener) {
-      const newMode = this.state.emergencyListener;
-      console.log(newMode);
-      this.setEmergency(newMode);
-    }
+
   }
 
   render() {
