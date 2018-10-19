@@ -17,14 +17,14 @@ const styles = StyleSheet.create({
   },
   logo: {
 
-  }
+  },
 });
 
 export default ({ router }) => (
   <View style={styles.logoContainer}>
     <Screen backgroundColor="#fbfbfb" title="">
       <View style={styles.logo}>
-        <Image source={require('../../assets/images/safensound2.png')} resizeMode='contain' />
+        <Image source={require('../../assets/images/safensound2.png')} resizeMode="contain" />
       </View>
       <Button
         onPress={() => {

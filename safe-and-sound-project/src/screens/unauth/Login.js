@@ -16,6 +16,10 @@ export default class Login extends React.Component {
     };
   }
 
+  handleSignIn(email, password) {
+    return login(email, password);
+  }
+
   render() {
     return (
       <Consumer>
@@ -48,14 +52,14 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                this._handleSignIn(this.state.email, this.state.password)
-                  .then(data => {
+                this.handleSignIn(this.state.email, this.state.password)
+                  .then((data) => {
                     if (data) {
-                      setAuth(true)
+                      setAuth(true);
                     } else {
-                      console.log('incorrect login details')
+                      console.log('incorrect login details');
                     }
-                  })
+                  });
               }}
               text="Sign in"
             />
@@ -69,8 +73,5 @@ export default class Login extends React.Component {
         )}
       </Consumer>
     );
-  }
-  _handleSignIn(email, password) {
-    return login(email, password)
   }
 }

@@ -15,7 +15,8 @@ module.exports = {
         "react/destructuring-assignment": "warn",
         "global-require": "warn",
         "max-len": "warn",
-        "import/no-unresolved": "warn"
-
+        "import/no-unresolved": "warn",
+        "class-methods-use-this": "warn",
+        "consistent-return": "warn"
     }
 };
