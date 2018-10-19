@@ -46,22 +46,28 @@ exports.createUser = (firstName, lastName, email, password) => {
     });
 };
 
-getUserById = id => database().ref('/users').orderByKey().equalTo(id)
-  .once('value')
-  .then((data) => {
-    if (data) {
-      return data;
-    }
-    alert(`${data.fname} doesn't exist within database`);
-  })
-  .catch(err => alert(err));
 
-exports.login = (email, password) => firebase.auth().signInWithEmailAndPassword(email, password)
-  .then(({ user }) => {
-    const { uid } = user;
-    return getUserById(uid);
-  })
-  .catch(err => alert(err));
+getUserById = (id) => {
+  return database().ref('/users').orderByKey().equalTo(id)
+    .once('value')
+    .then(data => {
+      if (data) {
+        return data
+      } else {
+        alert(`Submitted information does not exist within database`)
+      }
+    })
+    .catch(err => alert(err));
+};
+
+exports.login = (email, password) => {
+  return firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(({ user }) => {
+      const { uid } = user;
+      return getUserById(uid);
+    })
+    .catch(err => alert(err));
+};
 
 exports.toggleAdminStatus = (uid) => {
   database().ref(`/users/${uid}/isAdmin`).once('value')
