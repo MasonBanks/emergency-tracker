@@ -80,11 +80,12 @@ exports.toggleFirstAiderStatus = (uid) => {
     });
 };
 
-exports.readEmergencyStatus = () => database().ref('/site').child('isEmergency').on('value', (snapshot) => {
-  const mode = snapshot.val();
-  console.log(`current status: ${snapshot.val()}`);
-  return snapshot.val();
-});
+exports.emergencyStatusListener = () => {
+  return database().ref('/site').child('isEmergency').on('value', (snapshot) => {
+    console.log(`current status: ${snapshot.val()}`);
+    console.log(snapshot);
+  });
+}
 
 exports.toggleEmergencyStatus = (mode) => {
   database().ref('/site').child('isEmergency').once('value')
@@ -94,8 +95,8 @@ exports.toggleEmergencyStatus = (mode) => {
       database().ref('/site').child('isEmergency').set(!currentStatus)
         .then(() => {
           database().ref('/site').child('isEmergency').once('value')
-            .then(() => {
-              console.log(`Emergency status set to ${data.val()}`);
+            .then((newData) => {
+              console.log(`Emergency status set to ${newData.val()}`);
             });
         });
     });

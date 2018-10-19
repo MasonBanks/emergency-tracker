@@ -1,11 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import firebase from 'firebase';
-import { config } from './config/firebase-config';
 import { Provider, initialState } from './src/ContextStore';
 import Routes from './src/Routes';
 
-// firebase.initializeApp(config);
+const { database } = firebase;
 
 
 export default class App extends React.Component {
@@ -13,8 +12,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       ...initialState,
-      setAuth: this.setAuth,
-      setMode: this.setMode
+      setAuth: this.setAuth
     };
   }
 
@@ -27,7 +25,7 @@ export default class App extends React.Component {
     }));
   };
 
-  setMode = (emergency) => {
+  setEmergency = (newMode) => {
     this.setState((oldState) => ({
       mode: {
         ...oldState.mode,
@@ -35,6 +33,22 @@ export default class App extends React.Component {
       },
     }));
   };
+
+  componentDidMount() {
+    database().ref('/site').child('isEmergency').on('value', (snapshot) => {
+      this.setState({
+        emergencyListener: snapshot.val()
+      })
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.emergencyListener !== prevState.emergencyListener) {
+      const newMode = this.state.emergencyListener;
+      console.log(newMode);
+      this.setEmergency(newMode);
+    }
+  }
 
   render() {
     return (

@@ -1,5 +1,5 @@
 const api = require('./api');
 
-// api.readEmergencyStatus();
+// api.toggleEmergencyStatus();
 
-api.toggleEmergencyStatus();
+api.emergencyStatusListener();

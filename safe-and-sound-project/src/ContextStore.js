@@ -1,22 +1,19 @@
 import React from 'react';
+import * as api from '../api';
 
 const initialState = {
   auth: {
     authenticated: false,
-  },
-  mode: {
-    emergency: false,
-  },
+  }
 };
 
 const {
-  Provider, Consumer, Idle, Emergency,
+  Provider, Consumer
 } = React.createContext({
   ...initialState,
-  setAuth: () => { },
-  setMode: () => { },
+  setAuth: () => { }
 });
 
 export {
-  initialState, Provider, Consumer, Idle, Emergency,
+  initialState, Provider, Consumer
 };
