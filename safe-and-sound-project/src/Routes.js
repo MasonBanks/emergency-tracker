@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import EasyRouter from 'react-native-easy-router';
 
-import { authContext, modeContext } from './ContextStore';
+import { authContext } from './ContextStore/authContext';
 
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';

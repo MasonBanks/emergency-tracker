@@ -28,11 +28,10 @@ export default class App extends React.Component {
   }
 
   setAuth = (authenticated) => {
-    this.setState((oldState) => ({
+    this.setState(() => ({
       auth: {
-        ...oldState.auth,
-        authenticated,
-      },
+        authenticated
+      }
     }));
   };
 
@@ -47,7 +46,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     database().ref('/site').child('isEmergency').on('value', (snapshot) => {
-      console.log(snapshot, '<<<<<<<<<')
+      console.log(`DB connected: Site status ${snapshot.val() ? 'Emergency' : 'IDLE'}`)
     });
   }
 

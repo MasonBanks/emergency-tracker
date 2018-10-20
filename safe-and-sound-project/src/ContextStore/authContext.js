@@ -6,7 +6,7 @@ const authContext = React.createContext();
 class AuthProvider extends Component {
   state = {
     ...initialState,
-    setAuth: () => { },
+    setAuth: () => { }
   }
 
   render() {
@@ -19,5 +19,5 @@ class AuthProvider extends Component {
 }
 
 export {
-  initialState, authContext, AuthProvider
+  authContext, AuthProvider,
 };

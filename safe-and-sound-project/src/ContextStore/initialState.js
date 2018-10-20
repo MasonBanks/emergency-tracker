@@ -5,6 +5,6 @@ const initialState = {
   mode: {
     emergency: false,
   },
-}
+};
 
-module.exports = { initialState }
+module.exports = { initialState };

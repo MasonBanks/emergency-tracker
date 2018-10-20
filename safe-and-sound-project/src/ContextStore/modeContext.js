@@ -19,5 +19,5 @@ class ModeProvider extends Component {
 }
 
 export {
-  initialState, modeContext, ModeProvider,
+  modeContext, ModeProvider,
 };
