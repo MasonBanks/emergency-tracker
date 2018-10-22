@@ -12,76 +12,78 @@ export default class FireEscapeMap extends React.Component {
     },
     safezone: [
       {
-        latitude: 53.48397908451812,
-        longitude: -2.2426030213088165,
+        longitude: -2.2398000955581665,
+        latitude: 53.486491111816854,
       },
       {
-        latitude: 53.486986686340465,
-        longitude: -2.2453671080128724,
+        longitude: -2.239486277103424,
+        latitude: 53.48684221878136,
       },
       {
-        latitude: 53.48638329743184,
-        longitude: -2.235059018856967,
+        longitude: -2.2398510575294495,
+        latitude: 53.486947550303995,
       },
       {
-        latitude: 53.48353594020686,
-        longitude: -2.2362632420683735,
+        longitude: -2.240191698074341,
+        latitude: 53.486594848267956,
+      },
+      {
+        longitude: -2.2398000955581665,
+        latitude: 53.486491111816854,
       },
     ],
     building: [
       {
-        latitude: 53.47851429362762,
-        longitude: -2.2459109006015616,
+        longitude: -2.2398993372917175,
+        latitude: 53.48647036449619,
       },
       {
-        latitude: 53.48056993658202,
-        longitude: -2.244247168413971,
+        longitude: -2.2402507066726685,
+        latitude: 53.48599955718398,
       },
       {
-        latitude: 53.429706154268154,
-        longitude: -2.241331675818669,
+        longitude: -2.2395211458206177,
+        latitude: 53.48578888916899,
       },
       {
-        latitude: 53.47819367978521,
-        longitude: -2.242646816500184,
+        longitude: -2.239258289337158,
+        latitude: 53.48625810286333,
+      },
+      {
+        longitude: -2.2398993372917175,
+        latitude: 53.48647036449619,
       },
     ],
   };
 
   componentDidMount() {
-    this.getSafeZone();
-    this.getBuilding();
-    this.findEdges();
+    const build = this.getBuilding();
+    const safe = this.getSafeZone();
+    Promise.all([build, safe]).then(([building, safezone]) => {
+      this.setState(
+        {
+          building,
+          safezone,
+        },
+        () => {
+          this.findEdges();
+        },
+      );
+    });
   }
 
-  getSafeZone = () => {
-    api.getSafeZone().then((data) => {
-      const safezone = data.val();
-      this.setState({
-        safezone,
-      });
-    });
-  };
+  getSafeZone = () => api.getSafeZone().then(data => data.val());
 
-  getBuilding = () => {
-    api.getBuilding().then((data) => {
-      const building = data.val();
-      this.setState({
-        building,
-      });
-    });
-  };
+  getBuilding = () => api.getBuilding().then(data => data.val());
 
   findEdges = () => {
     const { safezone, building } = this.state;
     const latitudeArray = safezone
       .concat(building)
       .map(coordinate => coordinate.latitude);
-
     const longitudeArray = safezone
       .concat(building)
       .map(coordinate => coordinate.longitude);
-
     const westEdge = Math.min(...latitudeArray);
     const eastEdge = Math.max(...latitudeArray);
     const northEdge = Math.max(...longitudeArray);
