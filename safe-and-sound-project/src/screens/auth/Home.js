@@ -12,7 +12,7 @@ export default ({ router }) => (
     {({ state }) => (
       <Screen backgroundColor={state.isAdmin.admin ? '#82E0AA' : '#C39BD3'} title="Home">
         {/* <FireEscapeMap /> */}
-        <Button text="hello" />
+        <Button text="Menu" />
       </Screen>
     )}
   </GlobalContext.Consumer>

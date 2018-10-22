@@ -2,12 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import firebase from 'firebase';
 import { GlobalProvider } from './src/ContextStore/globalContext';
-import { initialState } from './src/ContextStore/initialState';
 import Routes from './src/Routes';
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
 
-YellowBox.ignoreWarnings(['Setting a timer']);
+YellowBox.ignoreWarnings(['Setting a timer']); // makes app ignore yellow warnings
 const _console = _.clone(console);
 console.warn = message => {
   if (message.indexOf('Setting a timer') <= -1) {
