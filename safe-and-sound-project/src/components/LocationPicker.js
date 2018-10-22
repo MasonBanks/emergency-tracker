@@ -86,7 +86,7 @@ export default class App extends React.Component {
 
           {currentArea.map(point => (
             <MapView.Marker
-              key={point[0] + point[1]}
+              key={point.latitude + point.longitude}
               title="Safe Zone"
               coordinate={point}
               description="Safe Zone Boundry"
@@ -94,7 +94,7 @@ export default class App extends React.Component {
           ))}
         </MapView>
         <Button
-          onPress={() =>this.handleSubmit('safeZone')}
+          onPress={() => this.handleSubmit('safeZone')}
           text="save Safe Zone"
         />
         <Button
