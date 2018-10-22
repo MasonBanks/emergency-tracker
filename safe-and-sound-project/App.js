@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import firebase from 'firebase';
-import { Provider, initialState } from './src/ContextStore';
+import { AuthProvider } from './src/ContextStore/AuthContext';
+import { ModeProvider } from './src/ContextStore/ModeContext';
+import { initialState } from './src/ContextStore/initialState';
 import Routes from './src/Routes';
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
@@ -16,51 +18,30 @@ console.warn = message => {
 
 const { database } = firebase;
 
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      ...initialState,
-      setAuth: this.setAuth
-    };
+    state = {
+      localEmergencyStatus: null
+    }
   }
-
-  setAuth = (authenticated) => {
-    this.setState((oldState) => ({
-      auth: {
-        ...oldState.auth,
-        authenticated,
-      },
-    }));
-  };
-
-  // setEmergency = (newMode) => {
-  //   this.setState((oldState) => ({
-  //     mode: {
-  //       ...oldState.mode,
-  //       emergency,
-  //     },
-  //   }));
-  // };
 
   componentDidMount() {
-    database().ref('/site').child('isEmergency').on('value', (snapshot) => {
+    database().ref('/site').child('isEmergency').once('value', (snapshot) => {
+      console.log(`DB connected: Site status ${snapshot.val() ? 'Emergency' : 'IDLE'}`)
       this.setState({
-        emergencyListener: snapshot.val()
+        localEmergencyStatus: snapshot.val()
       })
     });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-
-  }
+  };
 
   render() {
     return (
-      <Provider value={this.state}>
-        <Routes />
-      </Provider>
-    );
+      <AuthProvider>
+        <ModeProvider>
+          <Routes />
+        </ModeProvider>
+      </AuthProvider>
+    )
   }
 }
