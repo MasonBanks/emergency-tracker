@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import { authContext } from '../../ContextStore/authContext';
+import { AuthContext } from '../../ContextStore/AuthContext';
 
 import { login } from '../../../api';
 
@@ -22,8 +22,8 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <authContext.Consumer>
-        {({ state }) => (
+      <AuthContext.Consumer>
+        {({ setAuth }) => (
           <Screen backgroundColor="#155e63" title="Login">
             <TextInput
               style={{
@@ -55,10 +55,7 @@ export default class Login extends React.Component {
                 this.handleSignIn(this.state.email, this.state.password)
                   .then((data) => {
                     if (data) {
-                      const { setAuth } = state;
-                      console.log(state)
-                      setAuth(true);
-                      console.log(`Authenticated: ${state.auth.authenticated}`);
+                      setAuth(true)
                     } else {
                       console.log('incorrect login details');
                     }
@@ -74,7 +71,7 @@ export default class Login extends React.Component {
             />
           </Screen>
         )}
-      </authContext.Consumer>
+      </AuthContext.Consumer>
     );
   }
 }

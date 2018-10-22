@@ -2,7 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import EasyRouter from 'react-native-easy-router';
 
-import { authContext } from './ContextStore/authContext';
+import { AuthContext } from './ContextStore/AuthContext';
+import { ModeContext } from './ContextStore/ModeContext';
 
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
@@ -73,10 +74,10 @@ class Routes extends React.Component {
 
   render() {
     return (
-      <authContext.Consumer>
-        {({ setAuth, authenticated }) => (
+      <AuthContext.Consumer>
+        {({ setAuth, state }) => (
           <View style={{ backgroundColor: 'black', flex: 1 }}>
-            {!authenticated && (
+            {!state.auth.authenticated && (
               <EasyRouter
                 routes={{
                   Intro,
@@ -93,7 +94,7 @@ class Routes extends React.Component {
               />
             )}
 
-            {authenticated && (
+            {state.auth.authenticated && (
               <Drawer
                 renderNavigationView={() => (
                   <Sidenav
@@ -130,7 +131,7 @@ class Routes extends React.Component {
             )}
           </View>
         )}
-      </authContext.Consumer>
+      </AuthContext.Consumer>
     );
   }
 }
