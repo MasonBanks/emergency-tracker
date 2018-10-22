@@ -1,7 +1,7 @@
 const usersRouter = require('express').Router();
 const { assignPushToken } = require('../controllers/users')
 
-usersRouter.route('/:push_token')
+usersRouter.route('push/:token')
   .post(assignPushToken)
 
 module.exports = {
