@@ -20,7 +20,6 @@ class AuthProvider extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <AuthContext.Provider value={{ state: this.state, setAuth: this.setAuth }}>
         {this.props.children}
