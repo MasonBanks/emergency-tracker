@@ -7,20 +7,20 @@ class AuthProvider extends Component {
   state = {
     ...initialState,
     auth: {
-      authenticated: false
-    }
+      authenticated: false,
+    },
   }
 
   setAuth = (authenticated) => {
     this.setState(() => ({
       auth: {
-        authenticated
-      }
+        authenticated,
+      },
     }));
   };
 
   render() {
-    console.log(this.state)
+    console.log(this.state);
     return (
       <AuthContext.Provider value={{ state: this.state, setAuth: this.setAuth }}>
         {this.props.children}

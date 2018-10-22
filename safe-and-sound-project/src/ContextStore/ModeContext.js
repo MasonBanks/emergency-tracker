@@ -7,15 +7,15 @@ class ModeProvider extends Component {
   state = {
     ...initialState,
     mode: {
-      emergency: false
+      emergency: false,
     },
   }
 
   setMode = (emergency) => {
     this.setState(() => ({
       mode: {
-        emergency
-      }
+        emergency,
+      },
     }));
   };
 

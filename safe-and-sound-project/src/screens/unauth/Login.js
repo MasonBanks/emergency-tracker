@@ -55,7 +55,7 @@ export default class Login extends React.Component {
                 this.handleSignIn(this.state.email, this.state.password)
                   .then((data) => {
                     if (data) {
-                      setAuth(true)
+                      setAuth(true);
                     } else {
                       console.log('incorrect login details');
                     }

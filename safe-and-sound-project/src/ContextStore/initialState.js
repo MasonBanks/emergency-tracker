@@ -4,5 +4,5 @@ exports.initialState = {
   },
   mode: {
     emergency: false,
-  }
+  },
 };
