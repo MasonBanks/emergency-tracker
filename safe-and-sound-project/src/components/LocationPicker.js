@@ -1,12 +1,15 @@
 import React from 'react';
 import MapView from 'react-native-maps';
+import Screen from './Screen';
+import Button from './Button';
+import * as api from '../../api';
 
 export default class App extends React.Component {
   state = {
     currentArea: [],
     region: {
-      latitude: 43.4807593,
-      longitude: -1.2426305,
+      latitude: 53.4807593,
+      longitude: -2.2426305,
       latitudeDelta: 0.0122,
       longitudeDelta: 0.0021,
     },
@@ -35,10 +38,11 @@ export default class App extends React.Component {
     );
   }
 
-  handleSubmit = () => {
-    // here we need to add a function to add the current state
-    // area to the site as either a safe zone or as a building
-    console.log('saved!');
+  handleSubmit = (zone) => {
+    api.saveSafeZone(this.state.currentArea, zone);
+    this.setState({
+      currentArea: [],
+    });
   };
 
   handleMoveMap = (region) => {
@@ -60,34 +64,50 @@ export default class App extends React.Component {
     const { region, currentArea } = this.state;
 
     return (
-      <MapView
-        style={{ flex: 1 }}
-        initialRegion={{
-          latitude: 53.4807593,
-          longitude: -2.2426305,
-          latitudeDelta: 0.0122,
-          longitudeDelta: 0.0021,
-        }}
-        region={region}
-        onPress={e => this.handlePush(e.nativeEvent)}
-        onRegionChangeComplete={e => this.handleMoveMap(e)}
-      >
-        <MapView.Polygon
-          title="Safe Zone"
-          coordinates={currentArea}
-          description="Safe Zone Boundry"
-          fillColor="rgba(255,0,0,0.1)"
-        />
-
-        {currentArea.map(point => (
-          <MapView.Marker
-            key={point}
+      <Screen backgroundColor="#5f1854" title="Zone Picker">
+        <MapView
+          style={{ flex: 1, height: 200, width: 400 }}
+          initialRegion={{
+            latitude: 53.4807593,
+            longitude: -2.2426305,
+            latitudeDelta: 0.0122,
+            longitudeDelta: 0.0021,
+          }}
+          region={region}
+          onPress={e => this.handlePush(e.nativeEvent)}
+          onRegionChangeComplete={e => this.handleMoveMap(e)}
+        >
+          <MapView.Polygon
             title="Safe Zone"
-            coordinate={point}
+            coordinates={currentArea}
             description="Safe Zone Boundry"
+            fillColor="rgba(255,0,0,0.1)"
           />
-        ))}
-      </MapView>
+
+          {currentArea.map(point => (
+            <MapView.Marker
+              key={point[0] + point[1]}
+              title="Safe Zone"
+              coordinate={point}
+              description="Safe Zone Boundry"
+            />
+          ))}
+        </MapView>
+        <Button
+          onPress={() =>this.handleSubmit('safeZone')}
+          text="save Safe Zone"
+        />
+        <Button
+          onPress={() => this.handleSubmit('building')}
+          text="save building"
+        />
+        <Button
+          onPress={() => {
+            router.pop();
+          }}
+          text="back"
+        />
+      </Screen>
     );
   }
 }

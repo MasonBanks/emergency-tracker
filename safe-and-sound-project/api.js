@@ -104,3 +104,8 @@ exports.getSafeZone = () => database().ref('/site/safeZone').once('value')
 
 exports.getBuilding = () => database().ref('/site/building').once('value')
   .then(data => data);
+
+exports.saveSafeZone = (Zone, zoneName) => database()
+  .ref('/site').update({
+    [zoneName]: Zone,
+  });

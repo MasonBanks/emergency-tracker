@@ -106,7 +106,7 @@ export default class FireEscapeMap extends React.Component {
 
     return (
       <MapView
-        style={{ flex: 1, height: 200, width: 200 }}
+        style={{ flex: 1, height: 200, width: 400 }}
         initialRegion={{
           latitude: 53.4807593,
           longitude: -2.2426305,

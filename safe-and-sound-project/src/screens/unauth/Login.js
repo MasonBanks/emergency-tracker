@@ -52,14 +52,14 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                this.handleSignIn(this.state.email, this.state.password)
-                  .then((data) => {
-                    if (data) {
+                // this.handleSignIn(this.state.email, this.state.password)
+                //   .then((data) => {
+                //     if (data) {
                       setAuth(true);
-                    } else {
-                      console.log('incorrect login details');
-                    }
-                  });
+                  //   } else {
+                  //     console.log('incorrect login details');
+                  //   }
+                  // });
               }}
               text="Sign in"
             />
