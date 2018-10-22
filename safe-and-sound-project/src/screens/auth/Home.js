@@ -9,11 +9,5 @@ const animation = { type: 'top', duration: 1000 };
 export default ({ router }) => (
   <Screen backgroundColor="#1b3764" title="Home">
     <FireEscapeMap />
-    <Button
-      onPress={() => {
-        router.push.Profile({}, animation);
-      }}
-      text={`push.Profile({}, ${JSON.stringify(animation)})`}
-    />
   </Screen>
 );
