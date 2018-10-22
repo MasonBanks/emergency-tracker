@@ -54,12 +54,12 @@ export default class Login extends React.Component {
               onPress={() => {
                 this.handleSignIn(this.state.email, this.state.password)
                   .then((data) => {
-                    const object = data.val();
-                    const user = object[Object.keys(data.val())[0]];
-                    const { isAdmin } = user;
-                    setAdmin(isAdmin); // updates isAdmin in GlobalContext
                     if (data) {
-                      setAuth(true);
+                      const object = data.val();
+                      const user = object[Object.keys(data.val())[0]];
+                      const { uid, isAdmin } = user;
+                      setAdmin(isAdmin); // updates isAdmin in GlobalContext
+                      setAuth(uid);
                     } else {
                       console.log('incorrect login details');
                     }
