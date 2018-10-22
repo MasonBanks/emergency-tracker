@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "expo-server-sdk": "^3.0.1",
     "express": "^4.16.4",
     "firebase": "^5.5.5",
     "firebase-admin": "^6.0.0"
