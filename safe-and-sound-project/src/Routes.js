@@ -2,8 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import EasyRouter from 'react-native-easy-router';
 
-import { AuthContext } from './ContextStore/AuthContext';
-import { ModeContext } from './ContextStore/ModeContext';
+import { GlobalContext } from './ContextStore/globalContext';
 
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
@@ -74,69 +73,65 @@ class Routes extends React.Component {
 
   render() {
     return (
-      <AuthContext.Consumer>
-        {({ setAuth, state }) => (
-          <ModeContext.Consumer>
-            {({ setMode }) => (
-              <View style={{ backgroundColor: 'black', flex: 1 }}>
-                {!state.auth.authenticated && (
+      <GlobalContext.Consumer>
+        {({ setAuth, setMode, setAdmin, state }) => (
+          <View style={{ backgroundColor: 'black', flex: 1 }}>
+            {!state.auth.authenticated && (
+              <EasyRouter
+                routes={{
+                  Intro,
+                  Login,
+                }}
+                initialRoute="Intro"
+                animations={animations}
+                onStackChange={this.onStackChange}
+                onBeforeStackChange={this.onBeforeStackChange}
+                router={(router) => {
+                  this.setRouter(router);
+                }}
+
+              />
+            )}
+
+            {state.auth.authenticated && (
+              <Drawer
+                renderNavigationView={() => (
+                  <Sidenav
+                    setAuth={setAuth}
+                    setMode={setMode}
+                    router={this.state.router}
+                    closeDrawer={this.closeDrawer}
+                  />
+                )}
+                ref={this.drawer}
+              >
+                <Tabs
+                  router={this.state.router}
+                  openDrawer={this.openDrawer}
+                  from={this.state.from}
+                  to={this.state.to}
+                  transition={this.state.animation}
+                >
                   <EasyRouter
                     routes={{
-                      Intro,
-                      Login,
+                      Home,
+                      Profile,
+                      Settings,
                     }}
-                    initialRoute="Intro"
+                    initialRoute="Home"
                     animations={animations}
                     onStackChange={this.onStackChange}
                     onBeforeStackChange={this.onBeforeStackChange}
                     router={(router) => {
                       this.setRouter(router);
                     }}
-
                   />
-                )}
-
-                {state.auth.authenticated && (
-                  <Drawer
-                    renderNavigationView={() => (
-                      <Sidenav
-                        setAuth={setAuth}
-                        setMode={setMode}
-                        router={this.state.router}
-                        closeDrawer={this.closeDrawer}
-                      />
-                    )}
-                    ref={this.drawer}
-                  >
-                    <Tabs
-                      router={this.state.router}
-                      openDrawer={this.openDrawer}
-                      from={this.state.from}
-                      to={this.state.to}
-                      transition={this.state.animation}
-                    >
-                      <EasyRouter
-                        routes={{
-                          Home,
-                          Profile,
-                          Settings,
-                        }}
-                        initialRoute="Home"
-                        animations={animations}
-                        onStackChange={this.onStackChange}
-                        onBeforeStackChange={this.onBeforeStackChange}
-                        router={(router) => {
-                          this.setRouter(router);
-                        }}
-                      />
-                    </Tabs>
-                  </Drawer>
-                )}
-              </View>
+                </Tabs>
+              </Drawer>
             )}
-          </ModeContext.Consumer>
+          </View>
         )}
-      </AuthContext.Consumer>
+      </GlobalContext.Consumer>
     );
   }
 }

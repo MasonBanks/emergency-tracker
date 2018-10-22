@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import firebase from 'firebase';
-import { AuthProvider } from './src/ContextStore/AuthContext';
-import { ModeProvider, ModeContext } from './src/ContextStore/ModeContext';
+import { GlobalProvider } from './src/ContextStore/globalContext';
 import { initialState } from './src/ContextStore/initialState';
 import Routes from './src/Routes';
 import { YellowBox } from 'react-native';
@@ -45,11 +44,9 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <AuthProvider>
-        <ModeProvider>
-          <Routes />
-        </ModeProvider>
-      </AuthProvider>
+      <GlobalProvider>
+        <Routes />
+      </GlobalProvider>
     )
   }
 }

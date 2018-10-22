@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import { AuthContext } from '../../ContextStore/AuthContext';
+import { GlobalContext } from '../../ContextStore/globalContext';
 
 import { login } from '../../../api';
 
@@ -22,8 +22,8 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <AuthContext.Consumer>
-        {({ setAuth }) => (
+      <GlobalContext.Consumer>
+        {({ setAuth, setAdmin, state }) => (
           <Screen backgroundColor="#155e63" title="Login">
             <TextInput
               style={{
@@ -52,14 +52,18 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                // this.handleSignIn(this.state.email, this.state.password)
-                //   .then((data) => {
-                //     if (data) {
+                this.handleSignIn(this.state.email, this.state.password)
+                  .then((data) => {
+                    const object = data.val();
+                    const user = object[Object.keys(data.val())[0]];
+                    const { isAdmin } = user;
+                    setAdmin(isAdmin) // updates isAdmin in GlobalContext
+                    if (data) {
                       setAuth(true);
-                  //   } else {
-                  //     console.log('incorrect login details');
-                  //   }
-                  // });
+                    } else {
+                      console.log('incorrect login details');
+                    }
+                  });
               }}
               text="Sign in"
             />
@@ -71,7 +75,7 @@ export default class Login extends React.Component {
             />
           </Screen>
         )}
-      </AuthContext.Consumer>
+      </GlobalContext.Consumer>
     );
   }
 }

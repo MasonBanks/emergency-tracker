@@ -5,7 +5,9 @@ import Button from './Button';
 
 const animation = { type: 'right', duration: 1100 };
 
-export default ({ router, setAuth, setMode, closeDrawer }) => (
+export default ({
+  router, setAuth, setMode, closeDrawer,
+}) => (
   <Screen backgroundColor="#5c3c10" title="Sidenav">
     <Button
       onPress={() => {
@@ -19,11 +21,10 @@ export default ({ router, setAuth, setMode, closeDrawer }) => (
 
     <Button
       onPress={() => {
-        setMode(true)
+        setMode(true);
       }}
       text="set context to emergency mode"
     />
-
 
 
     <Button
