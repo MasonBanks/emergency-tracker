@@ -1,10 +1,10 @@
 import { Permissions, Notifications } from 'expo';
 
-const PUSH_ENDPOINT = 'https://your-server.com/users/push-token';
+const PUSH_ENDPOINT = `https://localhost:9090/api/users/push/${token}`;
 
 async function registerForPushNotificationsAsync() {
   const { status: existingStatus } = await Permissions.getAsync(
-    Permissions.NOTIFICATIONS
+    Permissions.NOTIFICATIONS,
   );
   let finalStatus = existingStatus;
 
@@ -17,7 +17,7 @@ async function registerForPushNotificationsAsync() {
     return;
   }
 
-  let token = await Notifications.getExpoPushTokenAsync();
+  const token = await Notifications.getExpoPushTokenAsync();
 
   return fetch(PUSH_ENDPOINT, {
     method: 'POST',
