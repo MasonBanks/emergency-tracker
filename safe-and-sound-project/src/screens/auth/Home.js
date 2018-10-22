@@ -10,7 +10,7 @@ const animation = { type: 'top', duration: 1000 };
 export default ({ router }) => (
   <GlobalContext.Consumer>
     {({ state }) => (
-      <Screen backgroundColor={state.isAdmin.admin ? "#F4D03F" : "#D7BDE2"} title="Home">
+      <Screen backgroundColor={state.isAdmin.admin ? '#82E0AA' : '#C39BD3'} title="Home">
         {/* <FireEscapeMap /> */}
         <Button text="hello" />
       </Screen>

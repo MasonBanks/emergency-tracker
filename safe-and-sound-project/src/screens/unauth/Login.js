@@ -57,7 +57,7 @@ export default class Login extends React.Component {
                     const object = data.val();
                     const user = object[Object.keys(data.val())[0]];
                     const { isAdmin } = user;
-                    setAdmin(isAdmin) // updates isAdmin in GlobalContext
+                    setAdmin(isAdmin); // updates isAdmin in GlobalContext
                     if (data) {
                       setAuth(true);
                     } else {

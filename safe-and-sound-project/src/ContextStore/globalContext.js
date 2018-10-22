@@ -13,8 +13,8 @@ class GlobalProvider extends Component {
       emergency: false,
     },
     isAdmin: {
-      admin: false
-    }
+      admin: false,
+    },
   }
 
   setAuth = (authenticated) => {
@@ -43,7 +43,10 @@ class GlobalProvider extends Component {
 
   render() {
     return (
-      <GlobalContext.Provider value={{ state: this.state, setAuth: this.setAuth, setMode: this.setMode, setAdmin: this.setAdmin }}>
+      <GlobalContext.Provider value={{
+        state: this.state, setAuth: this.setAuth, setMode: this.setMode, setAdmin: this.setAdmin,
+      }}
+      >
         {this.props.children}
       </GlobalContext.Provider>
     );

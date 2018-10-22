@@ -74,60 +74,61 @@ class Routes extends React.Component {
   render() {
     return (
       <GlobalContext.Consumer>
-        {({ setAuth, setMode, setAdmin, state }) => (
+        {({
+          setAuth, setMode, setAdmin, state,
+        }) => (
           <View style={{ backgroundColor: 'black', flex: 1 }}>
             {!state.auth.authenticated && (
-              <EasyRouter
-                routes={{
-                  Intro,
-                  Login,
-                }}
-                initialRoute="Intro"
-                animations={animations}
-                onStackChange={this.onStackChange}
-                onBeforeStackChange={this.onBeforeStackChange}
-                router={(router) => {
-                  this.setRouter(router);
-                }}
-
-              />
+            <EasyRouter
+              routes={{
+                Intro,
+                Login,
+              }}
+              initialRoute="Intro"
+              animations={animations}
+              onStackChange={this.onStackChange}
+              onBeforeStackChange={this.onBeforeStackChange}
+              router={(router) => {
+                this.setRouter(router);
+              }}
+            />
             )}
 
             {state.auth.authenticated && (
-              <Drawer
-                renderNavigationView={() => (
-                  <Sidenav
-                    setAuth={setAuth}
-                    setMode={setMode}
-                    router={this.state.router}
-                    closeDrawer={this.closeDrawer}
-                  />
-                )}
-                ref={this.drawer}
-              >
-                <Tabs
+            <Drawer
+              renderNavigationView={() => (
+                <Sidenav
+                  setAuth={setAuth}
+                  setMode={setMode}
                   router={this.state.router}
-                  openDrawer={this.openDrawer}
-                  from={this.state.from}
-                  to={this.state.to}
-                  transition={this.state.animation}
-                >
-                  <EasyRouter
-                    routes={{
-                      Home,
-                      Profile,
-                      Settings,
-                    }}
-                    initialRoute="Home"
-                    animations={animations}
-                    onStackChange={this.onStackChange}
-                    onBeforeStackChange={this.onBeforeStackChange}
-                    router={(router) => {
-                      this.setRouter(router);
-                    }}
-                  />
-                </Tabs>
-              </Drawer>
+                  closeDrawer={this.closeDrawer}
+                />
+              )}
+              ref={this.drawer}
+            >
+              <Tabs
+                router={this.state.router}
+                openDrawer={this.openDrawer}
+                from={this.state.from}
+                to={this.state.to}
+                transition={this.state.animation}
+              >
+                <EasyRouter
+                  routes={{
+                    Home,
+                    Profile,
+                    Settings,
+                  }}
+                  initialRoute="Home"
+                  animations={animations}
+                  onStackChange={this.onStackChange}
+                  onBeforeStackChange={this.onBeforeStackChange}
+                  router={(router) => {
+                    this.setRouter(router);
+                  }}
+                />
+              </Tabs>
+            </Drawer>
             )}
           </View>
         )}
