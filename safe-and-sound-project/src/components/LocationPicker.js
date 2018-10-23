@@ -13,8 +13,8 @@ export default class App extends React.Component {
       latitude: 53.4807593,
       longitude: -2.2426305,
       latitudeDelta: 0.0122,
-      longitudeDelta: 0.0021
-    }
+      longitudeDelta: 0.0021,
+    },
   };
 
   componentDidMount() {
@@ -29,21 +29,21 @@ export default class App extends React.Component {
     const options = {
       enableHighAccuracy: false,
       timeout: 5000,
-      maximumAge: 0
+      maximumAge: 0,
     };
     const { region } = this.state;
     navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         this.setState({
           region: {
             ...region,
             latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          }
+            longitude: position.coords.longitude,
+          },
         });
       },
       error => alert(error.message),
-      options
+      options,
     );
   };
 
@@ -56,45 +56,45 @@ export default class App extends React.Component {
         region: {
           ...region,
           longitude: -2.2398000955581665,
-          latitude: 53.486491111816854
-        }
+          latitude: 53.486491111816854,
+        },
       });
     } else {
       await Location.getCurrentPositionAsync()
-        .then(position => {
+        .then((position) => {
           this.setState({
             region: {
               ...region,
               latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            }
+              longitude: position.coords.longitude,
+            },
           });
         })
-        .catch(err => {
+        .catch((err) => {
           alert(err.message);
         });
     }
   };
 
-  handleSubmit = zone => {
+  handleSubmit = (zone) => {
     api.saveSafeZone(this.state.currentArea, zone);
     this.setState({
-      currentArea: []
+      currentArea: [],
     });
   };
 
-  handleMoveMap = region => {
+  handleMoveMap = (region) => {
     this.setState({
-      region
+      region,
     });
   };
 
-  handlePush = e => {
+  handlePush = (e) => {
     const newPoint = e.coordinate;
     const { currentArea } = this.state;
     const newPoints = [...currentArea, newPoint];
     this.setState({
-      currentArea: newPoints
+      currentArea: newPoints,
     });
   };
 
@@ -109,7 +109,7 @@ export default class App extends React.Component {
             latitude: 53.4807593,
             longitude: -2.2426305,
             latitudeDelta: 0.0122,
-            longitudeDelta: 0.0021
+            longitudeDelta: 0.0021,
           }}
           region={region}
           onPress={e => this.handlePush(e.nativeEvent)}

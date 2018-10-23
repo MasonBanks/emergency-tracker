@@ -1,7 +1,7 @@
-const { updateUserDetails, getAllUsers } = require('../api');
+// const { updateUserDetails, getAllUsers } = require('../api');
 
-// console.log(getAllUsers());
+// // console.log(getAllUsers());
 
-getAllUsers();
+// getAllUsers();
 
-updateUserDetails('lyRP73zikkRJS0SQGMJblxNoyMM2', { isFirstAider: true });
+// updateUserDetails('lyRP73zikkRJS0SQGMJblxNoyMM2', { isFirstAider: true });
