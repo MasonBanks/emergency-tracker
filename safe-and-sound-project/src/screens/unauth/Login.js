@@ -6,6 +6,7 @@ import { login } from '../../../api';
 
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
+import styles from '../../components/styles';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -71,7 +72,7 @@ export default class Login extends React.Component {
               onPress={() => {
                 this.props.router.pop();
               }}
-              text="back"
+              text="back" style={styles.backButton}
             />
           </Screen>
         )}

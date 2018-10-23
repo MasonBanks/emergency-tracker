@@ -11,12 +11,10 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./splash/safensound2.png",
+    "icon": "./splash/safensound-no_outline.png",
     "splash": {
       "image": "./splash/splash.png",
-      "resizeMode": "contain",
-      "width": "100%",
-      "backgroundColor": "#500768"
+      "resizeMode": "contain"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

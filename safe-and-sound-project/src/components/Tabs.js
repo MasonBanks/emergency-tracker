@@ -182,14 +182,6 @@ export default class Tabs extends React.Component {
           <View>
             <Animated.View style={[styles.underline, { transform: [{ translateX }, { scaleX }] }]} />
           </View>
-          <View style={styles.textWrap}>
-            {/* <Text style={styles.componentText}>&lt;Tabs /&gt;</Text>
-            <Text style={styles.tipText}>
-              push[screen](
-              {JSON.stringify(screenAnimation)}
-              )
-            </Text> */}
-          </View>
         </View>
       </View>
     );
