@@ -109,3 +109,18 @@ exports.saveSafeZone = (Zone, zoneName) => database()
   .ref('/site').update({
     [zoneName]: Zone,
   });
+
+exports.userInBuilding = (uid) => {
+  console.log(`${uid} entering`);
+  database().ref(`/inBuildingUsers/${uid}`).set('inBuilding');
+};
+
+exports.userExitBuilding = (uid) => {
+  console.log(`${uid} exit`);
+  database().ref(`/inBuildingUsers/${uid}`).set(null);
+};
+
+// exports.userInBuilding = (uid) => {
+//   console.log(uid);
+//   database().ref(`/inBuildingUsers/${uid}`).set(null);
+// };
