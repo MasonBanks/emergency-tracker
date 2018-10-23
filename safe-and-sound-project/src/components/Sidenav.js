@@ -18,15 +18,6 @@ export default ({
       }}
       text={`push.Profile({}, ${JSON.stringify(animation)})`}
     />
-
-    <Button
-      onPress={() => {
-        setMode(true);
-      }}
-      text="set context to emergency mode"
-    />
-
-
     <Button
       onPress={() => {
         closeDrawer();
