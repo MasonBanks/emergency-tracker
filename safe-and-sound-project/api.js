@@ -90,7 +90,7 @@ exports.toggleEmergencyStatus = (mode) => {
     .then((data) => {
       console.log(`current emergency status: ${data.val()}`);
       const currentStatus = data.val();
-      database().ref('/site').child('isEmergency').set(!currentStatus)
+      database().ref('/site').child('isEmergency').update(!currentStatus)
         .then(() => {
           database().ref('/site').child('isEmergency').once('value')
             .then((newData) => {
