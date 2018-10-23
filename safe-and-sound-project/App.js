@@ -26,8 +26,8 @@ export default class App extends React.Component {
       inSafeZone: false,
       inBuilding: false,
       latitude: 53.483959,
-      longitude:-2.244644,
-      user:'fffffffff',
+      longitude: -2.244644,
+      user: 'fffffffff',
     }
   }
 
@@ -44,45 +44,43 @@ export default class App extends React.Component {
         inBuilding: false,
         // latitude: 53.483959,
         // longitude:-2.244644,
-        user:'fffffffff',
+        user: 'fffffffff',
       })
     });
 
     const build = this.getBuilding();
     const safe = this.getSafeZone();
     Promise.all([build, safe])
-    .then(([building, safezone]) => {
-      let mappedBuilding = building.map(coordinate=>{
-        return [coordinate.longitude, coordinate.latitude];
+      .then(([building, safezone]) => {
+        let mappedBuilding = building.map(coordinate => {
+          return [coordinate.longitude, coordinate.latitude];
+        });
+
+        let mappedSafeZone = safezone.map(coordinate => {
+          return [coordinate.longitude, coordinate.latitude];
+        });
+
+
+        console.log(this.state);
+
+        console.log(inside([this.state.longitude, this.state.latitude], mappedBuilding));
+
+        this.interval = setInterval(() => { this.checkLocation(mappedBuilding) }, 10000);
+
       });
-
-      let mappedSafeZone = safezone.map(coordinate=>{
-        return [coordinate.longitude, coordinate.latitude];
-      });
-
-
-      console.log(this.state);
-   
-      console.log(inside([this.state.longitude, this.state.latitude ], mappedBuilding));
-
-      this.interval = setInterval(()=>{this.checkLocation(mappedBuilding)}, 10000);
-
-    });
 
   };
 
-<<<<<<< HEAD
-=======
-  checkLocation=(mappedBuilding) => {
-    
+  checkLocation = (mappedBuilding) => {
+
     const options = {
       enableHighAccuracy: false,
       timeout: 5000,
       maximumAge: 0,
     };
-  
+
     const { latitude, longitude } = this.state;
-  
+
     navigator.geolocation.watchPosition(
       (position) => {
         this.setState({
@@ -90,10 +88,10 @@ export default class App extends React.Component {
           longitude: position.coords.longitude,
         }, () => {
           console.log(inside([latitude, longitude], mappedBuilding));
-console.log(longitude)
-          if(inside([longitude, latitude], mappedBuilding)){
+          console.log(longitude)
+          if (inside([longitude, latitude], mappedBuilding)) {
             api.userInBuilding(this.state.user)
-          }else{
+          } else {
             api.userExitBuilding(this.state.user)
           }
 
@@ -112,15 +110,6 @@ console.log(longitude)
 
   getBuilding = () => api.getBuilding().then(data => data.val());
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   switch (newStatus) {
-  //     case prevState === null: this.state.dbEmergencyStatus;
-  //     case prevState === false: this.state.dbEmergencyStatus;
-  //     case prevState === true: this.state.dbEmergencyStatus;
-  //   }
-  // }
-
->>>>>>> bcd10674202822354d75a0252e46ab26eee6a5e1
   render() {
     return (
       <GlobalProvider appState={this.state}>
