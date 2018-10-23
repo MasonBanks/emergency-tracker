@@ -5,7 +5,7 @@ import {
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
 
-const animation = { type: 'fade', duration: 1200 };
+const animation = { type: 'top', duration: 500 };
 
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -15,15 +15,17 @@ const styles = StyleSheet.create({
     width,
     alignItems: 'center',
   },
-  // logo: {
-  //   resizeMode: 'contain'
-  // }
+  logo: {
+
+  },
 });
 
 export default ({ router }) => (
   <View style={styles.logoContainer}>
     <Screen backgroundColor="#fbfbfb" title="">
-      <Image source={require('../../assets/images/safensound2.png')} />
+      <View style={styles.logo}>
+        <Image source={require('../../assets/images/safensound2.png')} resizeMode="contain" />
+      </View>
       <Button
         onPress={() => {
           router.push.Login({}, animation);

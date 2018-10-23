@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import EasyRouter from 'react-native-easy-router';
 
-import { Consumer } from './ContextStore';
+import { GlobalContext } from './ContextStore/globalContext';
 
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
@@ -73,64 +73,66 @@ class Routes extends React.Component {
 
   render() {
     return (
-      <Consumer>
-        {({ setAuth, auth: { authenticated } }) => (
+      <GlobalContext.Consumer>
+        {({
+          setAuth, setMode, setAdmin, state,
+        }) => (
           <View style={{ backgroundColor: 'black', flex: 1 }}>
-            {!authenticated && (
-              <EasyRouter
-                routes={{
-                  Intro,
-                  Login,
-                }}
-                initialRoute="Intro"
-                animations={animations}
-                onStackChange={this.onStackChange}
-                onBeforeStackChange={this.onBeforeStackChange}
-                router={(router) => {
-                  this.setRouter(router);
-                }}
-
-              />
+            {!state.auth.authenticated && (
+            <EasyRouter
+              routes={{
+                Intro,
+                Login,
+              }}
+              initialRoute="Intro"
+              animations={animations}
+              onStackChange={this.onStackChange}
+              onBeforeStackChange={this.onBeforeStackChange}
+              router={(router) => {
+                this.setRouter(router);
+              }}
+            />
             )}
 
-            {authenticated && (
-              <Drawer
-                renderNavigationView={() => (
-                  <Sidenav
-                    setAuth={setAuth}
-                    router={this.state.router}
-                    closeDrawer={this.closeDrawer}
-                  />
-                )}
-                ref={this.drawer}
-              >
-                <Tabs
+            {state.auth.authenticated && (
+            <Drawer
+              renderNavigationView={() => (
+                <Sidenav
+                  setAuth={setAuth}
+                  setMode={setMode}
                   router={this.state.router}
-                  openDrawer={this.openDrawer}
-                  from={this.state.from}
-                  to={this.state.to}
-                  transition={this.state.animation}
-                >
-                  <EasyRouter
-                    routes={{
-                      Home,
-                      Profile,
-                      Settings,
-                    }}
-                    initialRoute="Home"
-                    animations={animations}
-                    onStackChange={this.onStackChange}
-                    onBeforeStackChange={this.onBeforeStackChange}
-                    router={(router) => {
-                      this.setRouter(router);
-                    }}
-                  />
-                </Tabs>
-              </Drawer>
+                  closeDrawer={this.closeDrawer}
+                />
+              )}
+              ref={this.drawer}
+            >
+              <Tabs
+                router={this.state.router}
+                openDrawer={this.openDrawer}
+                from={this.state.from}
+                to={this.state.to}
+                transition={this.state.animation}
+              >
+                <EasyRouter
+                  routes={{
+                    Home,
+                    Profile,
+                    Settings,
+                  }}
+                  initialRoute="Home"
+                  animations={animations}
+                  onStackChange={this.onStackChange}
+                  onBeforeStackChange={this.onBeforeStackChange}
+                  router={(router) => {
+                    this.setRouter(router);
+                  }}
+                />
+              </Tabs>
+            </Drawer>
             )}
           </View>
         )}
-      </Consumer>
+      </GlobalContext.Consumer>
     );
   }
 }

@@ -5,14 +5,14 @@ const { database } = firebase;
 firebase.initializeApp(config);
 
 // these two functions will need to change to accept a userID
-exports.enterBuilding = bool => {
+exports.enterBuilding = (bool) => {
   database()
     .ref('/users/0')
     .update({ inBuilding: bool });
 };
 
 // these two functions will need to change to accept a userID
-exports.enterSafeZone = bool => {
+exports.enterSafeZone = (bool) => {
   database()
     .ref('/users/0')
     .update({ inSafeZone: bool });
@@ -33,7 +33,7 @@ exports.createUser = (firstName, lastName, email, password) => {
         inBuilding: false,
         inSafeZone: false,
         isAdmin: false,
-        isFirstAider: false
+        isFirstAider: false,
       };
 
       database()
@@ -44,9 +44,9 @@ exports.createUser = (firstName, lastName, email, password) => {
         })
         .catch(console.log);
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.code === 'auth/weak-password') {
-        console.log('The password is too weak.');
+        alert('The password is too weak.');
       } else {
         console.log(error.message);
       }
@@ -54,38 +54,33 @@ exports.createUser = (firstName, lastName, email, password) => {
     });
 };
 
-exports.login = (email, password) => {
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(({ user }) => {
-      const { uid } = user;
-      console.log('success!');
-      getUserById(uid);
-    })
-    .catch(console.log);
-};
+getUserById = id => database()
+  .ref('/users')
+  .orderByKey()
+  .equalTo(id)
+  .once('value')
+  .then((data) => {
+    if (data) {
+      return data;
+    }
+    alert('Submitted information does not exist within database');
+  })
+  .catch(err => alert(err));
 
-exports.getUserById = id => {
-  database()
-    .ref('/users')
-    .orderByKey()
-    .equalTo(id)
-    .once('value')
-    .then(data => {
-      console.log(data.val() ? data.val() : `${id} doesn't exist in db`);
-    })
-    .catch(console.log);
-  // .catch(err =>
-  //   alert(err)
-  // );
-};
+exports.login = (email, password) => firebase
+  .auth()
+  .signInWithEmailAndPassword(email, password)
+  .then(({ user }) => {
+    const { uid } = user;
+    return getUserById(uid);
+  })
+  .catch(err => alert(err));
 
-exports.toggleAdminStatus = uid => {
+exports.toggleAdminStatus = (uid) => {
   database()
     .ref(`/users/${uid}/isAdmin`)
     .once('value')
-    .then(data => {
+    .then((data) => {
       const currentStatus = data.val();
       database()
         .ref(`/users/${uid}`)
@@ -93,14 +88,61 @@ exports.toggleAdminStatus = uid => {
     });
 };
 
-exports.toggleFirstAiderStatus = uid => {
+exports.toggleFirstAiderStatus = (uid) => {
   database()
     .ref(`/users/${uid}/isFirstAider`)
     .once('value')
-    .then(data => {
+    .then((data) => {
       const currentStatus = data.val();
       database()
         .ref(`/users/${uid}`)
         .update({ isFirstAider: !currentStatus });
     });
 };
+
+exports.emergencyStatusListener = () => database()
+  .ref('/site')
+  .child('isEmergency')
+  .on('value', (snapshot) => {
+    console.log(`current status: ${snapshot.val()}`);
+    console.log(snapshot);
+  });
+
+exports.toggleEmergencyStatus = (mode) => {
+  database()
+    .ref('/site')
+    .child('isEmergency')
+    .once('value')
+    .then((data) => {
+      console.log(`current emergency status: ${data.val()}`);
+      const currentStatus = data.val();
+      database()
+        .ref('/site')
+        .child('isEmergency')
+        .set(!currentStatus)
+        .then(() => {
+          database()
+            .ref('/site')
+            .child('isEmergency')
+            .once('value')
+            .then((newData) => {
+              console.log(`Emergency status set to ${newData.val()}`);
+            });
+        });
+    });
+};
+exports.getSafeZone = () => database()
+  .ref('/site/safeZone')
+  .once('value')
+  .then(data => data);
+
+exports.getBuilding = () => database()
+  .ref('/site/building')
+  .once('value')
+  .then(data => data);
+
+exports.saveSafeZone = (Zone, zoneName) => database()
+  .ref('/site')
+  .update({
+    [zoneName]: Zone,
+  });
