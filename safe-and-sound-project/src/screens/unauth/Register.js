@@ -2,7 +2,7 @@ import React from 'react';
 import { TextInput } from 'react-native';
 import { GlobalContext } from '../../ContextStore/globalContext';
 
-import { login } from '../../../api';
+import { createUser } from '../../../api';
 
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
@@ -11,20 +11,46 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      fName: '',
+      lName: '',
       email: '',
       password: '',
     };
   }
 
-  handleSignIn(email, password) {
-    return login(email, password);
+  handleSubmit(fName, lName, email, password) {
+    return createUser(fName, lName, email, password);
   }
 
   render() {
     return (
       <GlobalContext.Consumer>
         {({ setAuth, setAdmin, state }) => (
-          <Screen backgroundColor="#155e63" title="Login">
+          <Screen backgroundColor="#155e63" title="Create New Account">
+            <TextInput
+              style={{
+                width: 175,
+                height: 30,
+                borderColor: 'gray',
+                borderWidth: 1,
+              }}
+              placeholder="First name"
+              onChangeText={fName => this.setState({ fName })}
+              value={this.state.fName}
+              autoCapitalize="none"
+            />
+            <TextInput
+              style={{
+                width: 175,
+                height: 30,
+                borderColor: 'gray',
+                borderWidth: 1,
+              }}
+              placeholder="Last name"
+              onChangeText={lName => this.setState({ lName })}
+              value={this.state.lName}
+              autoCapitalize="none"
+            />
             <TextInput
               style={{
                 width: 175,
@@ -52,20 +78,9 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                this.handleSignIn(this.state.email, this.state.password)
-                  .then((data) => {
-                    if (data) {
-                      const object = data.val();
-                      const user = object[Object.keys(data.val())[0]];
-                      const { uid, isAdmin } = user;
-                      setAdmin(isAdmin); // updates isAdmin in GlobalContext
-                      setAuth(uid);
-                    } else {
-                      console.log('incorrect login details');
-                    }
-                  });
+                this.handleSubmit(this.state.fName, this.state.lastName, this.state.email, this.state.password)
               }}
-              text="Sign in"
+              text="Register"
             />
             <Button
               onPress={() => {

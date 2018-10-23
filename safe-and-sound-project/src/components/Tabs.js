@@ -127,6 +127,8 @@ export default class Tabs extends React.Component {
         inputRange: [0, 1],
         outputRange: [fromPos.width, toPos.width],
       });
+    const contextState = this.props.state;
+    console.log(contextState)
 
     return (
       <View style={styles.container}>
@@ -146,31 +148,33 @@ export default class Tabs extends React.Component {
               }}
               text="Home"
             />
+            {contextState.isAdmin.admin &&
+              <Button
+                style={styles.button}
+                textStyle={styles.buttonText}
+                disabled={to === 'EditZones'}
+                activeOpacity={0.5}
+                onPress={() => {
+                  this.goto('EditZones');
+                }}
+                onLayout={(layout) => {
+                  this.onLayout('EditZones', layout);
+                }}
+                text="Edit Zones"
+              />}
+
             <Button
               style={styles.button}
               textStyle={styles.buttonText}
-              disabled={to === 'Profile'}
+              disabled={to === 'UserInfo'}
               activeOpacity={0.5}
               onPress={() => {
-                this.goto('Profile');
+                this.goto('UserInfo');
               }}
               onLayout={(layout) => {
-                this.onLayout('Profile', layout);
+                this.onLayout('UserInfo', layout);
               }}
-              text="Profile"
-            />
-            <Button
-              style={styles.button}
-              textStyle={styles.buttonText}
-              disabled={to === 'Settings'}
-              activeOpacity={0.5}
-              onPress={() => {
-                this.goto('Settings');
-              }}
-              onLayout={(layout) => {
-                this.onLayout('Settings', layout);
-              }}
-              text="Settings"
+              text="Users"
             />
             <Button
               style={styles.button}

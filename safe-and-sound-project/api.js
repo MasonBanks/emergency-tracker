@@ -18,24 +18,21 @@ exports.enterSafeZone = (bool) => {
     .update({ inSafeZone: bool });
 };
 
-exports.createUser = (firstName, lastName, email, password) => {
+exports.createUser = (fname, lName, email, password) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(({ user }) => {
       const { uid } = user;
-
       const newUser = {
         uid,
-        firstName,
-        lastName,
-        email,
+        fname,
+        lName,
         inBuilding: false,
         inSafeZone: false,
         isAdmin: false,
         isFirstAider: false,
       };
-
       database()
         .ref(`/users/${uid}`)
         .set(newUser)
@@ -149,15 +146,15 @@ exports.saveSafeZone = (Zone, zoneName) => database()
 exports.userInBuilding = (uid) => {
   console.log(`${uid} entering`);
   database()
-  .ref(`/users/${uid}`)
-  .update({ inBuilding: true });
+    .ref(`/users/${uid}`)
+    .update({ inBuilding: true });
 };
 
 exports.userExitBuilding = (uid) => {
   console.log(`${uid} exit`);
   database()
-  .ref(`/users/${uid}`)
-  .update({ inBuilding: false });
+    .ref(`/users/${uid}`)
+    .update({ inBuilding: false });
 };
 
 // exports.userInBuilding = (uid) => {
