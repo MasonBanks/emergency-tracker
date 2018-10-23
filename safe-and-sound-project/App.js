@@ -20,7 +20,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     state = {
-      dbEmergencyStatus: false
+      dbEmergencyStatus: {},
+      update: {}
     }
   }
 
@@ -33,18 +34,14 @@ export default class App extends React.Component {
     });
   };
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   switch (newStatus) {
-  //     case prevState === null: this.state.dbEmergencyStatus;
-  //     case prevState === false: this.state.dbEmergencyStatus;
-  //     case prevState === true: this.state.dbEmergencyStatus;
-  //   }
-  // }
+  handleEmergencyStatusChange(status) {
+    return this.setMode(status)
+  }
 
   render() {
     return (
       <GlobalProvider>
-        <Routes />
+        <Routes handleEmergencyStatusChange={() => { this.handleEmergencyStatusChange(this.state.dbEmergencyStatus) }} />
       </GlobalProvider>
     )
   }

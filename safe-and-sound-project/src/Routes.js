@@ -7,6 +7,7 @@ import { GlobalContext } from './ContextStore/globalContext';
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
 import Tabs from './components/Tabs';
+import BaseContextElement from './components/BaseContextElement';
 
 import Intro from './screens/unauth/Intro';
 import Login from './screens/unauth/Login';
@@ -75,9 +76,10 @@ class Routes extends React.Component {
     return (
       <GlobalContext.Consumer>
         {({
-          setAuth, setMode, setAdmin, state,
+          setAuth, setMode, state,
         }) => (
           <View style={{ backgroundColor: 'black', flex: 1 }}>
+            <BaseContextElement handleEmergencyStatusChange={this.props.handleEmergencyStatusChange} />
             {!state.auth.authenticated && (
             <EasyRouter
               routes={{
@@ -114,6 +116,7 @@ class Routes extends React.Component {
                 transition={this.state.animation}
               >
                 <EasyRouter
+                  handleEmergencyStatusChange={this.props.handleEmergencyStatusChange}
                   routes={{
                     Home,
                     Profile,
@@ -131,7 +134,8 @@ class Routes extends React.Component {
             </Drawer>
             )}
           </View>
-        )}
+        )
+        }
       </GlobalContext.Consumer>
     );
   }

@@ -21,14 +21,6 @@ export default ({
 
     <Button
       onPress={() => {
-        setMode(true);
-      }}
-      text="set context to emergency mode"
-    />
-
-
-    <Button
-      onPress={() => {
         closeDrawer();
       }}
       text="Close the drawer"

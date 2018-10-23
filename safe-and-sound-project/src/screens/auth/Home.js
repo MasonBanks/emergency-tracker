@@ -7,9 +7,9 @@ import { GlobalContext } from '../../ContextStore/globalContext';
 
 const animation = { type: 'top', duration: 1000 };
 
-export default ({ router }) => (
+export default Home = ({ router }) => (
   <GlobalContext.Consumer>
-    {({ state }) => (
+    {({ state, setMode }) => (
       <Screen backgroundColor={state.isAdmin.admin ? '#82E0AA' : '#C39BD3'} title="Home">
         {/* <FireEscapeMap /> */}
         <Button text="Menu" />
