@@ -2,11 +2,13 @@ import React from 'react';
 
 import Screen from './Screen';
 import Button from './Button';
+import GlobalContext from '../ContextStore/globalContext';
+import toggleEmergencyStatus from '../../api';
 
 const animation = { type: 'right', duration: 1100 };
 
 export default ({
-  router, setAuth, setMode, closeDrawer,
+  router, closeDrawer, setAuth, setMode, state,
 }) => (
   <Screen backgroundColor="rgb(255,255,255)" title="Sidenav">
     <Button
@@ -25,6 +27,15 @@ export default ({
       text="Close the drawer"
     />
 
+    {state.isAdmin.admin && (
+      <Button
+        onPress={() => {
+          toggleEmergencyStatus(state.mode.emergency);
+        }}
+        text="Toggle Emergency!!"
+      />
+    )}
+
     <Button
       onPress={() => {
         setAuth(false);
@@ -32,4 +43,5 @@ export default ({
       text="Logout"
     />
   </Screen>
+
 );

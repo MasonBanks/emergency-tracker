@@ -98,6 +98,7 @@ class Routes extends React.Component {
             <Drawer
               renderNavigationView={() => (
                 <Sidenav
+                  state={state}
                   setAuth={setAuth}
                   setMode={setMode}
                   router={this.state.router}

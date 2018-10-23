@@ -5,4 +5,7 @@ exports.initialState = {
   mode: {
     emergency: false,
   },
+  isAdmin: {
+    admin: false,
+  },
 };

@@ -4,17 +4,25 @@ import { initialState } from './initialState';
 const GlobalContext = React.createContext();
 
 class GlobalProvider extends Component {
-  state = {
-    ...initialState,
-    auth: {
-      authenticated: false,
-    },
-    mode: {
-      emergency: false,
-    },
-    isAdmin: {
-      admin: false,
-    },
+  constructor(props) {
+    super(props);
+    this.state = {
+      auth: {
+        authenticated: false,
+      },
+      mode: {
+        emergency: false,
+      },
+      isAdmin: {
+        admin: false,
+      },
+    };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.appState !== null && prevProps.appState.dbEmergencyStatus !== this.props.appState.dbEmergencyStatus) {
+      this.setMode(this.props.appState.dbEmergencyStatus || false);
+    }
   }
 
   setAuth = (authenticated) => {
@@ -22,7 +30,9 @@ class GlobalProvider extends Component {
       auth: {
         authenticated,
       },
-    }));
+    }), () => {
+      console.log(this.state.auth);
+    });
   };
 
   setMode = (emergency) => {
@@ -30,15 +40,19 @@ class GlobalProvider extends Component {
       mode: {
         emergency,
       },
-    }));
-  };
+    }), () => {
+      console.log(this.state.mode);
+    });
+  }
 
   setAdmin = (admin) => {
     this.setState(() => ({
       isAdmin: {
         admin,
       },
-    }));
+    }), () => {
+      console.log(this.state.isAdmin);
+    });
   }
 
   render() {

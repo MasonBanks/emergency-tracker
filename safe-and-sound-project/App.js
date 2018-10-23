@@ -5,6 +5,8 @@ import { GlobalProvider } from './src/ContextStore/globalContext';
 import Routes from './src/Routes';
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
+import * as api from './api';
+import inside from 'point-in-polygon';
 
 YellowBox.ignoreWarnings(['Setting a timer']); // makes app ignore yellow warnings
 const _console = _.clone(console);
@@ -20,18 +22,93 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     state = {
-      dbEmergencyStatus: false
+      dbEmergencyStatus: true,
+      inSafeZone: false,
+      inBuilding: false,
+      latitude: 53.483959,
+      longitude:-2.244644,
+      user:'fffffffff',
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   componentDidMount() {
     database().ref('site').child('isEmergency').on('value', (snapshot) => {
       console.log(`DB connected: Site status: ${snapshot.val() ? 'Emergency' : 'IDLE'}`)
       this.setState({
-        dbEmergencyStatus: snapshot.val()
+        dbEmergencyStatus: snapshot.val(),
+        inSafeZone: false,
+        inBuilding: false,
+        // latitude: 53.483959,
+        // longitude:-2.244644,
+        user:'fffffffff',
       })
     });
+
+    const build = this.getBuilding();
+    const safe = this.getSafeZone();
+    Promise.all([build, safe])
+    .then(([building, safezone]) => {
+      let mappedBuilding = building.map(coordinate=>{
+        return [coordinate.longitude, coordinate.latitude];
+      });
+
+      let mappedSafeZone = safezone.map(coordinate=>{
+        return [coordinate.longitude, coordinate.latitude];
+      });
+
+
+      console.log(this.state);
+   
+      console.log(inside([this.state.longitude, this.state.latitude ], mappedBuilding));
+
+      this.interval = setInterval(()=>{this.checkLocation(mappedBuilding)}, 10000);
+
+    });
+
   };
+
+  checkLocation=(mappedBuilding) => {
+    
+    const options = {
+      enableHighAccuracy: false,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+  
+    const { latitude, longitude } = this.state;
+  
+    navigator.geolocation.watchPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        }, () => {
+          console.log(inside([latitude, longitude], mappedBuilding));
+console.log(longitude)
+          if(inside([longitude, latitude], mappedBuilding)){
+            api.userInBuilding(this.state.user)
+          }else{
+            api.userExitBuilding(this.state.user)
+          }
+
+          // this.setState({
+          //   inSafeZone: inside([latitude, longitude], safeZonePolygon),
+          //   inBuilding: inside([latitude, longitude], buildingPolygon),
+          // });
+        });
+      }, error => alert(error.message), options,
+    );
+  }
+
+
+
+  getSafeZone = () => api.getSafeZone().then(data => data.val());
+
+  getBuilding = () => api.getBuilding().then(data => data.val());
 
   // componentDidUpdate(prevProps, prevState) {
   //   switch (newStatus) {
@@ -43,9 +120,8 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <GlobalProvider>
+      <GlobalProvider appState={this.state}>
         <Routes />
-      </GlobalProvider>
-    )
+      </GlobalProvider>)
   }
 }

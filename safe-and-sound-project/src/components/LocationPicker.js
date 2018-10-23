@@ -1,6 +1,7 @@
 import React from 'react';
 import MapView from 'react-native-maps';
 import { Platform } from 'react-native';
+import { Permissions, Location } from 'expo';
 import Screen from './Screen';
 import Button from './Button';
 import * as api from '../../api';
@@ -19,6 +20,8 @@ export default class App extends React.Component {
   componentDidMount() {
     if (Platform.OS === 'ios') {
       this.iosGetLocation();
+    } else {
+      this.androidGetLocationAsync();
     }
   }
 
@@ -42,7 +45,36 @@ export default class App extends React.Component {
       error => alert(error.message),
       options,
     );
-  }
+  };
+
+  androidGetLocationAsync = async () => {
+    const { region } = this.state;
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
+
+    if (status !== 'granted') {
+      this.setState({
+        region: {
+          ...region,
+          longitude: -2.2398000955581665,
+          latitude: 53.486491111816854,
+        },
+      });
+    } else {
+      await Location.getCurrentPositionAsync()
+        .then((position) => {
+          this.setState({
+            region: {
+              ...region,
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            },
+          });
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+  };
 
   handleSubmit = (zone) => {
     api.saveSafeZone(this.state.currentArea, zone);
@@ -83,12 +115,14 @@ export default class App extends React.Component {
           onPress={e => this.handlePush(e.nativeEvent)}
           onRegionChangeComplete={e => this.handleMoveMap(e)}
         >
-          <MapView.Polygon
-            title="Safe Zone"
-            coordinates={currentArea}
-            description="Safe Zone Boundry"
-            fillColor="rgba(255,0,0,0.1)"
-          />
+          {currentArea.length !== 0 && (
+            <MapView.Polygon
+              title="Safe Zone"
+              coordinates={currentArea}
+              description="Safe Zone Boundry"
+              fillColor="rgba(255,0,0,0.1)"
+            />
+          )}
 
           {currentArea.map(point => (
             <MapView.Marker
