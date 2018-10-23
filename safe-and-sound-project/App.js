@@ -42,8 +42,7 @@ export default class App extends React.Component {
         dbEmergencyStatus: snapshot.val(),
         inSafeZone: false,
         inBuilding: false,
-        // latitude: 53.483959,
-        // longitude:-2.244644,
+
         user:'',
 
       })
@@ -57,7 +56,6 @@ export default class App extends React.Component {
           return [coordinate.longitude, coordinate.latitude];
         });
 
-
       let mappedSafeZone = safezone.map(coordinate=>{
         return [coordinate.longitude, coordinate.latitude];
       });
@@ -65,7 +63,8 @@ export default class App extends React.Component {
     });
   };
 
-
+  checkLocation=(mappedBuilding) => {
+    
     const options = {
       enableHighAccuracy: false,
       timeout: 5000,
@@ -80,14 +79,12 @@ export default class App extends React.Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }, () => {
-
           if(inside([longitude, latitude], mappedBuilding) && this.state.user){
             api.userInBuilding(this.state.user)
           }else if(!inside([longitude, latitude], mappedBuilding) && this.state.user){
-
             api.userExitBuilding(this.state.user)
           }
-
+        });
       }, error => alert(error.message), options,
     );
   }
@@ -103,7 +100,10 @@ user:userId
 
   getBuilding = () => api.getBuilding().then(data => data.val());
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 907e6b6d77e42e357f3a5c636e5435ab2a39c4f6
   render() {
     return (
       <GlobalProvider appState={this.state} getUserId={this.getUserId}>
