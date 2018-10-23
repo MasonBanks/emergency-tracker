@@ -41,8 +41,10 @@ export default class App extends React.Component {
       this.setState({
         dbEmergencyStatus: snapshot.val(),
         inSafeZone: false,
-        inBuilding: false,git 
+        inBuilding: false,
+
         user:'',
+
       })
     });
 
@@ -98,6 +100,10 @@ user:userId
 
   getBuilding = () => api.getBuilding().then(data => data.val());
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 907e6b6d77e42e357f3a5c636e5435ab2a39c4f6
   render() {
     return (
       <GlobalProvider appState={this.state} getUserId={this.getUserId}>
