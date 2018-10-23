@@ -44,7 +44,7 @@ export default class App extends React.Component {
         inBuilding: false,
         // latitude: 53.483959,
         // longitude:-2.244644,
-        user:'fffffffff',
+        user:'',
       })
     });
 
@@ -59,20 +59,10 @@ export default class App extends React.Component {
       let mappedSafeZone = safezone.map(coordinate=>{
         return [coordinate.longitude, coordinate.latitude];
       });
-
-
-      console.log(this.state);
-   
-      console.log(inside([this.state.longitude, this.state.latitude ], mappedBuilding));
-
       this.interval = setInterval(()=>{this.checkLocation(mappedBuilding)}, 10000);
-
     });
-
   };
 
-<<<<<<< HEAD
-=======
   checkLocation=(mappedBuilding) => {
     
     const options = {
@@ -89,11 +79,9 @@ export default class App extends React.Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }, () => {
-          console.log(inside([latitude, longitude], mappedBuilding));
-console.log(longitude)
-          if(inside([longitude, latitude], mappedBuilding)){
+          if(inside([longitude, latitude], mappedBuilding) && this.state.user){
             api.userInBuilding(this.state.user)
-          }else{
+          }else if(!inside([longitude, latitude], mappedBuilding) && this.state.user){
             api.userExitBuilding(this.state.user)
           }
 
@@ -106,7 +94,12 @@ console.log(longitude)
     );
   }
 
+getUserId=(userId)=>{
+  this.setState({
+user:userId
+  })
 
+}
 
   getSafeZone = () => api.getSafeZone().then(data => data.val());
 
@@ -120,10 +113,9 @@ console.log(longitude)
   //   }
   // }
 
->>>>>>> bcd10674202822354d75a0252e46ab26eee6a5e1
   render() {
     return (
-      <GlobalProvider appState={this.state}>
+      <GlobalProvider appState={this.state} getUserId={this.getUserId}>
         <Routes />
       </GlobalProvider>)
   }
