@@ -79,3 +79,33 @@ exports.toggleFirstAiderStatus = (uid) => {
       database().ref(`/users/${uid}`).update({ isFirstAider: !currentStatus });
     });
 };
+
+exports.emergencyStatusListener = () => database().ref('/site').child('isEmergency').on('value', (snapshot) => {
+  console.log(`current status: ${snapshot.val()}`);
+  console.log(snapshot);
+});
+
+exports.toggleEmergencyStatus = (mode) => {
+  database().ref('/site').child('isEmergency').once('value')
+    .then((data) => {
+      console.log(`current emergency status: ${data.val()}`);
+      const currentStatus = data.val();
+      database().ref('/site').child('isEmergency').set(!currentStatus)
+        .then(() => {
+          database().ref('/site').child('isEmergency').once('value')
+            .then((newData) => {
+              console.log(`Emergency status set to ${newData.val()}`);
+            });
+        });
+    });
+};
+exports.getSafeZone = () => database().ref('/site/safeZone').once('value')
+  .then(data => data);
+
+exports.getBuilding = () => database().ref('/site/building').once('value')
+  .then(data => data);
+
+exports.saveSafeZone = (Zone, zoneName) => database()
+  .ref('/site').update({
+    [zoneName]: Zone,
+  });
