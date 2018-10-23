@@ -108,7 +108,7 @@ exports.emergencyStatusListener = () => database()
     console.log(snapshot);
   });
 
-exports.toggleEmergencyStatus = (mode) => {
+exports.toggleEmergencyStatus = () => {
   database()
     .ref('/site')
     .child('isEmergency')
@@ -118,8 +118,7 @@ exports.toggleEmergencyStatus = (mode) => {
       const currentStatus = data.val();
       database()
         .ref('/site')
-        .child('isEmergency')
-        .update(!currentStatus)
+        .update({ isEmergency: !currentStatus })
         .then(() => {
           database()
             .ref('/site')

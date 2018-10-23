@@ -21,7 +21,7 @@ class GlobalProvider extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.appState !== null && prevProps.appState.dbEmergencyStatus !== this.props.appState.dbEmergencyStatus) {
-      this.setMode(this.props.appState.dbEmergencyStatus || false);
+      this.setMode(this.props.appState.dbEmergencyStatus);
     }
   }
 
