@@ -26,8 +26,8 @@ export default class App extends React.Component {
       inSafeZone: false,
       inBuilding: false,
       latitude: 53.483959,
-      longitude:-2.244644,
-      user:'fffffffff',
+      longitude: -2.244644,
+      user: 'fffffffff',
     }
   }
 
@@ -45,16 +45,18 @@ export default class App extends React.Component {
         // latitude: 53.483959,
         // longitude:-2.244644,
         user:'',
+
       })
     });
 
     const build = this.getBuilding();
     const safe = this.getSafeZone();
     Promise.all([build, safe])
-    .then(([building, safezone]) => {
-      let mappedBuilding = building.map(coordinate=>{
-        return [coordinate.longitude, coordinate.latitude];
-      });
+      .then(([building, safezone]) => {
+        let mappedBuilding = building.map(coordinate => {
+          return [coordinate.longitude, coordinate.latitude];
+        });
+
 
       let mappedSafeZone = safezone.map(coordinate=>{
         return [coordinate.longitude, coordinate.latitude];
@@ -63,33 +65,29 @@ export default class App extends React.Component {
     });
   };
 
-  checkLocation=(mappedBuilding) => {
-    
+
     const options = {
       enableHighAccuracy: false,
       timeout: 5000,
       maximumAge: 0,
     };
-  
+
     const { latitude, longitude } = this.state;
-  
+
     navigator.geolocation.watchPosition(
       (position) => {
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }, () => {
+
           if(inside([longitude, latitude], mappedBuilding) && this.state.user){
             api.userInBuilding(this.state.user)
           }else if(!inside([longitude, latitude], mappedBuilding) && this.state.user){
+
             api.userExitBuilding(this.state.user)
           }
 
-          // this.setState({
-          //   inSafeZone: inside([latitude, longitude], safeZonePolygon),
-          //   inBuilding: inside([latitude, longitude], buildingPolygon),
-          // });
-        });
       }, error => alert(error.message), options,
     );
   }
@@ -105,13 +103,6 @@ user:userId
 
   getBuilding = () => api.getBuilding().then(data => data.val());
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   switch (newStatus) {
-  //     case prevState === null: this.state.dbEmergencyStatus;
-  //     case prevState === false: this.state.dbEmergencyStatus;
-  //     case prevState === true: this.state.dbEmergencyStatus;
-  //   }
-  // }
 
   render() {
     return (
