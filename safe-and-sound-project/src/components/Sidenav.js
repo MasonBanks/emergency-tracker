@@ -6,7 +6,7 @@ import Button from './Button';
 const animation = { type: 'right', duration: 1100 };
 
 export default ({ router, setAuth, closeDrawer }) => (
-  <Screen backgroundColor="#5c3c10" title="Sidenav">
+  <Screen backgroundColor="#ffffff" title="Sidenav">
     <Button
       onPress={() => {
         if (router) {

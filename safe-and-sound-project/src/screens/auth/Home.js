@@ -6,7 +6,7 @@ import Button from '../../components/Button';
 const animation = { type: 'top', duration: 1000 };
 
 export default ({ router }) => (
-  <Screen backgroundColor="#1b3764" title="Home">
+  <Screen backgroundColor="#ffffff" title="Home">
     <Button
       onPress={() => {
         router.push.Profile({}, animation);

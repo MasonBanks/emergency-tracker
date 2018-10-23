@@ -75,7 +75,7 @@ class Routes extends React.Component {
     return (
       <Consumer>
         {({ setAuth, auth: { authenticated } }) => (
-          <View style={{ backgroundColor: 'black', flex: 1 }}>
+          <View style={{ backgroundColor: '#ffffff', flex: 1 }}>
             {!authenticated && (
               <EasyRouter
                 routes={{

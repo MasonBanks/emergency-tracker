@@ -1,3 +1,7 @@
+import { Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
+
 const styles = {
   container: {
     flex: 1,
@@ -11,16 +15,20 @@ const styles = {
     marginBottom: 0,
   },
   text: {
-    color: 'white',
+    color: 'black',
     fontSize: 20,
     textAlign: 'center',
   },
-  mapContainer: {
+  logoContainer: {
     flex: 1,
-    height: 200,
-    width: 100,
-    padding: 10,
+    alignItems: 'center',
+
   },
+  logo: {
+    width: width - 100,
+    paddingBottom: 0,
+  }
 };
+
 
 export default styles;
