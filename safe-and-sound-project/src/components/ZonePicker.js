@@ -16,6 +16,7 @@ export default class App extends React.Component {
       longitude: null,
       inSafeZone: false,
       inBuilding: false,
+      user: 'b7UgXoQoyadBCn1bjugj4RhbfDz1',
     };
   }
 
