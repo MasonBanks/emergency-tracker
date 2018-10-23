@@ -14,7 +14,8 @@ export default ({ router }) => (
       onPress={() => {
         router.pop();
       }}
-      text="back" style={styles.backButton}
+      text="back"
+      style={styles.backButton}
     />
   </Screen>
 );

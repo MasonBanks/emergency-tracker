@@ -72,7 +72,8 @@ export default class Login extends React.Component {
               onPress={() => {
                 this.props.router.pop();
               }}
-              text="back" style={styles.backButton}
+              text="back"
+              style={styles.backButton}
             />
           </Screen>
         )}

@@ -8,28 +8,28 @@ const animation = { type: 'right', duration: 1100 };
 export default ({
   router, setAuth, setMode, closeDrawer,
 }) => (
-    <Screen backgroundColor="rgb(255,255,255)" title="Sidenav">
-      <Button
-        onPress={() => {
-          if (router) {
-            router.push.Profile({}, animation);
-          }
-          closeDrawer();
-        }}
-        text={`push.Profile({}, ${JSON.stringify(animation)})`}
-      />
-      <Button
-        onPress={() => {
-          closeDrawer();
-        }}
-        text="Close the drawer"
-      />
+  <Screen backgroundColor="rgb(255,255,255)" title="Sidenav">
+    <Button
+      onPress={() => {
+        if (router) {
+          router.push.Profile({}, animation);
+        }
+        closeDrawer();
+      }}
+      text={`push.Profile({}, ${JSON.stringify(animation)})`}
+    />
+    <Button
+      onPress={() => {
+        closeDrawer();
+      }}
+      text="Close the drawer"
+    />
 
-      <Button
-        onPress={() => {
-          setAuth(false);
-        }}
-        text="Logout"
-      />
-    </Screen>
-  );
+    <Button
+      onPress={() => {
+        setAuth(false);
+      }}
+      text="Logout"
+    />
+  </Screen>
+);
