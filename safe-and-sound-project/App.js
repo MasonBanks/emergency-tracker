@@ -33,19 +33,10 @@ export default class App extends React.Component {
     });
   };
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   switch (newStatus) {
-  //     case prevState === null: this.state.dbEmergencyStatus;
-  //     case prevState === false: this.state.dbEmergencyStatus;
-  //     case prevState === true: this.state.dbEmergencyStatus;
-  //   }
-  // }
-
   render() {
     return (
-      <GlobalProvider>
+      <GlobalProvider appState={this.state}>
         <Routes />
-      </GlobalProvider>
-    )
+      </GlobalProvider>)
   }
 }
