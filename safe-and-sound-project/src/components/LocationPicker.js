@@ -1,5 +1,6 @@
 import React from 'react';
 import MapView from 'react-native-maps';
+import { Platform } from 'react-native';
 import Screen from './Screen';
 import Button from './Button';
 import * as api from '../../api';
@@ -16,12 +17,17 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
+    if (Platform.OS === 'ios') {
+      this.iosGetLocation();
+    }
+  }
+
+  iosGetLocation = () => {
     const options = {
       enableHighAccuracy: false,
       timeout: 5000,
       maximumAge: 0,
     };
-
     const { region } = this.state;
     navigator.geolocation.getCurrentPosition(
       (position) => {
