@@ -15,17 +15,13 @@ const styles = {
     marginBottom: 0,
   },
   text: {
-    color: 'black',
+    color: 'white',
     fontSize: 20,
     textAlign: 'center',
   },
-  logoContainer: {
-    flex: 1,
-    alignItems: 'center',
-
-  },
   logo: {
-    width: width - 100,
+    width,
+    height: '50%',
     paddingBottom: 0,
   },
 };

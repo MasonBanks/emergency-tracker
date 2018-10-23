@@ -10,7 +10,7 @@ const animation = { type: 'top', duration: 500 };
 export default ({ router }) => (
   <Screen>
     <View style={styles.logoContainer}>
-      <Image source={require('../../assets/images/safensound2.png')} resizeMode="contain" style={styles.logo} />
+      <Image source={require('../../assets/images/safensound-no_outline.png')} resizeMode="contain" style={styles.logo} />
     </View>
     <Button
       onPress={() => {
