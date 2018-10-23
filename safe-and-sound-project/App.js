@@ -43,7 +43,7 @@ export default class App extends React.Component {
         inSafeZone: false,
         inBuilding: false,
 
-        user:'',
+        user: '',
 
       })
     });
@@ -56,15 +56,15 @@ export default class App extends React.Component {
           return [coordinate.longitude, coordinate.latitude];
         });
 
-      let mappedSafeZone = safezone.map(coordinate=>{
-        return [coordinate.longitude, coordinate.latitude];
+        let mappedSafeZone = safezone.map(coordinate => {
+          return [coordinate.longitude, coordinate.latitude];
+        });
+        this.interval = setInterval(() => { this.checkLocation(mappedBuilding) }, 10000);
       });
-      this.interval = setInterval(()=>{this.checkLocation(mappedBuilding)}, 10000);
-    });
   };
 
-  checkLocation=(mappedBuilding) => {
-    
+  checkLocation = (mappedBuilding) => {
+
     const options = {
       enableHighAccuracy: false,
       timeout: 5000,
@@ -79,9 +79,9 @@ export default class App extends React.Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }, () => {
-          if(inside([longitude, latitude], mappedBuilding) && this.state.user){
+          if (inside([longitude, latitude], mappedBuilding) && this.state.user) {
             api.userInBuilding(this.state.user)
-          }else if(!inside([longitude, latitude], mappedBuilding) && this.state.user){
+          } else if (!inside([longitude, latitude], mappedBuilding) && this.state.user) {
             api.userExitBuilding(this.state.user)
           }
         });
@@ -89,21 +89,17 @@ export default class App extends React.Component {
     );
   }
 
-getUserId=(userId)=>{
-  this.setState({
-user:userId
-  })
+  getUserId = (userId) => {
+    this.setState({
+      user: userId
+    })
 
-}
+  }
 
   getSafeZone = () => api.getSafeZone().then(data => data.val());
 
   getBuilding = () => api.getBuilding().then(data => data.val());
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 907e6b6d77e42e357f3a5c636e5435ab2a39c4f6
   render() {
     return (
       <GlobalProvider appState={this.state} getUserId={this.getUserId}>
