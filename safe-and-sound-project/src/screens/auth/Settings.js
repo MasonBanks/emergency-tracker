@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 import LiveList from '../../components/LiveList';
 
 export default ({ router }) => (
-  <Screen backgroundColor="#ffffff" title="Settings">
+  <Screen backgroundColor="#5f1854" title="Settings">
     <LiveList />
     <Button
       onPress={() => {

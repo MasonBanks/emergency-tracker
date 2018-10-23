@@ -108,7 +108,7 @@ exports.emergencyStatusListener = () => database()
     console.log(snapshot);
   });
 
-exports.toggleEmergencyStatus = (mode) => {
+exports.toggleEmergencyStatus = () => {
   database()
     .ref('/site')
     .child('isEmergency')
@@ -118,8 +118,7 @@ exports.toggleEmergencyStatus = (mode) => {
       const currentStatus = data.val();
       database()
         .ref('/site')
-        .child('isEmergency')
-        .update(!currentStatus)
+        .update({ isEmergency: !currentStatus })
         .then(() => {
           database()
             .ref('/site')
@@ -150,20 +149,20 @@ exports.saveSafeZone = (Zone, zoneName) => database()
 exports.userInBuilding = (uid) => {
   console.log(`${uid} entering`);
   database()
-    .ref(`/inBuildingUsers/${uid}`)
-    .set('inBuilding');
+    .ref(`/users/${uid}`)
+    .update({ inBuilding: true });
 };
 
 exports.userExitBuilding = (uid) => {
-  console.log(`${uid} exit`);
   database()
-    .ref(`/inBuildingUsers/${uid}`)
-    .set(null);
+    .ref(`/users/${uid}`)
+    .update({ inBuilding: false });
 };
 exports.getAllUsers = () => database()
   .ref('/users')
   .once('value')
   .then(userData => userData);
+
 // exports.userInBuilding = (uid) => {
 //   console.log(uid);
 //   database().ref(`/inBuildingUsers/${uid}`).set(null);
