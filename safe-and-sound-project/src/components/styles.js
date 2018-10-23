@@ -27,7 +27,7 @@ const styles = {
   logo: {
     width: width - 100,
     paddingBottom: 0,
-  }
+  },
 };
 
 
