@@ -5,14 +5,14 @@ const { database } = firebase;
 firebase.initializeApp(config);
 
 // these two functions will need to change to accept a userID
-exports.enterBuilding = bool => {
+exports.enterBuilding = (bool) => {
   database()
     .ref('/users/0')
     .update({ inBuilding: bool });
 };
 
 // these two functions will need to change to accept a userID
-exports.enterSafeZone = bool => {
+exports.enterSafeZone = (bool) => {
   database()
     .ref('/users/0')
     .update({ inSafeZone: bool });
@@ -33,7 +33,7 @@ exports.createUser = (firstName, lastName, email, password) => {
         inBuilding: false,
         inSafeZone: false,
         isAdmin: false,
-        isFirstAider: false
+        isFirstAider: false,
       };
 
       database()
@@ -44,7 +44,7 @@ exports.createUser = (firstName, lastName, email, password) => {
         })
         .catch(console.log);
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.code === 'auth/weak-password') {
         alert('The password is too weak.');
       } else {
@@ -54,35 +54,33 @@ exports.createUser = (firstName, lastName, email, password) => {
     });
 };
 
-getUserById = id =>
-  database()
-    .ref('/users')
-    .orderByKey()
-    .equalTo(id)
-    .once('value')
-    .then(data => {
-      if (data) {
-        return data;
-      }
-      alert('Submitted information does not exist within database');
-    })
-    .catch(err => alert(err));
+getUserById = id => database()
+  .ref('/users')
+  .orderByKey()
+  .equalTo(id)
+  .once('value')
+  .then((data) => {
+    if (data) {
+      return data;
+    }
+    alert('Submitted information does not exist within database');
+  })
+  .catch(err => alert(err));
 
-exports.login = (email, password) =>
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(({ user }) => {
-      const { uid } = user;
-      return getUserById(uid);
-    })
-    .catch(err => alert(err));
+exports.login = (email, password) => firebase
+  .auth()
+  .signInWithEmailAndPassword(email, password)
+  .then(({ user }) => {
+    const { uid } = user;
+    return getUserById(uid);
+  })
+  .catch(err => alert(err));
 
-exports.toggleAdminStatus = uid => {
+exports.toggleAdminStatus = (uid) => {
   database()
     .ref(`/users/${uid}/isAdmin`)
     .once('value')
-    .then(data => {
+    .then((data) => {
       const currentStatus = data.val();
       database()
         .ref(`/users/${uid}`)
@@ -90,11 +88,11 @@ exports.toggleAdminStatus = uid => {
     });
 };
 
-exports.toggleFirstAiderStatus = uid => {
+exports.toggleFirstAiderStatus = (uid) => {
   database()
     .ref(`/users/${uid}/isFirstAider`)
     .once('value')
-    .then(data => {
+    .then((data) => {
       const currentStatus = data.val();
       database()
         .ref(`/users/${uid}`)
@@ -102,21 +100,20 @@ exports.toggleFirstAiderStatus = uid => {
     });
 };
 
-exports.emergencyStatusListener = () =>
-  database()
-    .ref('/site')
-    .child('isEmergency')
-    .on('value', snapshot => {
-      console.log(`current status: ${snapshot.val()}`);
-      console.log(snapshot);
-    });
+exports.emergencyStatusListener = () => database()
+  .ref('/site')
+  .child('isEmergency')
+  .on('value', (snapshot) => {
+    console.log(`current status: ${snapshot.val()}`);
+    console.log(snapshot);
+  });
 
-exports.toggleEmergencyStatus = mode => {
+exports.toggleEmergencyStatus = (mode) => {
   database()
     .ref('/site')
     .child('isEmergency')
     .once('value')
-    .then(data => {
+    .then((data) => {
       console.log(`current emergency status: ${data.val()}`);
       const currentStatus = data.val();
       database()
@@ -128,39 +125,36 @@ exports.toggleEmergencyStatus = mode => {
             .ref('/site')
             .child('isEmergency')
             .once('value')
-            .then(newData => {
+            .then((newData) => {
               console.log(`Emergency status set to ${newData.val()}`);
             });
         });
     });
 };
-exports.getSafeZone = () =>
-  database()
-    .ref('/site/safeZone')
-    .once('value')
-    .then(data => data);
+exports.getSafeZone = () => database()
+  .ref('/site/safeZone')
+  .once('value')
+  .then(data => data);
 
-exports.getBuilding = () =>
-  database()
-    .ref('/site/building')
-    .once('value')
-    .then(data => data);
+exports.getBuilding = () => database()
+  .ref('/site/building')
+  .once('value')
+  .then(data => data);
 
-exports.saveSafeZone = (Zone, zoneName) =>
-  database()
-    .ref('/site')
-    .update({
-      [zoneName]: Zone
-    });
+exports.saveSafeZone = (Zone, zoneName) => database()
+  .ref('/site')
+  .update({
+    [zoneName]: Zone,
+  });
 
-exports.userInBuilding = uid => {
+exports.userInBuilding = (uid) => {
   console.log(`${uid} entering`);
   database()
     .ref(`/inBuildingUsers/${uid}`)
     .set('inBuilding');
 };
 
-exports.userExitBuilding = uid => {
+exports.userExitBuilding = (uid) => {
   console.log(`${uid} exit`);
   database()
     .ref(`/inBuildingUsers/${uid}`)
