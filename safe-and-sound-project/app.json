@@ -15,6 +15,7 @@
     "splash": {
       "image": "./splash/splash.png",
       "resizeMode": "contain",
+      "width": "100%",
       "backgroundColor": "#500768"
     },
     "updates": {

@@ -15,13 +15,13 @@ class GlobalProvider extends Component {
       },
       isAdmin: {
         admin: false,
-      }
-    }
+      },
+    };
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.appState !== null && prevProps.appState.dbEmergencyStatus !== this.props.appState.dbEmergencyStatus) {
-      this.setMode(this.props.appState.dbEmergencyStatus || false)
+      this.setMode(this.props.appState.dbEmergencyStatus || false);
     }
   }
 
@@ -31,7 +31,7 @@ class GlobalProvider extends Component {
         authenticated,
       },
     }), () => {
-      console.log(this.state.auth)
+      console.log(this.state.auth);
     });
   };
 
@@ -41,8 +41,8 @@ class GlobalProvider extends Component {
         emergency,
       },
     }), () => {
-      console.log(this.state.mode)
-    })
+      console.log(this.state.mode);
+    });
   }
 
   setAdmin = (admin) => {
@@ -51,7 +51,7 @@ class GlobalProvider extends Component {
         admin,
       },
     }), () => {
-      console.log(this.state.isAdmin)
+      console.log(this.state.isAdmin);
     });
   }
 

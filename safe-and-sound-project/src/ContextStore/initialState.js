@@ -7,5 +7,5 @@ exports.initialState = {
   },
   isAdmin: {
     admin: false,
-  }
+  },
 };
