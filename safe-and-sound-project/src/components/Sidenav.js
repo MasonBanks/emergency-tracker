@@ -10,8 +10,7 @@ const animation = { type: 'right', duration: 1100 };
 export default ({
   router, closeDrawer, setAuth, state,
 }) => (
-
-  <Screen backgroundColor="#5c3c10" title="Sidenav">
+  <Screen backgroundColor="rgb(255,255,255)" title="Sidenav">
     <Button
       onPress={() => {
         if (router) {

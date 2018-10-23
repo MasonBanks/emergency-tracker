@@ -141,12 +141,12 @@ export default class App extends React.Component {
           onPress={() => this.handleSubmit('building')}
           text="save building"
         />
-        <Button
+        {/* <Button
           onPress={() => {
             router.pop();
           }}
           text="back"
-        />
+        /> */}
       </Screen>
     );
   }

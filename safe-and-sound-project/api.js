@@ -149,16 +149,19 @@ exports.saveSafeZone = (Zone, zoneName) => database()
 exports.userInBuilding = (uid) => {
   console.log(`${uid} entering`);
   database()
-  .ref(`/users/${uid}`)
-  .update({ inBuilding: true });
+    .ref(`/users/${uid}`)
+    .update({ inBuilding: true });
 };
 
 exports.userExitBuilding = (uid) => {
-  console.log(`${uid} exit`);
   database()
-  .ref(`/users/${uid}`)
-  .update({ inBuilding: false });
+    .ref(`/users/${uid}`)
+    .update({ inBuilding: false });
 };
+exports.getAllUsers = () => database()
+  .ref('/users')
+  .once('value')
+  .then(userData => userData);
 
 // exports.userInBuilding = (uid) => {
 //   console.log(uid);

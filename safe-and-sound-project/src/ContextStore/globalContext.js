@@ -23,7 +23,7 @@ class GlobalProvider extends Component {
     if (prevProps.appState !== null && prevProps.appState.dbEmergencyStatus !== this.props.appState.dbEmergencyStatus) {
       this.setMode(this.props.appState.dbEmergencyStatus);
     }
-    if (this.state.auth.authenticated && (this.state.auth.authenticated!==prevState.auth.authenticated)) {
+    if (this.state.auth.authenticated && (this.state.auth.authenticated !== prevState.auth.authenticated)) {
       this.props.getUserId(this.state.auth.authenticated);
     }
   }
