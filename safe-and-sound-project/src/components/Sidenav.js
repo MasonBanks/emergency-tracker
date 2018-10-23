@@ -11,38 +11,38 @@ export default ({
   router, closeDrawer, setAuth, state,
 }) => (
 
-    <Screen backgroundColor="#5c3c10" title="Sidenav">
-      <Button
-        onPress={() => {
-          if (router) {
-            router.push.Profile({}, animation);
-          }
-          closeDrawer();
-        }}
-        text={`push.Profile({}, ${JSON.stringify(animation)})`}
-      />
-      <Button
-        onPress={() => {
-          closeDrawer();
-        }}
-        text="Close the drawer"
-      />
+  <Screen backgroundColor="#5c3c10" title="Sidenav">
+    <Button
+      onPress={() => {
+        if (router) {
+          router.push.Profile({}, animation);
+        }
+        closeDrawer();
+      }}
+      text={`push.Profile({}, ${JSON.stringify(animation)})`}
+    />
+    <Button
+      onPress={() => {
+        closeDrawer();
+      }}
+      text="Close the drawer"
+    />
 
-      {state.isAdmin.admin && (
-        <Button
-          onPress={() => {
-            toggleEmergencyStatus();
-          }}
-          text={state.mode.emergency ? "Quit Emergency Mode" : "Enter Emergency Mode"}
-        />
-      )}
+    {state.isAdmin.admin && (
+    <Button
+      onPress={() => {
+        toggleEmergencyStatus();
+      }}
+      text={state.mode.emergency ? 'Quit Emergency Mode' : 'Enter Emergency Mode'}
+    />
+    )}
 
-      <Button
-        onPress={() => {
-          setAuth(false);
-        }}
-        text="Logout"
-      />
-    </Screen>
+    <Button
+      onPress={() => {
+        setAuth(false);
+      }}
+      text="Logout"
+    />
+  </Screen>
 
-  );
+);
