@@ -44,7 +44,8 @@ export default class App extends React.Component {
         inBuilding: false,
         // latitude: 53.483959,
         // longitude:-2.244644,
-        user: 'fffffffff',
+        user:'',
+
       })
     });
 
@@ -56,22 +57,14 @@ export default class App extends React.Component {
           return [coordinate.longitude, coordinate.latitude];
         });
 
-        let mappedSafeZone = safezone.map(coordinate => {
-          return [coordinate.longitude, coordinate.latitude];
-        });
 
-
-        console.log(this.state);
-
-        console.log(inside([this.state.longitude, this.state.latitude], mappedBuilding));
-
-        this.interval = setInterval(() => { this.checkLocation(mappedBuilding) }, 10000);
-
+      let mappedSafeZone = safezone.map(coordinate=>{
+        return [coordinate.longitude, coordinate.latitude];
       });
-
+      this.interval = setInterval(()=>{this.checkLocation(mappedBuilding)}, 10000);
+    });
   };
 
-  checkLocation = (mappedBuilding) => {
 
     const options = {
       enableHighAccuracy: false,
@@ -87,32 +80,33 @@ export default class App extends React.Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }, () => {
-          console.log(inside([latitude, longitude], mappedBuilding));
-          console.log(longitude)
-          if (inside([longitude, latitude], mappedBuilding)) {
+
+          if(inside([longitude, latitude], mappedBuilding) && this.state.user){
             api.userInBuilding(this.state.user)
-          } else {
+          }else if(!inside([longitude, latitude], mappedBuilding) && this.state.user){
+
             api.userExitBuilding(this.state.user)
           }
 
-          // this.setState({
-          //   inSafeZone: inside([latitude, longitude], safeZonePolygon),
-          //   inBuilding: inside([latitude, longitude], buildingPolygon),
-          // });
-        });
       }, error => alert(error.message), options,
     );
   }
 
+getUserId=(userId)=>{
+  this.setState({
+user:userId
+  })
 
+}
 
   getSafeZone = () => api.getSafeZone().then(data => data.val());
 
   getBuilding = () => api.getBuilding().then(data => data.val());
 
+
   render() {
     return (
-      <GlobalProvider appState={this.state}>
+      <GlobalProvider appState={this.state} getUserId={this.getUserId}>
         <Routes />
       </GlobalProvider>)
   }
