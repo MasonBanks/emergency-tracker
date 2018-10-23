@@ -6,6 +6,7 @@ class LiveList extends Component {
   state = {
     liveUsers: [],
   }
+
   componentDidMount() {
     api.getAllUsers()
       .then((userData) => {
@@ -16,11 +17,10 @@ class LiveList extends Component {
   render() {
     return (
       <View>
-        {this.state.liveUsers.map((user) => <ListItem key={user.fname}>{user}</ListItem>)}
+        {this.state.liveUsers.map(user => <ListItem key={user.fname}>{user}</ListItem>)}
       </View>
     );
   }
-
 }
 
 
