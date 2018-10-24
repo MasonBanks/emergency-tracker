@@ -36,7 +36,10 @@ exports.createUser = (fname, lName, email, password) => firebase
     return database()
       .ref(`/users/${uid}`)
       .set(newUser)
-      .then(() => database().ref('/users').orderByKey().equalTo(uid)
+      .then(() => database()
+        .ref('/users')
+        .orderByKey()
+        .equalTo(uid)
         .once('value')
         .then((data) => {
           console.log(data.val(), '<<< User added to realtime db');
@@ -44,6 +47,7 @@ exports.createUser = (fname, lName, email, password) => firebase
         })
         .catch(err => alert(err)))
       .catch((error) => {
+        console.log(error);
         if (error.code === 'auth/weak-password') {
           alert('The password is too weak.');
         } else {
@@ -62,7 +66,8 @@ exports.getUserById = (uid) => {
       if (data) {
         console.log(data.val());
         return data;
-      } alert('Submitted information does not exist within database');
+      }
+      alert('Submitted information does not exist within database');
     })
     .catch(err => alert(err));
 };
@@ -72,7 +77,10 @@ exports.login = (email, password) => firebase
   .signInWithEmailAndPassword(email, password)
   .then(({ user }) => {
     const { uid } = user;
-    return database().ref('/users').orderByKey().equalTo(uid)
+    return database()
+      .ref('/users')
+      .orderByKey()
+      .equalTo(uid)
       .once('value')
       .then((data) => {
         if (data) {
