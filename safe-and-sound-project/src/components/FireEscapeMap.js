@@ -119,14 +119,14 @@ export default class FireEscapeMap extends React.Component {
         <MapView.Polygon
           title="Safe Zone"
           coordinates={building}
-          description="Safe Zone Boundry"
+          description="Safe Zone Boundary"
           fillColor="rgba(255,0,0,0.1)"
         />
 
         <MapView.Polygon
           title="Safe Zone"
           coordinates={safezone}
-          description="Safe Zone Boundry"
+          description="Safe Zone Boundary"
           fillColor="rgba(0,255,0,0.1)"
         />
       </MapView>

@@ -19,14 +19,26 @@ export default class Login extends React.Component {
   }
 
   handleSubmit(fName, lName, email, password) {
-    return createUser(fName, lName, email, password)
-      .then((data) => {
-        if (data) {
-          console.log(data);
-          alert('Account created!');
-          this.props.router.pop();
-        }
-      });
+    if (!/^[a-zA-Z]+$/.test(fName)) {
+      return alert('Please insert a valid first name');
+    } if (!/^[a-zA-Z]+$/.test(lName)) {
+      return alert('Please insert a valid last name');
+    } if (
+      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email,
+      )
+    ) {
+      return alert('Please insert a valid email address');
+    } if (password.length < 6) {
+      return alert('Password must have 6 characters or more');
+    }
+    return createUser(fName, lName, email, password).then((data) => {
+      if (data) {
+        console.log(data);
+        alert('Account created!');
+        this.props.router.pop();
+      }
+    });
   }
 
   render() {
@@ -40,6 +52,7 @@ export default class Login extends React.Component {
                 height: 30,
                 borderColor: 'gray',
                 borderWidth: 1,
+                backgroundColor: '#FFFFFF',
               }}
               placeholder="First name"
               onChangeText={fName => this.setState({ fName })}
@@ -52,6 +65,7 @@ export default class Login extends React.Component {
                 height: 30,
                 borderColor: 'gray',
                 borderWidth: 1,
+                backgroundColor: '#FFFFFF',
               }}
               placeholder="Last name"
               onChangeText={lName => this.setState({ lName })}
@@ -64,6 +78,7 @@ export default class Login extends React.Component {
                 height: 30,
                 borderColor: 'gray',
                 borderWidth: 1,
+                backgroundColor: '#FFFFFF',
               }}
               placeholder="email"
               onChangeText={email => this.setState({ email })}
@@ -76,6 +91,7 @@ export default class Login extends React.Component {
                 height: 30,
                 borderColor: 'gray',
                 borderWidth: 1,
+                backgroundColor: '#FFFFFF',
               }}
               placeholder="password"
               onChangeText={password => this.setState({ password })}
