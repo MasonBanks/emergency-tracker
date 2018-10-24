@@ -30,7 +30,7 @@ createUser = (fname, lName, email, password) => firebase
     //     console.log(response, '<<<<<<<<<<<<<,')
     //   })
     //   .catch(console.log);
-  })
+  });
 // .catch((error) => {
 //   if (error.code === 'auth/weak-password') {
 //     alert('The password is too weak.');
