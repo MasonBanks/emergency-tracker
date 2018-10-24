@@ -8,20 +8,15 @@ import { GlobalContext } from '../../ContextStore/GlobalContext';
 
 const animation = { type: 'top', duration: 1000 };
 
-export default Home = ({ router }) => (
+export default (Home = ({ router }) => (
   <GlobalContext.Consumer>
     {({ state, setMode }) => (
-
-
       <Screen
         backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'}
         title="Home"
       >
         {state.mode.emergency ? <EmergencyUserMap /> : <FireEscapeMap />}
-        <EmergencyUserMap />
-
-
       </Screen>
     )}
   </GlobalContext.Consumer>
-);
+));
