@@ -1,38 +1,97 @@
-[
-  {
-    "name": "Mason",
-    "admin": true,
-    "firstAidTrained": false,
-    "avatar_url": "https://i.imgur.com/garJAIX.png"
+{
+  "1YSrWZgXnbQSk49qWrURFOgwLZw2": {
+    "email": "user2@gmail.com",
+    "fname": "Usertwo",
+    "inBuilding": true,
+    "inSafeZone": true,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Usertwo",
+    "markedInDanger": false,
+    "markedSafe": true,
+    "uid": "1YSrWZgXnbQSk49qWrURFOgwLZw2"
   },
-  {
-    "name": "Turiya",
-    "admin": true,
-    "firstAidTrained": true,
-    "avatar_url": "https://vignette.wikia.nocookie.net/kong/images/4/47/Noodle_y_mike.jpg/revision/latest/scale-to-width-down/542?cb=20180821010623"
+  "2ZGeLEUwpdgCnkqtTf2vMVTjTWN2": {
+    "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/abelcabans/128.jpg",
+    "fName": "Elizabeth",
+    "inBuilding": false,
+    "inSafeZone": true,
+    "isAdmin": false,
+    "isFirstAider": true,
+    "lName": "Zemlak",
+    "uid": "2ZGeLEUwpdgCnkqtTf2vMVTjTWN2"
   },
-  {
-    "name": "Danny",
-    "admin": false,
-    "firstAidTrained": false,
-    "avatar_url": "https://i.stack.imgur.com/f2H3p.jpg?s=328&g=1"
+  "2kgLGnYWHBODnKxAL5tmVVX5Ae53": {
+    "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/webtanya/128.jpg",
+    "fName": "Ova",
+    "inBuilding": true,
+    "inSafeZone": true,
+    "isAdmin": false,
+    "isFirstAider": true,
+    "lName": "Heller",
+    "uid": "2kgLGnYWHBODnKxAL5tmVVX5Ae53"
   },
-  {
-    "name": "Rui",
-    "admin": false,
-    "firstAidTrained": true,
-    "avatar_url": "https://i.imgur.com/6YH9QYr.png"
+  "4wTnUsFSGNQTwBRxpigc5vy35aw1": {
+    "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/danro/128.jpg",
+    "fName": "Conor",
+    "inBuilding": false,
+    "inSafeZone": true,
+    "isAdmin": true,
+    "isFirstAider": true,
+    "lName": "Morar",
+    "uid": "4wTnUsFSGNQTwBRxpigc5vy35aw1"
   },
-  {
-    "name": "Will",
-    "admin": false,
-    "firstAidTrained": false,
-    "avatar_url": "https://avatars2.githubusercontent.com/u/39624752?s=400&v=4"
+  "5IcpHPpEJNPygEGre5d8CBqaSFm1": {
+    "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/tgormtx/128.jpg",
+    "fName": "Emmy",
+    "inBuilding": false,
+    "inSafeZone": true,
+    "isAdmin": false,
+    "isFirstAider": true,
+    "lName": "Kunze",
+    "uid": "5IcpHPpEJNPygEGre5d8CBqaSFm1"
   },
-  {
-    "name": "Paul",
-    "admin": false,
-    "firstAidTrained": false,
-    "avatar_url": "https://avatars0.githubusercontent.com/u/19927131?s=400&v=4"
+  "5j2qidSTVJYRehYJEMlNVag1Nou2": {
+    "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/beshur/128.jpg",
+    "fName": "Mckenzie",
+    "inBuilding": false,
+    "inSafeZone": true,
+    "isAdmin": true,
+    "isFirstAider": true,
+    "lName": "Simonis",
+    "uid": "5j2qidSTVJYRehYJEMlNVag1Nou2"
+  },
+  "5v036nDNQVNoeJOsZgscwgR5owi1": {
+    "email": "jj@gmail.com",
+    "fname": "John",
+    "inBuilding": true,
+    "inSafeZone": true,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Jones",
+    "markedInDanger": true,
+    "markedSafe": true,
+    "uid": "5v036nDNQVNoeJOsZgscwgR5owi1"
+  },
+  "9RKD99bsRBU2zfVMamjqXHP7Gxq2": {
+    "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/swooshycueb/128.jpg",
+    "fName": "Syble",
+    "inBuilding": true,
+    "inSafeZone": true,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Cassin",
+    "uid": "9RKD99bsRBU2zfVMamjqXHP7Gxq2"
+  },
+  "ASaY9y95fJcyg3iewbu0sfGYNli1": {
+    "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/designervzm/128.jpg",
+    "email": "admin@gmail.com",
+    "fName": "Test",
+    "inBuilding": true,
+    "inSafeZone": true,
+    "isAdmin": true,
+    "isFirstAider": true,
+    "lName": "Admin",
+    "uid": "ASaY9y95fJcyg3iewbu0sfGYNli1"
   }
-]
+}
