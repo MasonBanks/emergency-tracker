@@ -21,6 +21,7 @@ module.exports = {
         "no-unused-vars": "warn",
         "global-require": "warn",
         "react/prop-types": "off",
-        "no-plusplus": "warn"
+        "no-plusplus": "warn",
+        "no-useless-escape":"warn",
     }
 };

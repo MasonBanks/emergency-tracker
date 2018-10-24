@@ -16,7 +16,6 @@ export default Home = ({ router }) => (
         title="Home"
       >
         {state.mode.emergency ? <EmergencyUserMap /> : <FireEscapeMap />}
-        <EmergencyUserMap />
 
       </Screen>
     )}
