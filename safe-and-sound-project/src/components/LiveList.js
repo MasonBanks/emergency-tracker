@@ -52,7 +52,6 @@ class LiveList extends Component {
               key={user.uid}
               title={`${user.lName}, ${user.fName}`
               }
-
               leftAvatar={{ rounded: true, source: { uri: 'http://www.desiformal.com/assets/images/default-userAvatar.png' } }}
               subtitle={user.isFirstAider ? 'First Aider' : null}
               rightSubtitle={user.isAdmin ? 'Admin' : 'Personnel'}
