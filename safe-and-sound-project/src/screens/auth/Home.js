@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { View, StyleSheet } from 'react-native';
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
 import FireEscapeMap from '../../components/FireEscapeMap';
@@ -7,6 +7,28 @@ import EmergencyUserMap from '../../components/EmergencyUserMap';
 import { GlobalContext } from '../../ContextStore/GlobalContext';
 
 const animation = { type: 'top', duration: 1000 };
+const styles = StyleSheet.create({
+  outterContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start'
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  greenButton: {
+    backgroundColor: 'green',
+    width: '40%',
+    height: 40
+  },
+  redButton: {
+    backgroundColor: 'red',
+    width: '40%',
+    height: 40
+  }
+});
 
 export default (Home = ({ router }) => (
   <GlobalContext.Consumer>
@@ -15,7 +37,25 @@ export default (Home = ({ router }) => (
         backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'}
         title="Home"
       >
-        {state.mode.emergency ? <EmergencyUserMap /> : <FireEscapeMap />}
+        {state.mode.emergency ? (
+          <View style={styles.outterContainer}>
+            <EmergencyUserMap />
+            <View style={styles.buttonContainer}>
+              <Button
+                style={styles.greenButton}
+                onPress={() => {}}
+                text="Mark Safe"
+              />
+              <Button
+                style={styles.redButton}
+                onPress={() => {}}
+                text="Im in Danger"
+              />
+            </View>
+          </View>
+        ) : (
+          <FireEscapeMap />
+        )}
       </Screen>
     )}
   </GlobalContext.Consumer>

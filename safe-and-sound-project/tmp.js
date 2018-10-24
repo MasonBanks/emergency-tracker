@@ -7,4 +7,3 @@ const { database } = firebase;
 
 
 // api.getUserById('pI1EYTutWqZNSMTBFjTwF7hAdfC2');
-
