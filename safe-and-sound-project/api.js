@@ -37,22 +37,21 @@ exports.createUser = (fname, lName, email, password) => {
       return database()
         .ref(`/users/${uid}`)
         .set(newUser)
-        .then(() => {
-          return database().ref('/users').orderByKey().equalTo(uid).once('value')
-            .then((data) => {
-              console.log(data.val(), '<<< User added to realtime db')
-              return data
-            })
-            .catch(err => alert(err));
-        })
+        .then(() => database().ref('/users').orderByKey().equalTo(uid)
+          .once('value')
+          .then((data) => {
+            console.log(data.val(), '<<< User added to realtime db');
+            return data;
+          })
+          .catch(err => alert(err)))
         .catch((error) => {
           if (error.code === 'auth/weak-password') {
             alert('The password is too weak.');
           } else {
             console.log(error.message);
           }
-        })
-    })
+        });
+    });
 }
 
 exports.getUserById = (uid) => {
@@ -63,9 +62,9 @@ exports.getUserById = (uid) => {
     .once('value')
     .then((data) => {
       if (data) {
-        console.log(data.val())
+        console.log(data.val());
         return data;
-      } else alert('Submitted information does not exist within database');
+      } alert('Submitted information does not exist within database');
     })
     .catch(err => alert(err));
 };
