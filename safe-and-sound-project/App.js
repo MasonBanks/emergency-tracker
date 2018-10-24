@@ -59,11 +59,11 @@ export default class App extends React.Component {
         let mappedSafeZone = safezone.map(coordinate => {
           return [coordinate.longitude, coordinate.latitude];
         });
-        this.interval = setInterval(() => { this.checkLocation(mappedBuilding) }, 10000);
+        this.interval = setInterval(() => { this.checkLocation(mappedBuilding, mappedSafeZone) }, 10000);
       });
   };
 
-  checkLocation = (mappedBuilding) => {
+  checkLocation = (mappedBuilding, mappedSafeZone) => {
 
     const options = {
       enableHighAccuracy: false,
@@ -83,6 +83,11 @@ export default class App extends React.Component {
             api.userInBuilding(this.state.user)
           } else if (!inside([longitude, latitude], mappedBuilding) && this.state.user) {
             api.userExitBuilding(this.state.user)
+          }
+          if (inside([longitude, latitude], mappedSafeZone) && this.state.user) {
+            api.userInSafeZone(this.state.user)
+          } else if (!inside([longitude, latitude], mappedSafeZone) && this.state.user) {
+            api.userExitSafeZone(this.state.user)
           }
         });
       }, error => alert(error.message), options,
