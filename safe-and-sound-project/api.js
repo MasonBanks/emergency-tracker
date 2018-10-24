@@ -165,7 +165,6 @@ exports.getEvacList = (adminId) => {
       database().ref(`evacuations/${mostRecentStamp}/inBuildingUsers`).once('value')
         .then((users) => {
           const evacList = Object.values(users.val());
-          console.log(evacList);
           return evacList;
         });
     });
