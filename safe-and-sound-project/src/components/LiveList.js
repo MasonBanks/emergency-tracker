@@ -8,8 +8,6 @@ import * as api from '../../api';
 const styles = StyleSheet.create({
   list: {
     width: '90%',
-    borderBottomColor: 'grey',
-    // backgroundColor: 'rgba(0,0,0,.4)',
   },
 });
 class LiveList extends Component {
@@ -43,20 +41,21 @@ class LiveList extends Component {
   render() {
     let users = this.state.liveUsers;
     users = users.sort((a, b) => b.isAdmin - a.isAdmin || b.isFirstAider - a.isFirstAider);
-    console.log('users listed');
     return (
       <ScrollView style={styles.list}>
         {
           users.map(user => (
             <ListItem
-              titleStyle={{ color: 'black' }}
+              titleStyle={{ color: 'white' }}
+              containerStyle={{ backgroundColor: '#2eea3b' }}
               subtitleStyle={{ color: 'grey' }}
               key={user.uid}
               title={`${user.lName}, ${user.fName}`
               }
-              leftAvatar={{ source: { uri: 'http://icons-for-free.com/free-icons/png/512/1287507.png' } }}
+              leftAvatar={{ rounded: true, source: { uri: 'http://www.desiformal.com/assets/images/default-userAvatar.png' } }}
               subtitle={user.isFirstAider ? 'First Aider' : null}
               rightSubtitle={user.isAdmin ? 'Admin' : 'Personnel'}
+
             />
           ))
         }
