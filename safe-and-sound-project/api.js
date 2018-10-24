@@ -167,7 +167,7 @@ exports.userExitBuilding = (uid) => {
 exports.getAllUsers = () => database()
   .ref('/users')
   .once('value')
-  .then(userData => userData);
+  .then(userData => userData.val());
 
 // exports.userInBuilding = (uid) => {
 //   console.log(uid);
