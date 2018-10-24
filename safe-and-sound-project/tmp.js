@@ -8,4 +8,4 @@ const { database } = firebase;
 // api.getUserById('pI1EYTutWqZNSMTBFjTwF7hAdfC2');
 
 
-createNewEvacuation('person', 123)
+createNewEvacuation('person', 123);
