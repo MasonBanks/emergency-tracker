@@ -119,7 +119,7 @@ export default class App extends React.Component {
             <MapView.Polygon
               title="Safe Zone"
               coordinates={currentArea}
-              description="Safe Zone Boundry"
+              description="Safe Zone Boundary"
               fillColor="rgba(255,0,0,0.1)"
             />
           )}
@@ -129,7 +129,7 @@ export default class App extends React.Component {
               key={point.latitude + point.longitude}
               title="Safe Zone"
               coordinate={point}
-              description="Safe Zone Boundry"
+              description="Safe Zone Boundary"
             />
           ))}
         </MapView>
