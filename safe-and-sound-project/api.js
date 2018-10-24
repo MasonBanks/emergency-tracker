@@ -2,7 +2,7 @@ const firebase = require('firebase');
 const { config } = require('./config/firebase-config');
 
 const { database } = firebase;
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
 
 // these two functions will need to change to accept a userID
 exports.enterBuilding = (bool) => {
@@ -23,6 +23,7 @@ exports.createUser = (fname, lName, email, password) => {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(({ user }) => {
+      console.log(user, '<<< new auth user');
       const { uid } = user;
       const newUser = {
         uid,
@@ -33,11 +34,11 @@ exports.createUser = (fname, lName, email, password) => {
         isAdmin: false,
         isFirstAider: false,
       };
-      database()
+      return database()
         .ref(`/users/${uid}`)
         .set(newUser)
-        .then(() => {
-          this.getUserById(uid);
+        .then((response) => {
+          console.log(response, '<<<< new db user?');
         })
         .catch(console.log);
     })
@@ -51,27 +52,35 @@ exports.createUser = (fname, lName, email, password) => {
     });
 };
 
-getUserById = id => database()
-  .ref('/users')
-  .orderByKey()
-  .equalTo(id)
-  .once('value')
-  .then((data) => {
-    if (data) {
-      return data;
-    }
-    alert('Submitted information does not exist within database');
-  })
-  .catch(err => alert(err));
+exports.getUserById = (uid) => {
+  database()
+    .ref('/users')
+    .orderByKey()
+    .equalTo(uid)
+    .once('value')
+    .then((data) => {
+      if (data) {
+        return data;
+      }
+      alert('Submitted information does not exist within database');
+    })
+    .catch(err => alert(err));
+};
 
 exports.login = (email, password) => firebase
   .auth()
   .signInWithEmailAndPassword(email, password)
   .then(({ user }) => {
     const { uid } = user;
-    return getUserById(uid);
-  })
-  .catch(err => alert(err));
+    return database().ref('/users').orderByKey().equalTo(uid)
+      .once('value')
+      .then((data) => {
+        if (data) {
+          return data;
+        }
+      })
+      .catch(err => alert(err));
+  });
 
 exports.toggleAdminStatus = (uid) => {
   database()

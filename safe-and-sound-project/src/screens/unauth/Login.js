@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import { GlobalContext } from '../../ContextStore/globalContext';
+import { GlobalContext } from '../../ContextStore/GlobalContext';
 
 import { login } from '../../../api';
 
@@ -17,7 +17,8 @@ export default class Login extends React.Component {
   }
 
   handleSignIn(email, password) {
-    return login(email, password);
+    return login(email, password)
+      .then(data => data);
   }
 
   render() {
@@ -55,6 +56,7 @@ export default class Login extends React.Component {
                 this.handleSignIn(this.state.email, this.state.password)
                   .then((data) => {
                     if (data) {
+                      console.log('!!!!!!!!!!!');
                       const object = data.val();
                       const user = object[Object.keys(data.val())[0]];
                       const { uid, isAdmin } = user;

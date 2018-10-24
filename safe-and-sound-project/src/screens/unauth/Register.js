@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import { GlobalContext } from '../../ContextStore/globalContext';
+import { GlobalContext } from '../../ContextStore/GlobalContext';
 
 import { createUser } from '../../../api';
 
@@ -19,7 +19,10 @@ export default class Login extends React.Component {
   }
 
   handleSubmit(fName, lName, email, password) {
-    return createUser(fName, lName, email, password);
+    return createUser(fName, lName, email, password)
+      .then((uid) => {
+        console.log(uid);
+      });
   }
 
   render() {
@@ -37,7 +40,7 @@ export default class Login extends React.Component {
               placeholder="First name"
               onChangeText={fName => this.setState({ fName })}
               value={this.state.fName}
-              autoCapitalize="none"
+              autoCapitalize="words"
             />
             <TextInput
               style={{
@@ -49,7 +52,7 @@ export default class Login extends React.Component {
               placeholder="Last name"
               onChangeText={lName => this.setState({ lName })}
               value={this.state.lName}
-              autoCapitalize="none"
+              autoCapitalize="words"
             />
             <TextInput
               style={{
@@ -78,7 +81,7 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                this.handleSubmit(this.state.fName, this.state.lastName, this.state.email, this.state.password)
+                this.handleSubmit(this.state.fName, this.state.lastName, this.state.email, this.state.password);
               }}
               text="Register"
             />

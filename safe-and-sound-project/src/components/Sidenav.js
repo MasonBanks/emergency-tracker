@@ -10,31 +10,31 @@ export default ({
   router, closeDrawer, setAuth, state,
 }) => (
 
-    <Screen backgroundColor={state.mode.emergency ? "#EE5353" : "#A575E3"}>
+  <Screen backgroundColor={state.mode.emergency ? '#EE5353' : '#A575E3'}>
 
-      {state.isAdmin.admin && (
-        <Button
-          onPress={() => {
-            toggleEmergencyStatus();
-          }}
-          text={state.mode.emergency ? 'Quit Emergency Mode' : 'Enter Emergency Mode'}
-        />
-      )}
+    {state.isAdmin.admin && (
+    <Button
+      onPress={() => {
+        toggleEmergencyStatus();
+      }}
+      text={state.mode.emergency ? 'Quit Emergency Mode' : 'Enter Emergency Mode'}
+    />
+    )}
 
-      <Button
-        onPress={() => {
-          setAuth(false);
-        }}
-        text="Logout"
-      />
+    <Button
+      onPress={() => {
+        setAuth(false);
+      }}
+      text="Logout"
+    />
 
-      <Button
-        onPress={() => {
-          closeDrawer();
-        }}
-        text="⬅"
-      />
+    <Button
+      onPress={() => {
+        closeDrawer();
+      }}
+      text="⬅"
+    />
 
-    </Screen>
+  </Screen>
 
-  );
+);
