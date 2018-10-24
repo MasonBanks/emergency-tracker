@@ -4,8 +4,6 @@ const { config } = require('./config/firebase-config');
 const { database } = firebase;
 firebase.initializeApp(config);
 
-const { GlobalProvider } = require('./src/ContextStore/GlobalContext')
-
 // these two functions will need to change to accept a userID
 exports.enterBuilding = (bool) => {
   database()
@@ -20,73 +18,67 @@ exports.enterSafeZone = (bool) => {
     .update({ inSafeZone: bool });
 };
 
-exports.createUser = (fname, lName, email, password) => {
-  return firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(({ user }) => {
-      const { uid } = user;
-      const newUser = {
-        uid,
-        fname,
-        lName,
-        email,
-        inBuilding: false,
-        inSafeZone: false,
-        isAdmin: false,
-        isFirstAider: false,
-      };
-      return database()
-        .ref(`/users/${uid}`)
-        .set(newUser)
-        .then(() => database().ref('/users').orderByKey().equalTo(uid)
-          .once('value')
-          .then((data) => {
-            console.log(data.val(), '<<< User added to realtime db');
-            return data;
-          })
-          .catch(err => alert(err)))
-        .catch((error) => {
-          if (error.code === 'auth/weak-password') {
-            alert('The password is too weak.');
-          } else {
-            console.log(error.message);
-          }
-        });
-    });
-}
-
-exports.getUserById = (uid) => {
-  return database()
-    .ref('/users')
-    .orderByKey()
-    .equalTo(uid)
-    .once('value')
-    .then((data) => {
-      if (data) {
-        console.log(data.val(), 'User exists');
-        return data;
-      } alert('Submitted information does not exist within database');
-    })
-    .catch(err => alert(err));
-};
-
-exports.login = (email, password) => {
-  return firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(({ user }) => {
-      const { uid } = user;
-      return database().ref('/users').orderByKey().equalTo(uid)
+exports.createUser = (fname, lName, email, password) => firebase
+  .auth()
+  .createUserWithEmailAndPassword(email, password)
+  .then(({ user }) => {
+    const { uid } = user;
+    const newUser = {
+      uid,
+      fname,
+      lName,
+      email,
+      inBuilding: false,
+      inSafeZone: false,
+      isAdmin: false,
+      isFirstAider: false,
+    };
+    return database()
+      .ref(`/users/${uid}`)
+      .set(newUser)
+      .then(() => database().ref('/users').orderByKey().equalTo(uid)
         .once('value')
         .then((data) => {
-          if (data) {
-            return data;
-          }
+          console.log(data.val(), '<<< User added to realtime db');
+          return data;
         })
-        .catch(err => alert(err));
-    });
-}
+        .catch(err => alert(err)))
+      .catch((error) => {
+        if (error.code === 'auth/weak-password') {
+          alert('The password is too weak.');
+        } else {
+          console.log(error.message);
+        }
+      });
+  });
+
+exports.getUserById = uid => database()
+  .ref('/users')
+  .orderByKey()
+  .equalTo(uid)
+  .once('value')
+  .then((data) => {
+    if (data) {
+      console.log(data.val(), 'User exists');
+      return data;
+    } alert('Submitted information does not exist within database');
+  })
+  .catch(err => alert(err));
+
+exports.login = (email, password) => firebase
+  .auth()
+  .signInWithEmailAndPassword(email, password)
+  .then(({ user }) => {
+    const { uid } = user;
+    return database().ref('/users').orderByKey().equalTo(uid)
+      .once('value')
+      .then((data) => {
+        if (data) {
+          return data;
+        }
+      })
+      .catch(err => alert(err));
+  });
 
 exports.toggleAdminStatus = (uid) => {
   database()
@@ -112,16 +104,14 @@ exports.toggleFirstAiderStatus = (uid) => {
     });
 };
 
-exports.emergencyStatusListener = () => {
-  return database()
-    .ref('/site')
-    .child('isEmergency')
-    .on('value', (snapshot) => {
-      console.log(`current status: ${snapshot.val()}`);
-    });
-}
+exports.emergencyStatusListener = () => database()
+  .ref('/site')
+  .child('isEmergency')
+  .on('value', (snapshot) => {
+    console.log(`current status: ${snapshot.val()}`);
+  });
 
-exports.toggleEmergencyStatus = () => {
+exports.toggleEmergencyStatus = (currentMode) => {
   database()
     .ref('/site')
     .child('isEmergency')
@@ -139,20 +129,23 @@ exports.toggleEmergencyStatus = () => {
             .once('value')
             .then((newData) => {
               console.log(`Emergency status set to ${newData.val()}`);
-              if (newData.val()) {
-                const { authenticated } = GlobalProvider.state.auth || 'hello';
-                const timestamp = Date.now()
-                console.log(adminId, timestamp)
-                return this.createNewEvacuation(authenticated, timestamp)
-              } else return;
             });
         });
     });
 };
 
 exports.createNewEvacuation = (adminId, startTime) => {
-  return console.log(adminId, startTime, '<<<<<<')
-}
+  const inBuildingUsers = [];
+  database().ref('users').orderByChild('inBuilding').on('value', (snapshot) => {
+    console.log(snapshot.val());
+  });
+  // database().ref('evacuations').push({
+  //   adminId,
+  //   startTime,
+  //   finishTime,
+  //   inBuildingUsers
+  // })
+};
 
 exports.getSafeZone = () => database()
   .ref('/site/safeZone')

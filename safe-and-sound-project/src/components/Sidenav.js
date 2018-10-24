@@ -1,8 +1,7 @@
 import React from 'react';
-
 import Screen from './Screen';
 import Button from './Button';
-import { toggleEmergencyStatus } from '../../api';
+import { toggleEmergencyStatus, createNewEvacuation } from '../../api';
 
 const animation = { type: 'right', duration: 1100 };
 
@@ -15,7 +14,9 @@ export default ({
     {state.isAdmin.admin && (
     <Button
       onPress={() => {
-        toggleEmergencyStatus();
+        const timestamp = Date.now();
+        toggleEmergencyStatus(state.mode.emergency);
+        createNewEvacuation(state.auth.authenticated, timestamp);
       }}
       text={state.mode.emergency ? 'Quit Emergency Mode' : 'Enter Emergency Mode'}
     />

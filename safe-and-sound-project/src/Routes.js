@@ -79,15 +79,53 @@ class Routes extends React.Component {
         {({
           setAuth, setMode, state,
         }) => (
-            <View style={{ backgroundColor: 'black', flex: 1 }}>
-              {!state.auth.authenticated && (
+          <View style={{ backgroundColor: 'black', flex: 1 }}>
+            {!state.auth.authenticated && (
+            <EasyRouter
+              routes={{
+                Intro,
+                Login,
+                Register,
+              }}
+              initialRoute="Intro"
+              animations={animations}
+              onStackChange={this.onStackChange}
+              onBeforeStackChange={this.onBeforeStackChange}
+              router={(router) => {
+                this.setRouter(router);
+              }}
+            />
+            )}
+
+            {state.auth.authenticated && (
+            <Drawer
+              renderNavigationView={() => (
+                <Sidenav
+                  state={state}
+                  setAuth={setAuth}
+                  setMode={setMode}
+                  router={this.state.router}
+                  closeDrawer={this.closeDrawer}
+                />
+              )}
+              ref={this.drawer}
+            >
+              <Tabs
+                state={state}
+                router={this.state.router}
+                openDrawer={this.openDrawer}
+                from={this.state.from}
+                to={this.state.to}
+                transition={this.state.animation}
+              >
                 <EasyRouter
                   routes={{
-                    Intro,
-                    Login,
-                    Register,
+                    Home,
+                    EditZones,
+                    Settings,
+                    UserInfo,
                   }}
-                  initialRoute="Intro"
+                  initialRoute="Home"
                   animations={animations}
                   onStackChange={this.onStackChange}
                   onBeforeStackChange={this.onBeforeStackChange}
@@ -95,49 +133,11 @@ class Routes extends React.Component {
                     this.setRouter(router);
                   }}
                 />
-              )}
-
-              {state.auth.authenticated && (
-                <Drawer
-                  renderNavigationView={() => (
-                    <Sidenav
-                      state={state}
-                      setAuth={setAuth}
-                      setMode={setMode}
-                      router={this.state.router}
-                      closeDrawer={this.closeDrawer}
-                    />
-                  )}
-                  ref={this.drawer}
-                >
-                  <Tabs
-                    state={state}
-                    router={this.state.router}
-                    openDrawer={this.openDrawer}
-                    from={this.state.from}
-                    to={this.state.to}
-                    transition={this.state.animation}
-                  >
-                    <EasyRouter
-                      routes={{
-                        Home,
-                        EditZones,
-                        Settings,
-                        UserInfo,
-                      }}
-                      initialRoute="Home"
-                      animations={animations}
-                      onStackChange={this.onStackChange}
-                      onBeforeStackChange={this.onBeforeStackChange}
-                      router={(router) => {
-                        this.setRouter(router);
-                      }}
-                    />
-                  </Tabs>
-                </Drawer>
-              )}
-            </View>
-          )
+              </Tabs>
+            </Drawer>
+            )}
+          </View>
+        )
         }
       </GlobalContext.Consumer>
     );

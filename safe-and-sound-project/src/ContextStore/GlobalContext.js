@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { initialState } from './initialState';
 
 const GlobalContext = React.createContext();
 
