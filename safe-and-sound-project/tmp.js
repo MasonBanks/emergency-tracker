@@ -5,4 +5,4 @@ const { config } = require('./config/firebase-config');
 const { database } = firebase;
 // firebase.initializeApp(config);
 
-api.getUserById('pI1EYTutWqZNSMTBFjTwF7hAdfC2');
+api.getSafeList('HFEZc1g9aaPuWIF3RnWsy0I1yDB2');

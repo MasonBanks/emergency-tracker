@@ -171,6 +171,10 @@ exports.getEvacList = (adminId) => {
     });
 };
 
+async function getSafeList(adminId) {
+  await exports.getEvacList(adminId);
+}
+
 exports.endCurrentEvacuation = (adminId) => {
   database().ref('evacuations').orderByChild('adminId').equalTo(adminId)
     .once('value')
@@ -231,3 +235,8 @@ exports.getAllUsers = () => database()
 //   console.log(uid);
 //   database().ref(`/inBuildingUsers/${uid}`).set(null);
 // };
+
+
+module.exports = {
+  getSafeList,
+};
