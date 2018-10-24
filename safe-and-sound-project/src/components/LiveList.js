@@ -42,10 +42,8 @@ class LiveList extends Component {
 
   render() {
     let users = this.state.liveUsers;
-    users = users.sort(function (a, b) {
-      return b.isAdmin - a.isAdmin || b.isFirstAider - a.isFirstAider
-    })
-    console.log('users listed')
+    users = users.sort((a, b) => b.isAdmin - a.isAdmin || b.isFirstAider - a.isFirstAider);
+    console.log('users listed');
     return (
       <ScrollView style={styles.list}>
         {
@@ -56,7 +54,7 @@ class LiveList extends Component {
               key={user.uid}
               title={`${user.lName}, ${user.fName}`
               }
-              leftAvatar={{ source: { uri: 'http://icons-for-free.com/free-icons/png/512/1287507.png', } }}
+              leftAvatar={{ source: { uri: 'http://icons-for-free.com/free-icons/png/512/1287507.png' } }}
               subtitle={user.isFirstAider ? 'First Aider' : null}
               rightSubtitle={user.isAdmin ? 'Admin' : 'Personnel'}
             />
