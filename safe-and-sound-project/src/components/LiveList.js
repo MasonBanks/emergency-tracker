@@ -15,16 +15,16 @@ class LiveList extends Component {
 
   componentDidMount() {
     api.getAllUsers()
-      .then((users) => {
-        const liveUsers = users.reduce((acc, user) => {
-          acc.push(user[0]);
-          return acc;
-        }, []);
-        console.log(liveUsers);
-        this.setState({
-          liveUsers,
-        });
-      });
+    // .then((users) => {
+    //   const liveUsers = users.reduce((acc, user) => {
+    //     acc.push(user[0]);
+    //     return acc;
+    //   }, []);
+    //   console.log(liveUsers);
+    //   this.setState({
+    //     liveUsers,
+    //   });
+    // });
   }
 
   render() {
