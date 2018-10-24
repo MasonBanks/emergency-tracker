@@ -128,7 +128,6 @@ export default class Tabs extends React.Component {
         outputRange: [fromPos.width, toPos.width],
       });
     const contextState = this.props.state;
-    console.log(contextState);
 
     return (
       <View style={styles.container}>
