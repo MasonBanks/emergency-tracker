@@ -6,20 +6,20 @@ firebase.initializeApp(config);
 
 // these two functions will need to change to accept a userID
 exports.enterBuilding = (bool) => {
-  database()
+  return database()
     .ref('/users/0')
     .update({ inBuilding: bool });
 };
 
 // these two functions will need to change to accept a userID
 exports.enterSafeZone = (bool) => {
-  database()
+  return database()
     .ref('/users/0')
     .update({ inSafeZone: bool });
 };
 
-exports.createUser = (fname, lName, email, password) =>
-  firebase
+exports.createUser = (fname, lName, email, password) => {
+  return firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(({ user }) => {
@@ -33,26 +33,24 @@ exports.createUser = (fname, lName, email, password) =>
         inSafeZone: false,
         markedSafe: null,
         markedInDanger: null,
-        avatar: '',
+        avatar: 'https://commons.wikimedia.org/wiki/File:Profile_avatar_placeholder_large.png',
         isAdmin: false,
-        isFirstAider: false
+        isFirstAider: false,
       };
       return database()
         .ref(`/users/${uid}`)
         .set(newUser)
-        .then(() =>
-          database()
-            .ref('/users')
-            .orderByKey()
-            .equalTo(uid)
-            .once('value')
-            .then(data => {
-              console.log(data.val(), '<<< User added to realtime db');
-              return data;
-            })
-            .catch(err => alert(err))
-        )
-        .catch(error => {
+        .then(() => database()
+          .ref('/users')
+          .orderByKey()
+          .equalTo(uid)
+          .once('value')
+          .then((data) => {
+            console.log(data.val(), '<<< User added to realtime db');
+            return data;
+          })
+          .catch(err => alert(err)))
+        .catch((error) => {
           console.log(error);
           if (error.code === 'auth/weak-password') {
             alert('The password is too weak.');
@@ -61,9 +59,10 @@ exports.createUser = (fname, lName, email, password) =>
           }
         });
     });
+}
 
-exports.getUserById = uid => {
-  database()
+exports.getUserById = (uid) => {
+  return database()
     .ref('/users')
     .orderByKey()
     .equalTo(uid)
@@ -78,43 +77,45 @@ exports.getUserById = uid => {
     .catch(err => alert(err));
 };
 
-exports.login = (email, password) => firebase
-  .auth()
-  .signInWithEmailAndPassword(email, password)
-  .then(({ user }) => {
-    const { uid } = user;
-    return database()
-      .ref('/users')
-      .orderByKey()
-      .equalTo(uid)
-      .once('value')
-      .then((data) => {
-        if (data) {
-          return data;
-        }
-      })
-      .catch(err => alert(err));
-  });
+exports.login = (email, password) => {
+  return firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then(({ user }) => {
+      const { uid } = user;
+      return database()
+        .ref('/users')
+        .orderByKey()
+        .equalTo(uid)
+        .once('value')
+        .then((data) => {
+          if (data) {
+            return data;
+          }
+        })
+        .catch(err => alert(err));
+    });
+}
 
 exports.toggleAdminStatus = (uid) => {
-  database()
+  return database()
     .ref(`/users/${uid}/isAdmin`)
     .once('value')
     .then((data) => {
       const currentStatus = data.val();
-      database()
+      return database()
         .ref(`/users/${uid}`)
         .update({ isAdmin: !currentStatus });
     });
 };
 
 exports.toggleFirstAiderStatus = (uid) => {
-  database()
+  return database()
     .ref(`/users/${uid}/isFirstAider`)
     .once('value')
     .then((data) => {
       const currentStatus = data.val();
-      database()
+      return database()
         .ref(`/users/${uid}`)
         .update({ isFirstAider: !currentStatus });
     });
@@ -128,18 +129,18 @@ exports.emergencyStatusListener = () => database()
   });
 
 exports.toggleEmergencyStatus = () => {
-  database()
+  return database()
     .ref('/site')
     .child('isEmergency')
     .once('value')
     .then((data) => {
       console.log(`current emergency status: ${data.val()}`);
       const currentStatus = data.val();
-      database()
+      return database()
         .ref('/site')
         .update({ isEmergency: !currentStatus })
         .then(() => {
-          database()
+          return database()
             .ref('/site')
             .child('isEmergency')
             .once('value')
@@ -151,10 +152,10 @@ exports.toggleEmergencyStatus = () => {
 };
 
 exports.createNewEvacuation = (adminId, startTime) => {
-  database().ref('users').orderByChild('inBuilding').equalTo(true)
+  return database().ref('users').orderByChild('inBuilding').equalTo(true)
     .once('value', (snapshot) => {
       const inBuildingUsers = snapshot.val();
-      database().ref(`evacuations/${startTime}`).set({
+      return database().ref(`evacuations/${startTime}`).set({
         adminId,
         startTime,
         finishTime: null,
@@ -164,85 +165,93 @@ exports.createNewEvacuation = (adminId, startTime) => {
 };
 
 exports.getEvacList = (adminId) => {
-  database().ref('evacuations').orderByChild('adminId').equalTo(adminId)
+  return database().ref('evacuations').orderByChild('adminId').equalTo(adminId)
     .once('value')
     .then((data) => {
       mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
-      database().ref(`evacuations/${mostRecentStamp}/inBuildingUsers`).once('value')
+      return database().ref(`evacuations/${mostRecentStamp}/inBuildingUsers`).once('value')
         .then((users) => {
           const evacList = Object.values(users.val());
-          console.log(evacList);
           return evacList;
         });
     });
 };
 
-async function getSafeList(adminId) {
-  await exports.getEvacList(adminId);
-}
+
 
 exports.endCurrentEvacuation = (adminId) => {
-  database().ref('evacuations').orderByChild('adminId').equalTo(adminId)
+  return database().ref('evacuations').orderByChild('adminId').equalTo(adminId)
     .once('value')
     .then((data) => {
       mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
-      database().ref(`evacuations/${mostRecentStamp}`).update({
+      return database().ref(`evacuations/${mostRecentStamp}`).update({
         finishTime: Date.now(),
       });
     });
 };
 
-exports.getSafeZone = () => database()
-  .ref('/site/safeZone')
-  .once('value')
-  .then(data => data);
+exports.getSafeZone = () => {
+  return database()
+    .ref('/site/safeZone')
+    .once('value')
+    .then(data => data);
+}
 
-exports.getBuilding = () => database()
-  .ref('/site/building')
-  .once('value')
-  .then(data => data);
+exports.getBuilding = () => {
+  return database()
+    .ref('/site/building')
+    .once('value')
+    .then(data => data);
+}
 
-exports.saveSafeZone = (Zone, zoneName) => database()
-  .ref('/site')
-  .update({
-    [zoneName]: Zone,
-  });
+exports.saveSafeZone = (Zone, zoneName) => {
+  return database()
+    .ref('/site')
+    .update({
+      [zoneName]: Zone,
+    });
+}
 
 exports.userInBuilding = (uid) => {
-  database()
+  return database()
     .ref(`/users/${uid}`)
     .update({ inBuilding: true });
 };
 
 exports.userExitBuilding = (uid) => {
-  database()
+  return database()
     .ref(`/users/${uid}`)
     .update({ inBuilding: false });
 };
 
 exports.userInSafeZone = (uid) => {
-  database()
+  return database()
     .ref(`/users/${uid}`)
     .update({ inSafeZone: true });
 };
 
 exports.userExitSafeZone = (uid) => {
-  database()
+  return database()
     .ref(`/users/${uid}`)
     .update({ inSafeZone: false });
 };
 
-exports.getAllUsers = () => database()
-  .ref('/users')
-  .once('value')
-  .then(userData => userData.val());
+exports.getAllUsers = () => {
+  return database()
+    .ref('/users')
+    .once('value')
+    .then(userData => userData.val());
+}
 
 // exports.userInBuilding = (uid) => {
 //   console.log(uid);
 //   database().ref(`/inBuildingUsers/${uid}`).set(null);
 // };
 
+exports.getSafeList = (adminId) => {
+  return this.getEvacList(adminId)
+    .then((list) => {
+      return list
+    })
+}
 
-module.exports = {
-  getSafeList,
-};
