@@ -5,6 +5,7 @@ import Button from '../../components/Button';
 import FireEscapeMap from '../../components/FireEscapeMap';
 import EmergencyUserMap from '../../components/EmergencyUserMap';
 import { GlobalContext } from '../../ContextStore/GlobalContext';
+import { updateUser } from '../../../api';
 
 const animation = { type: 'top', duration: 1000 };
 const styles = StyleSheet.create({
@@ -43,12 +44,21 @@ export default (Home = ({ router }) => (
             <View style={styles.buttonContainer}>
               <Button
                 style={styles.greenButton}
-                onPress={() => {}}
+                onPress={() => {
+                  updateUser(state.auth.authenticated, {
+                    markedSafe: true,
+                    markedInDanger: false
+                  });
+                }}
                 text="Mark Safe"
               />
               <Button
                 style={styles.redButton}
-                onPress={() => {}}
+                onPress={() => {
+                  updateUser(state.auth.authenticated, {
+                    markedInDanger: true
+                  });
+                }}
                 text="Im in Danger"
               />
             </View>

@@ -146,9 +146,12 @@ exports.toggleEmergencyStatus = (currentMode) => {
 
 exports.createNewEvacuation = (adminId, startTime) => {
   const inBuildingUsers = [];
-  database().ref('users').orderByChild('inBuilding').on('value', (snapshot) => {
-    console.log(snapshot.val());
-  });
+  database()
+    .ref('users')
+    .orderByChild('inBuilding')
+    .on('value', (snapshot) => {
+      console.log(snapshot.val());
+    });
   // database().ref('evacuations').push({
   //   adminId,
   //   startTime,
@@ -201,6 +204,11 @@ exports.getAllUsers = () => database()
   .ref('/users')
   .once('value')
   .then(userData => userData.val());
+
+exports.updateUser = (uid, entriesToUpdateObj) => database()
+  .ref(`/users/${uid}`)
+  .update(entriesToUpdateObj)
+  .then(updatedData => updatedData.val());
 
 // exports.userInBuilding = (uid) => {
 //   console.log(uid);
