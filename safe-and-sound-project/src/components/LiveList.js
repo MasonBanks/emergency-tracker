@@ -8,27 +8,34 @@ import * as api from '../../api';
 const styles = StyleSheet.create({
   list: {
     width: '90%',
-    backgroundColor: 'rgba(0,0,0,.4)'
+    backgroundColor: 'rgba(0,0,0,.4)',
   },
 });
 class LiveList extends Component {
   state = {
-    liveUsers: []
+    liveUsers: [],
   }
 
+
   componentDidMount() {
+    this.interval = setInterval(this.getUsers(), 10000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  getUsers = () => {
     api.getAllUsers()
-      .then(users => {
+      .then((users) => {
         this.setState({
           liveUsers:
             Object.values(users).reduce((acc, user) => {
-              acc.push(user)
-              return acc
-            }, [])
-        })
-      })
+              acc.push(user);
+              return acc;
+            }, []),
+        });
+      });
   }
-  
 
   render() {
     return (
