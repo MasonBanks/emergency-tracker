@@ -18,45 +18,51 @@ exports.enterSafeZone = (bool) => {
     .update({ inSafeZone: bool });
 };
 
-exports.createUser = (fname, lName, email, password) => firebase
-  .auth()
-  .createUserWithEmailAndPassword(email, password)
-  .then(({ user }) => {
-    const { uid } = user;
-    const newUser = {
-      uid,
-      fname,
-      lName,
-      email,
-      inBuilding: false,
-      inSafeZone: false,
-      isAdmin: false,
-      isFirstAider: false,
-    };
-    return database()
-      .ref(`/users/${uid}`)
-      .set(newUser)
-      .then(() => database()
-        .ref('/users')
-        .orderByKey()
-        .equalTo(uid)
-        .once('value')
-        .then((data) => {
-          console.log(data.val(), '<<< User added to realtime db');
-          return data;
-        })
-        .catch(err => alert(err)))
-      .catch((error) => {
-        console.log(error);
-        if (error.code === 'auth/weak-password') {
-          alert('The password is too weak.');
-        } else {
-          console.log(error.message);
-        }
-      });
-  });
+exports.createUser = (fname, lName, email, password) =>
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(({ user }) => {
+      const { uid } = user;
+      const newUser = {
+        uid,
+        fname,
+        lName,
+        email,
+        inBuilding: false,
+        inSafeZone: false,
+        markedSafe: null,
+        markedInDanger: null,
+        avatar: '',
+        isAdmin: false,
+        isFirstAider: false
+      };
+      return database()
+        .ref(`/users/${uid}`)
+        .set(newUser)
+        .then(() =>
+          database()
+            .ref('/users')
+            .orderByKey()
+            .equalTo(uid)
+            .once('value')
+            .then(data => {
+              console.log(data.val(), '<<< User added to realtime db');
+              return data;
+            })
+            .catch(err => alert(err))
+        )
+        .catch(error => {
+          console.log(error);
+          if (error.code === 'auth/weak-password') {
+            alert('The password is too weak.');
+          } else {
+            console.log(error.message);
+          }
+        });
+    });
 
-exports.getUserById = (uid) => {
+exports.getUserById = uid => {
   database()
     .ref('/users')
     .orderByKey()
