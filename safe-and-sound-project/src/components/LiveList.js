@@ -18,7 +18,7 @@ class LiveList extends Component {
 
 
   componentDidMount() {
-    this.getUsers()
+    this.getUsers();
     this.interval = setInterval(this.getUsers, 10000);
   }
 
@@ -44,7 +44,7 @@ class LiveList extends Component {
       <ScrollView style={styles.list}>
         {
           this.state.liveUsers.map(user => (
-            < ListItem
+            <ListItem
               titleStyle={{ color: 'white' }}
               subtitleStyle={{ color: 'grey' }}
               key={user.uid}
