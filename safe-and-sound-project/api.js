@@ -2,7 +2,7 @@ const firebase = require('firebase');
 const { config } = require('./config/firebase-config');
 
 const { database } = firebase;
-// firebase.initializeApp(config);
+firebase.initializeApp(config);
 
 // these two functions will need to change to accept a userID
 exports.enterBuilding = (bool) => {
