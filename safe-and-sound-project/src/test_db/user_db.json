@@ -1,0 +1,248 @@
+{
+  "1MZzFLEPmCYrD2kJpcL97OZ91l02": {
+    "fName": "Adalberto",
+    "isAdmin": false,
+    "isFirstAider": true,
+    "lName": "Weber",
+    "uid": "1MZzFLEPmCYrD2kJpcL97OZ91l02"
+  },
+  "3JwaKGRbNPakEz03VRx9smbuHmi2": {
+    "fName": "Maud",
+    "isAdmin": false,
+    "isFirstAider": true,
+    "lName": "Brekke",
+    "uid": "3JwaKGRbNPakEz03VRx9smbuHmi2"
+  },
+  "72peSapSFmMgLsmwMycuy97bwsq1": {
+    "fname": "jack",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "daniels",
+    "uid": "72peSapSFmMgLsmwMycuy97bwsq1"
+  },
+  "7Woxf1Kz5lgvehOCV5VowXgoHMt1": {
+    "email": "iamaperson10@gmail.com",
+    "fname": "test",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "person",
+    "uid": "7Woxf1Kz5lgvehOCV5VowXgoHMt1"
+  },
+  "9bMtKRx7URO606G8o2znZZBVxQe2": {
+    "fName": "Blake",
+    "isAdmin": true,
+    "isFirstAider": false,
+    "lName": "Klocko",
+    "uid": "9bMtKRx7URO606G8o2znZZBVxQe2"
+  },
+  "DwPXKxzCq6MFc8HjbxEx2kLjPmx1": {
+    "email": "iamaperson12@gmail.com",
+    "fname": "test",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "person",
+    "uid": "DwPXKxzCq6MFc8HjbxEx2kLjPmx1"
+  },
+  "FWVJrkWOqRW8pAlhNtgmLrThtBJ2": {
+    "email": "myemail@gmail.com",
+    "fname": "Hello",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Person",
+    "uid": "FWVJrkWOqRW8pAlhNtgmLrThtBJ2"
+  },
+  "I2eJQdJ9d5X8smbMJnYZHcS1ege2": {
+    "email": "iamaperson11@gmail.com",
+    "fname": "test",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "person",
+    "uid": "I2eJQdJ9d5X8smbMJnYZHcS1ege2"
+  },
+  "IvAel5zEQqZsTsSIsmWCegM4SWl2": {
+    "fName": "Adah",
+    "isAdmin": false,
+    "isFirstAider": true,
+    "lName": "Toy",
+    "uid": "IvAel5zEQqZsTsSIsmWCegM4SWl2"
+  },
+  "Jc8mdk94tINZUCzbFKzh5LYYPYx2": {
+    "fname": "jack",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "daniels",
+    "uid": "Jc8mdk94tINZUCzbFKzh5LYYPYx2"
+  },
+  "KWLfsPT7rMcMLm9O2hwAhLeHkUi2": {
+    "fname": "jack",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "daniels",
+    "uid": "KWLfsPT7rMcMLm9O2hwAhLeHkUi2"
+  },
+  "O5YWg3PUISPTzK9fcz30kOX3DFf1": {
+    "fName": "Margaretta",
+    "isAdmin": true,
+    "isFirstAider": true,
+    "lName": "Botsford",
+    "uid": "O5YWg3PUISPTzK9fcz30kOX3DFf1"
+  },
+  "RcW8kDDkPiXcRcgbuhDmWxDNO993": {
+    "fName": "Keara",
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Kuhic",
+    "uid": "RcW8kDDkPiXcRcgbuhDmWxDNO993"
+  },
+  "SiTJzg1p2sZWZpxb1Wm6BRZW4tr1": {
+    "fName": "Amir",
+    "isAdmin": false,
+    "isFirstAider": true,
+    "lName": "Klocko",
+    "uid": "SiTJzg1p2sZWZpxb1Wm6BRZW4tr1"
+  },
+  "TWTFnPHOfHayJEPaFQosJBj5OnJ2": {
+    "fName": "Crawford",
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Shanahan",
+    "uid": "TWTFnPHOfHayJEPaFQosJBj5OnJ2"
+  },
+  "TgMcSRZc93d1cr4K1Uh0vJzc3qk2": {
+    "fName": "Rene",
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Morissette",
+    "uid": "TgMcSRZc93d1cr4K1Uh0vJzc3qk2"
+  },
+  "XHtFNxu97GOxs1leGAEPeWUm8vi2": {
+    "fName": "Henderson",
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Berge",
+    "uid": "XHtFNxu97GOxs1leGAEPeWUm8vi2"
+  },
+  "b7UgXoQoyadBCn1bjugj4RhbfDz1": {
+    "fName": "Test",
+    "inBuilding": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "User",
+    "uid": "b7UgXoQoyadBCn1bjugj4RhbfDz1"
+  },
+  "ca8hyEV3dqT72sRU00CxhjAKKyn2": {
+    "fname": "jack",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "daniels",
+    "uid": "ca8hyEV3dqT72sRU00CxhjAKKyn2"
+  },
+  "fGSGk6EIuHTinF19PbiB9mua0s42": {
+    "email": "doesthiswork@ymail.com",
+    "fname": "Does",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Thiswork",
+    "uid": "fGSGk6EIuHTinF19PbiB9mua0s42"
+  },
+  "hAUGB48PwAZttbNFm7odRdfKoHV2": {
+    "email": "drf@gmail.com",
+    "fname": "Ggg",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Fdd",
+    "uid": "hAUGB48PwAZttbNFm7odRdfKoHV2"
+  },
+  "ioln0lArN3N4nHfZQf6EujCvJkr1": {
+    "fName": "Fernando",
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Lubowitz",
+    "uid": "ioln0lArN3N4nHfZQf6EujCvJkr1"
+  },
+  "m1DGywEAWYVDI6JzzNmphqh80C33": {
+    "email": "akdjfj@gmail.com",
+    "fname": "Ndjd",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Jdjdjf",
+    "uid": "m1DGywEAWYVDI6JzzNmphqh80C33"
+  },
+  "m1I7XROkiehMlyw6ZLc6GqNe42u2": {
+    "fname": "jack",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "daniels",
+    "uid": "m1I7XROkiehMlyw6ZLc6GqNe42u2"
+  },
+  "m7PR1grQ7LQaQEfR1QfSK03OZxR2": {
+    "fName": "Gillian",
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Sanford",
+    "uid": "m7PR1grQ7LQaQEfR1QfSK03OZxR2"
+  },
+  "mxZTRKNeEFVYGpoN8pTjJZOQzSD3": {
+    "fName": "Meta",
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Lubowitz",
+    "uid": "mxZTRKNeEFVYGpoN8pTjJZOQzSD3"
+  },
+  "pI1EYTutWqZNSMTBFjTwF7hAdfC2": {
+    "fName": "Norwood",
+    "isAdmin": false,
+    "isFirstAider": true,
+    "lName": "Zulauf",
+    "uid": "pI1EYTutWqZNSMTBFjTwF7hAdfC2"
+  },
+  "vYtWH8hN2zeitFUOEI96Xyp1lQg1": {
+    "fName": "Retta",
+    "isAdmin": true,
+    "isFirstAider": true,
+    "lName": "McLaughlin",
+    "uid": "vYtWH8hN2zeitFUOEI96Xyp1lQg1"
+  },
+  "xsy7AHXNBEb58Tw9RMqrZxD1Sbx1": {
+    "email": "notanemail@ymail.com",
+    "fname": "Mason",
+    "inBuilding": false,
+    "inSafeZone": false,
+    "isAdmin": false,
+    "isFirstAider": false,
+    "lName": "Banks",
+    "uid": "xsy7AHXNBEb58Tw9RMqrZxD1Sbx1"
+  },
+  "yJvk4DB8ZkXBrSfANptcwZGTmoU2": {
+    "firstName": "Test",
+    "inBuilding": false,
+    "isAdmin": true,
+    "isFirstAider": true,
+    "lastName": "Admin",
+    "uid": "yJvk4DB8ZkXBrSfANptcwZGTmoU2"
+  }
+}

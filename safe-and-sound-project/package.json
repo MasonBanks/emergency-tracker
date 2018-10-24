@@ -21,7 +21,7 @@
     "react-native-animatable-promise": "^1.2.4",
     "react-native-drawer-layout-polyfill": "^2.0.0",
     "react-native-easy-router": "^2.5.0",
-    "react-native-elements": "^0.19.1",
+    "react-native-elements": "^1.0.0-beta4",
     "react-native-maps": "^0.22.0",
     "react-native-scripts": "^2.0.1"
   },
@@ -43,7 +43,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm test"
+      "pre-push": ""
     }
   },
   "lint-staged": {
