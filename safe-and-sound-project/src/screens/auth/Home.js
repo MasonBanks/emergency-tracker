@@ -12,23 +12,23 @@ const styles = StyleSheet.create({
   outterContainer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   buttonContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   greenButton: {
     backgroundColor: 'green',
     width: '40%',
-    height: 40
+    height: 40,
   },
   redButton: {
     backgroundColor: 'red',
     width: '40%',
-    height: 40
-  }
+    height: 40,
+  },
 });
 
 export default (Home = ({ router }) => (
@@ -47,7 +47,7 @@ export default (Home = ({ router }) => (
                 onPress={() => {
                   updateUser(state.auth.authenticated, {
                     markedSafe: true,
-                    markedInDanger: false
+                    markedInDanger: false,
                   });
                 }}
                 text="Mark Safe"
@@ -56,7 +56,7 @@ export default (Home = ({ router }) => (
                 style={styles.redButton}
                 onPress={() => {
                   updateUser(state.auth.authenticated, {
-                    markedInDanger: true
+                    markedInDanger: true,
                   });
                 }}
                 text="Im in Danger"
