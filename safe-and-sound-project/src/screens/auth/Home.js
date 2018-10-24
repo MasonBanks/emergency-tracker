@@ -11,7 +11,8 @@ export default Home = ({ router }) => (
   <GlobalContext.Consumer>
     {({ state, setMode }) => (
       <Screen backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'} title="Home">
-        {/* <FireEscapeMap /> */}
+      {state.mode.emergency ? '#F05555' :  <FireEscapeMap />}
+        {/* */}
       </Screen>
     )}
   </GlobalContext.Consumer>
