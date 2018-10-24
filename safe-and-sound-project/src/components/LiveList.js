@@ -6,8 +6,8 @@ import * as api from '../../api';
 const styles = StyleSheet.create({
   list: {
     width: '75%',
-  }
-})
+  },
+});
 class LiveList extends Component {
   state = {
     liveUsers: [],
@@ -31,7 +31,7 @@ class LiveList extends Component {
     return (
       <View style={styles.list}>
         {
-          this.state.liveUsers.map((user) => (
+          this.state.liveUsers.map(user => (
             <ListItem
               style={styles.listItem}
               key={user.fName}

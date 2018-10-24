@@ -78,7 +78,7 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                this.handleSubmit(this.state.fName, this.state.lastName, this.state.email, this.state.password)
+                this.handleSubmit(this.state.fName, this.state.lastName, this.state.email, this.state.password);
               }}
               text="Register"
             />

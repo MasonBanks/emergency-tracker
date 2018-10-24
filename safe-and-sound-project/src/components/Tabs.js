@@ -128,7 +128,7 @@ export default class Tabs extends React.Component {
         outputRange: [fromPos.width, toPos.width],
       });
     const contextState = this.props.state;
-    console.log(contextState)
+    console.log(contextState);
 
     return (
       <View style={styles.container}>
@@ -148,7 +148,8 @@ export default class Tabs extends React.Component {
               }}
               text="Home"
             />
-            {contextState.isAdmin.admin &&
+            {contextState.isAdmin.admin
+              && (
               <Button
                 style={styles.button}
                 textStyle={styles.buttonText}
@@ -161,7 +162,8 @@ export default class Tabs extends React.Component {
                   this.onLayout('EditZones', layout);
                 }}
                 text="Edit Zones"
-              />}
+              />
+              )}
 
             <Button
               style={styles.button}
