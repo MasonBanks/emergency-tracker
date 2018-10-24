@@ -58,6 +58,7 @@ class GlobalProvider extends Component {
     });
   }
 
+
   render() {
     return (
       <GlobalContext.Provider value={{
