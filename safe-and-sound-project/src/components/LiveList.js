@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { List, ListItem } from 'react-native-elements';
-import { View, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import * as api from '../../api';
 // import users from '../test_db/user_db.json'
 
@@ -18,8 +18,10 @@ class LiveList extends Component {
 
 
   componentDidMount() {
-    this.interval = setInterval(this.getUsers(), 10000);
+    this.getUsers()
+    this.interval = setInterval(this.getUsers, 10000);
   }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
@@ -39,10 +41,10 @@ class LiveList extends Component {
 
   render() {
     return (
-      <View style={styles.list}>
+      <ScrollView style={styles.list}>
         {
           this.state.liveUsers.map(user => (
-            <ListItem
+            < ListItem
               titleStyle={{ color: 'white' }}
               subtitleStyle={{ color: 'grey' }}
               key={user.uid}
@@ -54,7 +56,7 @@ class LiveList extends Component {
           ))
         }
 
-      </View>
+      </ScrollView>
     );
   }
 }
