@@ -5,7 +5,4 @@ const { config } = require('./config/firebase-config');
 const { database } = firebase;
 // firebase.initializeApp(config);
 
-// api.getUserById('pI1EYTutWqZNSMTBFjTwF7hAdfC2');
-
-
-createNewEvacuation('person', 123)
+api.getEvacList('HFEZc1g9aaPuWIF3RnWsy0I1yDB2');
