@@ -1,86 +1,98 @@
 const firebase = require('firebase');
 const faker = require('faker');
 const admin = require('firebase-admin');
-const { adminConfig } = require('../../config/firebase-config');
-const { getUserById } = require('../../utils/createUser');
+const { config, adminConfig } = require('../../config/firebase-config');
 const { safeZone, buildingZone } = require('./zoneData');
 
 const { database } = firebase;
-
+firebase.initializeApp(config);
 admin.initializeApp(adminConfig);
 
 const allAuthUID = [];
 
-function seedAdmin() {
+function seedTestAdmin() {
   const email = 'admin@gmail.com';
-  firebase.auth().createUserWithEmailAndPassword(email, 'password')
+  return firebase.auth().createUserWithEmailAndPassword(email, 'password')
     .then(({ user }) => {
       const { uid } = user;
       const newUser = {
         uid,
-        firstName: 'Test',
-        lastName: 'Admin',
-        location: null,
+        email,
+        fName: 'Test',
+        lName: 'Admin',
+        inBuilding: false,
+        inSafeZone: true,
         isAdmin: true,
+        location: null,
         isFirstAider: true,
       };
-      database().ref(`/users/${uid}`).set(newUser)
-        .then(() => {
-          getUserById(uid);
-        })
-        .catch(console.log);
-    })
-    .catch((error) => {
-      if (error.code === 'auth/weak-password') {
-        console.log('The password is too weak.');
-      } else {
-        console.log(error.message);
-      }
-      console.log(error);
+      return database().ref(`/users/${uid}`)
+        .set(newUser)
+        .then(() => database().ref('/users').orderByKey().equalTo(uid)
+          .once('value')
+          .then((data) => {
+            console.log(data.val(), '<<< User added to realtime db');
+            return data;
+          })
+          .catch(err => console.log(err)))
     });
 }
 
-function seedUsers(n) {
+function seedTestUser() {
   const email = 'user@gmail.com';
-  firebase.auth().createUserWithEmailAndPassword(email, 'password')
+  return firebase.auth().createUserWithEmailAndPassword(email, 'password')
     .then(({ user }) => {
       const { uid } = user;
       const newUser = {
         uid,
-        firstName: 'Test',
-        lastName: 'User',
-        location: null,
+        email,
+        fName: 'Test',
+        lName: 'User',
+        inBuilding: true,
+        inSafeZone: false,
         isAdmin: false,
+        location: null,
         isFirstAider: false,
       };
-      database().ref(`/users/${uid}`).set(newUser)
-        .then(() => {
-          getUserById(uid);
-        })
-        .catch(console.log);
+      return database().ref(`/users/${uid}`)
+        .set(newUser)
+        .then(() => database().ref('/users').orderByKey().equalTo(uid)
+          .once('value')
+          .then((data) => {
+            console.log(data.val());
+            return data;
+          })
+          .catch(err => console.log(err)))
     })
-    .then(() => {
-      for (let i = 0; i < n; i++) {
-        firebase.auth().createUserWithEmailAndPassword(faker.internet.email(), faker.internet.password())
-          .then(({ user }) => {
-            const { uid } = user;
-            const newUser = {
-              uid,
-              fName: faker.name.firstName(),
-              lName: faker.name.lastName(),
-              location: null,
-              isAdmin: Math.floor(Math.random() * 10) <= 3,
-              isFirstAider: Math.floor(Math.random() * 10) <= 3,
-            };
-            database().ref(`/users/${uid}`).set(newUser)
-              .then(() => {
-                getUserById(uid);
-              })
-              .catch(console.log);
-          });
-      }
-    });
-};
+}
+
+function seedUsers(n) {
+  for (let i = 0; i < n; i++) {
+    firebase.auth().createUserWithEmailAndPassword(faker.internet.email(), "password")
+      .then(({ user }) => {
+        const { uid } = user;
+        const newUser = {
+          uid,
+          fName: faker.name.firstName(),
+          lName: faker.name.lastName(),
+          location: null,
+          inBuilding: Math.floor(Math.random() * 10) <= 2,
+          inSafeZone: Math.floor(Math.random() * 10) <= 8,
+          isAdmin: Math.floor(Math.random() * 10) <= 3,
+          isFirstAider: Math.floor(Math.random() * 10) <= 3,
+        };
+        return database().ref(`/users/${uid}`)
+          .set(newUser)
+          .then(() => database().ref('/users').orderByKey().equalTo(uid)
+            .once('value')
+            .then((data) => {
+              console.log(data.val());
+              return data;
+            })
+            .catch(err => console.log(err)))
+      })
+  }
+}
 
 function seedSite(safeZone, buildingZone) {
   database().ref('site').set({
@@ -91,9 +103,9 @@ function seedSite(safeZone, buildingZone) {
 }
 
 function eraseAndReseed(n) {
-  database().ref('users').set(null)
+  database().ref('users').set({})
     .then(() => {
-      admin.auth().listUsers(1000)
+      admin.auth().listUsers(100)
         .then((listUsersResult) => {
           listUsersResult.users.forEach((userRecord) => {
             const { uid } = userRecord;
@@ -102,20 +114,23 @@ function eraseAndReseed(n) {
           });
         })
         .then(() => {
-          seedAdmin();
           console.log('DB erased');
+          return seedTestAdmin();
         })
         .then(() => {
           console.log('Test Admin seeded');
-          seedUsers(n);
+          return seedTestUser();
         })
         .then(() => {
-          console.log(`Test User Seeded... ${n} random users seeded`)
-          seedSite(safeZone, buildingZone);
+          console.log('Test User seeded');
+          return seedUsers(n);
+        })
+        .then(() => {
+          console.log(`${n} random users seeded`)
+          return seedSite(safeZone, buildingZone);
         })
         .then(() => {
           console.log('Site information seeded')
-          seedSite(safeZone, buildingZone);
         })
         .catch((error) => {
           console.log('Error erasing authenticated users:', error);
@@ -123,4 +138,5 @@ function eraseAndReseed(n) {
     });
 }
 
-eraseAndReseed(15);
+
+eraseAndReseed(48)

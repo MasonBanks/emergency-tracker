@@ -119,7 +119,6 @@ exports.emergencyStatusListener = () => database()
   .child('isEmergency')
   .on('value', (snapshot) => {
     console.log(`current status: ${snapshot.val()}`);
-    console.log(snapshot);
   });
 
 exports.toggleEmergencyStatus = () => {
@@ -144,6 +143,45 @@ exports.toggleEmergencyStatus = () => {
         });
     });
 };
+
+exports.createNewEvacuation = (adminId, startTime) => {
+  database().ref('users').orderByChild('inBuilding').equalTo(true)
+    .once('value', (snapshot) => {
+      const inBuildingUsers = snapshot.val();
+      database().ref(`evacuations/${startTime}`).set({
+        adminId,
+        startTime,
+        finishTime: null,
+        inBuildingUsers,
+      });
+    });
+};
+
+exports.getEvacList = (adminId) => {
+  database().ref('evacuations').orderByChild('adminId').equalTo(adminId)
+    .once('value')
+    .then((data) => {
+      mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
+      database().ref(`evacuations/${mostRecentStamp}/inBuildingUsers`).once('value')
+        .then((users) => {
+          const evacList = Object.values(users.val());
+          console.log(evacList);
+          return evacList;
+        });
+    });
+};
+
+exports.endCurrentEvacuation = (adminId) => {
+  database().ref('evacuations').orderByChild('adminId').equalTo(adminId)
+    .once('value')
+    .then((data) => {
+      mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
+      database().ref(`evacuations/${mostRecentStamp}`).update({
+        finishTime: Date.now(),
+      });
+    });
+};
+
 exports.getSafeZone = () => database()
   .ref('/site/safeZone')
   .once('value')
