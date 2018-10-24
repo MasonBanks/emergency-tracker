@@ -164,7 +164,6 @@ exports.saveSafeZone = (Zone, zoneName) => database()
   });
 
 exports.userInBuilding = (uid) => {
-  console.log(`${uid} entering`);
   database()
     .ref(`/users/${uid}`)
     .update({ inBuilding: true });
@@ -175,12 +174,20 @@ exports.userExitBuilding = (uid) => {
     .ref(`/users/${uid}`)
     .update({ inBuilding: false });
 };
+
+exports.userInSafeZone = (uid) => {
+  database()
+    .ref(`/users/${uid}`)
+    .update({ inSafeZone: true });
+};
+
+exports.userExitSafeZone = (uid) => {
+  database()
+    .ref(`/users/${uid}`)
+    .update({ inSafeZone: false });
+};
+
 exports.getAllUsers = () => database()
   .ref('/users')
   .once('value')
   .then(userData => userData);
-
-// exports.userInBuilding = (uid) => {
-//   console.log(uid);
-//   database().ref(`/inBuildingUsers/${uid}`).set(null);
-// };
