@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import firebase from 'firebase';
-import { GlobalProvider } from './src/ContextStore/globalContext';
+import { GlobalProvider } from './src/ContextStore/GlobalContext';
 import Routes from './src/Routes';
 import { YellowBox } from 'react-native';
 import _ from 'lodash';

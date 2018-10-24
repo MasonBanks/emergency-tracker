@@ -18,63 +18,69 @@ exports.enterSafeZone = (bool) => {
     .update({ inSafeZone: bool });
 };
 
-exports.createUser = (firstName, lastName, email, password) => {
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(({ user }) => {
-      const { uid } = user;
-
-      const newUser = {
-        uid,
-        firstName,
-        lastName,
-        email,
-        inBuilding: false,
-        inSafeZone: false,
-        isAdmin: false,
-        isFirstAider: false,
-      };
-
-      database()
-        .ref(`/users/${uid}`)
-        .set(newUser)
-        .then(() => {
-          this.getUserById(uid);
+exports.createUser = (fname, lName, email, password) => firebase
+  .auth()
+  .createUserWithEmailAndPassword(email, password)
+  .then(({ user }) => {
+    const { uid } = user;
+    const newUser = {
+      uid,
+      fname,
+      lName,
+      email,
+      inBuilding: false,
+      inSafeZone: false,
+      isAdmin: false,
+      isFirstAider: false,
+    };
+    return database()
+      .ref(`/users/${uid}`)
+      .set(newUser)
+      .then(() => database().ref('/users').orderByKey().equalTo(uid)
+        .once('value')
+        .then((data) => {
+          console.log(data.val(), '<<< User added to realtime db');
+          return data;
         })
-        .catch(console.log);
-    })
-    .catch((error) => {
-      if (error.code === 'auth/weak-password') {
-        alert('The password is too weak.');
-      } else {
-        console.log(error.message);
-      }
-      console.log(error);
-    });
-};
+        .catch(err => alert(err)))
+      .catch((error) => {
+        if (error.code === 'auth/weak-password') {
+          alert('The password is too weak.');
+        } else {
+          console.log(error.message);
+        }
+      });
+  });
 
-getUserById = id => database()
-  .ref('/users')
-  .orderByKey()
-  .equalTo(id)
-  .once('value')
-  .then((data) => {
-    if (data) {
-      return data;
-    }
-    alert('Submitted information does not exist within database');
-  })
-  .catch(err => alert(err));
+exports.getUserById = (uid) => {
+  database()
+    .ref('/users')
+    .orderByKey()
+    .equalTo(uid)
+    .once('value')
+    .then((data) => {
+      if (data) {
+        console.log(data.val());
+        return data;
+      } alert('Submitted information does not exist within database');
+    })
+    .catch(err => alert(err));
+};
 
 exports.login = (email, password) => firebase
   .auth()
   .signInWithEmailAndPassword(email, password)
   .then(({ user }) => {
     const { uid } = user;
-    return getUserById(uid);
-  })
-  .catch(err => alert(err));
+    return database().ref('/users').orderByKey().equalTo(uid)
+      .once('value')
+      .then((data) => {
+        if (data) {
+          return data;
+        }
+      })
+      .catch(err => alert(err));
+  });
 
 exports.toggleAdminStatus = (uid) => {
   database()

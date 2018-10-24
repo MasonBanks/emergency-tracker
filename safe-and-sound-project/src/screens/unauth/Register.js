@@ -2,31 +2,62 @@ import React from 'react';
 import { TextInput } from 'react-native';
 import { GlobalContext } from '../../ContextStore/GlobalContext';
 
-import { login } from '../../../api';
+import { createUser } from '../../../api';
 
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
-import styles from '../../components/styles';
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      fName: '',
+      lName: '',
       email: '',
       password: '',
     };
   }
 
-  handleSignIn(email, password) {
-    return login(email, password)
-      .then(data => data);
+  handleSubmit(fName, lName, email, password) {
+    return createUser(fName, lName, email, password)
+      .then((data) => {
+        if (data) {
+          console.log(data);
+          alert('Account created!');
+          this.props.router.pop();
+        }
+      });
   }
 
   render() {
     return (
       <GlobalContext.Consumer>
         {({ setAuth, setAdmin, state }) => (
-          <Screen backgroundColor="#155e63" title="Login">
+          <Screen backgroundColor="#155e63" title="Create New Account">
+            <TextInput
+              style={{
+                width: 175,
+                height: 30,
+                borderColor: 'gray',
+                borderWidth: 1,
+              }}
+              placeholder="First name"
+              onChangeText={fName => this.setState({ fName })}
+              value={this.state.fName}
+              autoCapitalize="words"
+            />
+            <TextInput
+              style={{
+                width: 175,
+                height: 30,
+                borderColor: 'gray',
+                borderWidth: 1,
+              }}
+              placeholder="Last name"
+              onChangeText={lName => this.setState({ lName })}
+              value={this.state.lName}
+              autoCapitalize="words"
+            />
             <TextInput
               style={{
                 width: 175,
@@ -54,21 +85,10 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                this.handleSignIn(this.state.email, this.state.password)
-                  .then((data) => {
-                    if (data) {
-                      const object = data.val();
-                      const user = object[Object.keys(data.val())[0]];
-                      const { uid, isAdmin } = user;
-                      setAdmin(isAdmin); // updates isAdmin in GlobalContext
-                      setAuth(uid);
-                    } else {
-                      alert('Incorrect login details');
-                      console.log('incorrect login details');
-                    }
-                  });
+                const [values] = Object.keys(this.state);
+                this.handleSubmit(this.state.fName, this.state.lName, this.state.email, this.state.password);
               }}
-              text="Sign in"
+              text="Register"
             />
             <Button
               onPress={() => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import EasyRouter from 'react-native-easy-router';
 
-import { GlobalContext } from './ContextStore/globalContext';
+import { GlobalContext } from './ContextStore/GlobalContext';
 
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
@@ -11,8 +11,10 @@ import BaseContextElement from './components/BaseContextElement';
 
 import Intro from './screens/unauth/Intro';
 import Login from './screens/unauth/Login';
+import Register from './screens/unauth/Register';
 import Home from './screens/auth/Home';
-import Profile from './screens/auth/Profile';
+import EditZones from './screens/auth/EditZones';
+import UserInfo from './screens/auth/UserInfo';
 import Settings from './screens/auth/Settings';
 
 const animations = {
@@ -84,6 +86,7 @@ class Routes extends React.Component {
               routes={{
                 Intro,
                 Login,
+                Register,
               }}
               initialRoute="Intro"
               animations={animations}
@@ -109,6 +112,7 @@ class Routes extends React.Component {
               ref={this.drawer}
             >
               <Tabs
+                state={state}
                 router={this.state.router}
                 openDrawer={this.openDrawer}
                 from={this.state.from}
@@ -116,11 +120,11 @@ class Routes extends React.Component {
                 transition={this.state.animation}
               >
                 <EasyRouter
-                  handleEmergencyStatusChange={this.props.handleEmergencyStatusChange}
                   routes={{
                     Home,
-                    Profile,
+                    EditZones,
                     Settings,
+                    UserInfo,
                   }}
                   initialRoute="Home"
                   animations={animations}
