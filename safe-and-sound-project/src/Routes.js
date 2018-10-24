@@ -7,7 +7,6 @@ import { GlobalContext } from './ContextStore/GlobalContext';
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
 import Tabs from './components/Tabs';
-import BaseContextElement from './components/BaseContextElement';
 
 import Intro from './screens/unauth/Intro';
 import Login from './screens/unauth/Login';

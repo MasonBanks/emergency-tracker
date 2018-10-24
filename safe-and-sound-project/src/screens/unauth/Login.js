@@ -18,8 +18,7 @@ export default class Login extends React.Component {
   }
 
   handleSignIn(email, password) {
-    return login(email, password)
-      .then(data => data);
+    return login(email, password).then(data => data);
   }
 
   render() {
@@ -33,6 +32,7 @@ export default class Login extends React.Component {
                 height: 30,
                 borderColor: 'gray',
                 borderWidth: 1,
+                backgroundColor: '#FFFFFF',
               }}
               placeholder="email"
               onChangeText={email => this.setState({ email })}
@@ -45,6 +45,7 @@ export default class Login extends React.Component {
                 height: 30,
                 borderColor: 'gray',
                 borderWidth: 1,
+                backgroundColor: '#FFFFFF',
               }}
               placeholder="password"
               onChangeText={password => this.setState({ password })}
@@ -54,19 +55,20 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                this.handleSignIn(this.state.email, this.state.password)
-                  .then((data) => {
+                this.handleSignIn(this.state.email, this.state.password).then(
+                  (data) => {
                     if (data) {
-                      console.log('!!!!!!!!!!!');
                       const object = data.val();
                       const user = object[Object.keys(data.val())[0]];
                       const { uid, isAdmin } = user;
                       setAdmin(isAdmin); // updates isAdmin in GlobalContext
                       setAuth(uid);
                     } else {
+                      alert('Incorrect login details');
                       console.log('incorrect login details');
                     }
-                  });
+                  },
+                );
               }}
               text="Sign in"
             />
