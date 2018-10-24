@@ -18,5 +18,11 @@ export default ({ router }) => (
       }}
       text="Login"
     />
+    <Button
+      onPress={() => {
+        router.push.Register({}, animation);
+      }}
+      text="Register"
+    />
   </Screen>
 );

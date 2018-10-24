@@ -18,24 +18,21 @@ exports.enterSafeZone = (bool) => {
     .update({ inSafeZone: bool });
 };
 
-exports.createUser = (firstName, lastName, email, password) => {
+exports.createUser = (fname, lName, email, password) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(({ user }) => {
       const { uid } = user;
-
       const newUser = {
         uid,
-        firstName,
-        lastName,
-        email,
+        fname,
+        lName,
         inBuilding: false,
         inSafeZone: false,
         isAdmin: false,
         isFirstAider: false,
       };
-
       database()
         .ref(`/users/${uid}`)
         .set(newUser)
