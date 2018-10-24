@@ -1,16 +1,14 @@
-// import React from 'react';
-// import renderer from 'react-test-renderer';
-// // import { createUser } from "../api";
-// const {
-//   sum, mul, sub, div, string,
-// } = require('./math.js');
-// const { createUser } = require('../../api');
+import React from "react";
+import renderer from "react-test-renderer";
+// import { createUser } from "../api";
+const { sum, mul, sub, div, string } = require("./math.js");
+const { createUser } = require("../../api");
 
-// console.log(string);
+console.log(string);
 
-// test('Adding 1 + 1 equals 2', () => {
-//   expect(sum(1, 1)).toBe(2);
-// });
+test("Adding 1 + 1 equals 2", () => {
+  expect(sum(1, 1)).toBe(2);
+});
 // test('Multiplying 1 * 1 equals 1', () => {
 //   expect(mul(1, 1)).toBe(1);
 // });
