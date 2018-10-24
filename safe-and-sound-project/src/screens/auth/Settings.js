@@ -6,7 +6,6 @@ import Button from '../../components/Button';
 
 export default ({ router }) => (
   <Screen backgroundColor="#4286f4" title="Settings">
-
     <Button
       onPress={() => {
         router.pop();

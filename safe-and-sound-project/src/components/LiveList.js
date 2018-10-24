@@ -46,16 +46,15 @@ class LiveList extends Component {
         {
           users.map(user => (
             <ListItem
-              titleStyle={{ color: 'white' }}
-              containerStyle={{ backgroundColor: '#2eea3b' }}
+              titleStyle={{ color: 'black' }}
+              containerStyle={{ backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: 'grey' }}
               subtitleStyle={{ color: 'grey' }}
               key={user.uid}
               title={`${user.lName}, ${user.fName}`
               }
-              leftAvatar={{ rounded: true, source: { uri: 'http://www.desiformal.com/assets/images/default-userAvatar.png' } }}
+              leftAvatar={{ rounded: true, source: { uri: `${user.avatar}` } }}
               subtitle={user.isFirstAider ? 'First Aider' : null}
               rightSubtitle={user.isAdmin ? 'Admin' : 'Personnel'}
-
             />
           ))
         }

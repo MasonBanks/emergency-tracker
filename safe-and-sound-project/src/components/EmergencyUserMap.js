@@ -125,16 +125,16 @@ export default class EmergencyUserMap extends React.Component {
         zoomControlEnabled={false}
       >
         {this.state.myLocation[0]
-&& (
-<MapView.Marker
-  coordinate={this.state.myLocation[0]}
->
-  <Image source={require('../assets/images/mapmarker.png')} style={{ width: 40, height: 40 }} />
-</MapView.Marker>
+          && (
+            <MapView.Marker
+              coordinate={this.state.myLocation[0]}
+            >
+              <Image source={require('../assets/images/mapmarker.png')} style={{ width: 40, height: 40 }} />
+            </MapView.Marker>
 
 
-)
-}
+          )
+        }
 
         <MapView.Polygon
           title="Safe Zone"

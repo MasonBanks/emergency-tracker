@@ -180,7 +180,6 @@ exports.getEvacList = adminId => {
         .once('value')
         .then(users => {
           const evacList = Object.values(users.val());
-          console.log(evacList);
           return evacList;
         });
     });
