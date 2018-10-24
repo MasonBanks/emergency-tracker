@@ -14,7 +14,7 @@ export default class Login extends React.Component {
       fName: '',
       lName: '',
       email: '',
-      password: ''
+      password: '',
     };
   }
 
@@ -22,11 +22,11 @@ export default class Login extends React.Component {
     return createUser(fName, lName, email, password)
       .then((data) => {
         if (data) {
-          console.log(data)
-          alert('Account created!')
-          this.props.router.pop()
+          console.log(data);
+          alert('Account created!');
+          this.props.router.pop();
         }
-      })
+      });
   }
 
   render() {
@@ -85,7 +85,7 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                const [values] = Object.keys(this.state)
+                const [values] = Object.keys(this.state);
                 this.handleSubmit(this.state.fName, this.state.lName, this.state.email, this.state.password);
               }}
               text="Register"

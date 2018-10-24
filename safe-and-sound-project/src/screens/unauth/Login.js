@@ -63,7 +63,7 @@ export default class Login extends React.Component {
                       setAdmin(isAdmin); // updates isAdmin in GlobalContext
                       setAuth(uid);
                     } else {
-                      alert('Incorrect login details')
+                      alert('Incorrect login details');
                       console.log('incorrect login details');
                     }
                   });
