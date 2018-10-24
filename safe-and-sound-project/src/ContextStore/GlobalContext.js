@@ -19,11 +19,13 @@ class GlobalProvider extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.appState !== null && prevProps.appState.dbEmergencyStatus !== this.props.appState.dbEmergencyStatus) {
-      this.setMode(this.props.appState.dbEmergencyStatus);
+    const { appState, getUserId } = this.props;
+    const { auth } = this.state;
+    if (prevProps.appState !== null && prevProps.appState.dbEmergencyStatus !== appState.dbEmergencyStatus) {
+      this.setMode(appState.dbEmergencyStatus);
     }
-    if (this.state.auth.authenticated && (this.state.auth.authenticated !== prevState.auth.authenticated)) {
-      this.props.getUserId(this.state.auth.authenticated);
+    if (auth.authenticated && auth.authenticated !== prevState.auth.authenticated) {
+      getUserId(auth.authenticated);
     }
   }
 
