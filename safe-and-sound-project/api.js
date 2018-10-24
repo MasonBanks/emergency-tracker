@@ -119,10 +119,9 @@ exports.emergencyStatusListener = () => database()
   .child('isEmergency')
   .on('value', (snapshot) => {
     console.log(`current status: ${snapshot.val()}`);
-    console.log(snapshot);
   });
 
-exports.toggleEmergencyStatus = () => {
+exports.toggleEmergencyStatus = (currentMode) => {
   database()
     .ref('/site')
     .child('isEmergency')
@@ -144,6 +143,20 @@ exports.toggleEmergencyStatus = () => {
         });
     });
 };
+
+exports.createNewEvacuation = (adminId, startTime) => {
+  const inBuildingUsers = [];
+  database().ref('users').orderByChild('inBuilding').on('value', (snapshot) => {
+    console.log(snapshot.val());
+  });
+  // database().ref('evacuations').push({
+  //   adminId,
+  //   startTime,
+  //   finishTime,
+  //   inBuildingUsers
+  // })
+};
+
 exports.getSafeZone = () => database()
   .ref('/site/safeZone')
   .once('value')
