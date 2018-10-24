@@ -22,7 +22,10 @@ function seedTestAdmin() {
         lName: 'Admin',
         inBuilding: false,
         inSafeZone: true,
+        markedSafe: null,
+        markedInDanger: null,
         isAdmin: true,
+        avatar: faker.image.avatar(),
         location: null,
         isFirstAider: true,
       };
@@ -50,6 +53,9 @@ function seedTestUser() {
         lName: 'User',
         inBuilding: true,
         inSafeZone: false,
+        markedSafe: null,
+        avatar: faker.image.avatar(),
+        markedInDanger: null,
         isAdmin: false,
         location: null,
         isFirstAider: false,
@@ -76,8 +82,11 @@ function seedUsers(n) {
           fName: faker.name.firstName(),
           lName: faker.name.lastName(),
           location: null,
-          inBuilding: Math.floor(Math.random() * 10) <= 2,
-          inSafeZone: Math.floor(Math.random() * 10) <= 8,
+          markedSafe: null,
+          markedInDanger: null,
+          avatar: faker.image.avatar(),
+          inBuilding: Math.floor(Math.random() * 10) <= 4,
+          inSafeZone: Math.floor(Math.random() * 10) <= 6,
           isAdmin: Math.floor(Math.random() * 10) <= 3,
           isFirstAider: Math.floor(Math.random() * 10) <= 3,
         };
@@ -94,9 +103,9 @@ function seedUsers(n) {
   }
 }
 
-function seedSite(safeZone, buildingZone) {
+function seedSite(safeZone, building) {
   database().ref('site').set({
-    buildingZone,
+    building,
     safeZone,
     isEmergency: false
   })
@@ -139,4 +148,5 @@ function eraseAndReseed(n) {
 }
 
 
-eraseAndReseed(48)
+// eraseAndReseed(48)
+seedSite(safeZone, buildingZone)
