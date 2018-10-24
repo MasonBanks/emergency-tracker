@@ -202,6 +202,11 @@ exports.getAllUsers = () => database()
   .once('value')
   .then(userData => userData.val());
 
+exports.updateUser = (uid, entriesToUpdateObj) => database()
+  .ref(`/users/${uid}`)
+  .update(entriesToUpdateObj)
+  .then(updatedData => updatedData.val());
+
 // exports.userInBuilding = (uid) => {
 //   console.log(uid);
 //   database().ref(`/inBuildingUsers/${uid}`).set(null);
