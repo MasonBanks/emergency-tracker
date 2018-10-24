@@ -19,16 +19,16 @@ exports.enterSafeZone = (bool) => {
 };
 
 exports.createUser = (fname, lName, email, password) => {
-  firebase
+  return firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(({ user }) => {
-      console.log(user, '<<< new auth user');
       const { uid } = user;
       const newUser = {
         uid,
         fname,
         lName,
+        email,
         inBuilding: false,
         inSafeZone: false,
         isAdmin: false,
@@ -37,20 +37,23 @@ exports.createUser = (fname, lName, email, password) => {
       return database()
         .ref(`/users/${uid}`)
         .set(newUser)
-        .then((response) => {
-          console.log(response, '<<<< new db user?');
+        .then(() => {
+          return database().ref('/users').orderByKey().equalTo(uid).once('value')
+            .then((data) => {
+              console.log(data.val(), '<<< User added to realtime db')
+              return data
+            })
+            .catch(err => alert(err));
         })
-        .catch(console.log);
+        .catch((error) => {
+          if (error.code === 'auth/weak-password') {
+            alert('The password is too weak.');
+          } else {
+            console.log(error.message);
+          }
+        })
     })
-    .catch((error) => {
-      if (error.code === 'auth/weak-password') {
-        alert('The password is too weak.');
-      } else {
-        console.log(error.message);
-      }
-      console.log(error);
-    });
-};
+}
 
 exports.getUserById = (uid) => {
   database()
@@ -60,9 +63,9 @@ exports.getUserById = (uid) => {
     .once('value')
     .then((data) => {
       if (data) {
+        console.log(data.val())
         return data;
-      }
-      alert('Submitted information does not exist within database');
+      } else alert('Submitted information does not exist within database');
     })
     .catch(err => alert(err));
 };
