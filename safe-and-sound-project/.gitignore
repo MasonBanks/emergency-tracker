@@ -4,3 +4,4 @@ package-lock.json
 config/
 npm-debug.*
 .DS_Store
+tmp.js
