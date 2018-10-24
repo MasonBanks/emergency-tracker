@@ -33,9 +33,7 @@ class GlobalProvider extends Component {
       auth: {
         authenticated,
       },
-    }), () => {
-      console.log(this.state.auth);
-    });
+    }));
   };
 
   setMode = (emergency) => {
@@ -43,9 +41,7 @@ class GlobalProvider extends Component {
       mode: {
         emergency,
       },
-    }), () => {
-      console.log(this.state.mode);
-    });
+    }));
   }
 
   setAdmin = (admin) => {
@@ -53,9 +49,7 @@ class GlobalProvider extends Component {
       isAdmin: {
         admin,
       },
-    }), () => {
-      console.log(this.state.isAdmin);
-    });
+    }));
   }
 
   render() {

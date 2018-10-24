@@ -7,7 +7,6 @@ import { GlobalContext } from './ContextStore/GlobalContext';
 import Drawer from './components/Drawer';
 import Sidenav from './components/Sidenav';
 import Tabs from './components/Tabs';
-import BaseContextElement from './components/BaseContextElement';
 
 import Intro from './screens/unauth/Intro';
 import Login from './screens/unauth/Login';
@@ -80,53 +79,15 @@ class Routes extends React.Component {
         {({
           setAuth, setMode, state,
         }) => (
-          <View style={{ backgroundColor: 'black', flex: 1 }}>
-            {!state.auth.authenticated && (
-            <EasyRouter
-              routes={{
-                Intro,
-                Login,
-                Register,
-              }}
-              initialRoute="Intro"
-              animations={animations}
-              onStackChange={this.onStackChange}
-              onBeforeStackChange={this.onBeforeStackChange}
-              router={(router) => {
-                this.setRouter(router);
-              }}
-            />
-            )}
-
-            {state.auth.authenticated && (
-            <Drawer
-              renderNavigationView={() => (
-                <Sidenav
-                  state={state}
-                  setAuth={setAuth}
-                  setMode={setMode}
-                  router={this.state.router}
-                  closeDrawer={this.closeDrawer}
-                />
-              )}
-              ref={this.drawer}
-            >
-              <Tabs
-                state={state}
-                router={this.state.router}
-                openDrawer={this.openDrawer}
-                from={this.state.from}
-                to={this.state.to}
-                transition={this.state.animation}
-              >
+            <View style={{ backgroundColor: 'black', flex: 1 }}>
+              {!state.auth.authenticated && (
                 <EasyRouter
                   routes={{
-                    Home,
-                    EditZones,
-                    Settings,
-                    UserInfo,
+                    Intro,
+                    Login,
+                    Register,
                   }}
-                  initialRoute="Home"
+                  initialRoute="Intro"
                   animations={animations}
                   onStackChange={this.onStackChange}
                   onBeforeStackChange={this.onBeforeStackChange}
@@ -134,11 +95,49 @@ class Routes extends React.Component {
                     this.setRouter(router);
                   }}
                 />
-              </Tabs>
-            </Drawer>
-            )}
-          </View>
-        )
+              )}
+
+              {state.auth.authenticated && (
+                <Drawer
+                  renderNavigationView={() => (
+                    <Sidenav
+                      state={state}
+                      setAuth={setAuth}
+                      setMode={setMode}
+                      router={this.state.router}
+                      closeDrawer={this.closeDrawer}
+                    />
+                  )}
+                  ref={this.drawer}
+                >
+                  <Tabs
+                    state={state}
+                    router={this.state.router}
+                    openDrawer={this.openDrawer}
+                    from={this.state.from}
+                    to={this.state.to}
+                    transition={this.state.animation}
+                  >
+                    <EasyRouter
+                      routes={{
+                        Home,
+                        EditZones,
+                        Settings,
+                        UserInfo,
+                      }}
+                      initialRoute="Home"
+                      animations={animations}
+                      onStackChange={this.onStackChange}
+                      onBeforeStackChange={this.onBeforeStackChange}
+                      router={(router) => {
+                        this.setRouter(router);
+                      }}
+                    />
+                  </Tabs>
+                </Drawer>
+              )}
+            </View>
+          )
         }
       </GlobalContext.Consumer>
     );
