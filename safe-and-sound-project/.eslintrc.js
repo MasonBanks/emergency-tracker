@@ -22,6 +22,7 @@ module.exports = {
         "global-require": "warn",
         "react/prop-types": "off",
         "no-plusplus": "warn",
-        "no-useless-escape":"warn",
+        "no-useless-escape": "warn",
+        "react/no-unescaped-entities": "warn"
     }
 };
