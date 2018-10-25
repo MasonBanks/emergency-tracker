@@ -43,8 +43,9 @@ class GlobalProvider extends Component {
     }
 
     if (
-      this.props.appState.latitude
-      && this.props.appState.latitude !== prevProps.appState.latitude
+      this.props.appState.latitude &&
+      this.props.appState.latitude !== prevProps.appState.latitude
+
     ) {
       this.setMyLocation(this.props.appState);
     }

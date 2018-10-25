@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 import FireEscapeMap from '../../components/FireEscapeMap';
 import EmergencyUserMap from '../../components/EmergencyUserMap';
 import { GlobalContext } from '../../ContextStore/GlobalContext';
-import { updateUser } from '../../../api';
+import * as api from '../../../api';
 
 const animation = { type: 'top', duration: 1000 };
 const styles = StyleSheet.create({
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
 export default (Home = ({ router }) => (
   <GlobalContext.Consumer>
     {({ state, setMode }) => (
+      // console.log(state.myCoordinates);
       <Screen
         backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'}
         title="Home"
@@ -56,7 +57,7 @@ export default (Home = ({ router }) => (
               <Button
                 style={styles.redButton}
                 onPress={() => {
-                  updateUser(state.auth.authenticated, {
+                  api.updateUser(state.auth.authenticated, {
                     markedInDanger: true,
                   });
                   alert('An alert has been signaled to the fire warden and your location will be relayed to the emergency services. Please remain calm, help is on the way!');
@@ -66,8 +67,8 @@ export default (Home = ({ router }) => (
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>

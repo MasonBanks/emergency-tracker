@@ -228,6 +228,15 @@ exports.updateUser = (uid, entriesToUpdateObj) => database()
 //   database().ref(`/inBuildingUsers/${uid}`).set(null);
 // };
 
+
+exports.getSafeList = adminId => this.getEvacList(adminId)
+  .then(list => list);
+
+
+exports.sendLocation = (location) => {
+  console.log(location);
+};
+
 exports.resetAllUsersStatus = (getAllUsersFunc, updateUserFunc) => {
   getAllUsersFunc().then((allUsers) => {
     Object.keys(allUsers).forEach((user) => {
@@ -240,3 +249,4 @@ exports.resetAllUsersStatus = (getAllUsersFunc, updateUserFunc) => {
 };
 
 exports.getSafeList = adminId => this.getEvacList(adminId).then(list => list);
+
