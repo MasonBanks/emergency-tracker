@@ -249,4 +249,3 @@ exports.resetAllUsersStatus = (getAllUsersFunc, updateUserFunc) => {
 };
 
 exports.getSafeList = adminId => this.getEvacList(adminId).then(list => list);
-
