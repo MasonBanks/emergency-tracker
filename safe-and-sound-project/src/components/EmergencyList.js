@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
 class EmergencyList extends Component {
   state = {
     liveUsers: [],
-    user: []
+    user: [],
   }
 
   componentDidMount() {
     this.getSnapshot(Object.values(this.props)[0]);
-    this.getUsers()
+    this.getUsers();
     this.interval = setInterval(this.getUsers, 10000);
   }
 
@@ -49,7 +49,7 @@ class EmergencyList extends Component {
 
   render() {
     let users = this.state.liveUsers;
-    console.log(this.state.liveUsers)
+    console.log(this.state.liveUsers);
     users = users.sort((a, b) => b.markedInDanger - a.markedInDanger);
     return (
       <ScrollView style={styles.list}>
@@ -58,8 +58,11 @@ class EmergencyList extends Component {
             <ListItem
               titleStyle={{ color: (user.markedInDanger || user.markedSafe) ? 'white' : 'black' }}
               containerStyle={{
-                backgroundColor: (user.markedInDanger) ? '#d32121' : (user.markedSafe) ? '#35d220' : (user.inBuilding) ? '#ffe0e0' : (user.inSafeZone) ? '#e7ffe0' : (!user.inBuilding && !user.inSafeZone) ? '#e0f5fc' : '#ccefff', borderWidth: 1, borderColor:
-                  '#c1c1c1', marginBottom: 2
+                backgroundColor: (user.markedInDanger) ? '#d32121' : (user.markedSafe) ? '#35d220' : (user.inBuilding) ? '#ffe0e0' : (user.inSafeZone) ? '#e7ffe0' : (!user.inBuilding && !user.inSafeZone) ? '#e0f5fc' : '#ccefff',
+                borderWidth: 1,
+                borderColor:
+                  '#c1c1c1',
+                marginBottom: 2,
               }}
               subtitleStyle={{ color: (user.markedInDanger || user.markedSafe) ? 'white' : 'grey' }}
               key={user.uid}
@@ -76,7 +79,6 @@ class EmergencyList extends Component {
     );
   }
 }
-
 
 
 export default EmergencyList;

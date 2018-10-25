@@ -23,6 +23,7 @@ module.exports = {
         "react/prop-types": "off",
         "no-plusplus": "warn",
         "no-useless-escape": "warn",
-        "react/no-unescaped-entities": "warn"
+        "react/no-unescaped-entities": "warn",
+        "no-nested-ternary": "warn"
     }
 };

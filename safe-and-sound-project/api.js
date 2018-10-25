@@ -107,13 +107,12 @@ exports.toggleFirstAiderStatus = uid => database()
       .update({ isFirstAider: !currentStatus });
   });
 
-exports.emergencyStatusListener = () =>
-  database()
-    .ref('/site')
-    .child('isEmergency')
-    .on('value', snapshot => {
-      console.log(`current status: ${snapshot.val()}`);
-    });
+exports.emergencyStatusListener = () => database()
+  .ref('/site')
+  .child('isEmergency')
+  .on('value', (snapshot) => {
+    console.log(`current status: ${snapshot.val()}`);
+  });
 
 exports.toggleEmergencyStatus = () => database()
   .ref('/site')
@@ -166,24 +165,21 @@ exports.endCurrentEvacuation = adminId => database().ref('evacuations').orderByC
     });
   });
 
-exports.getSafeZone = () =>
-  database()
-    .ref('/site/safeZone')
-    .once('value')
-    .then(data => data);
+exports.getSafeZone = () => database()
+  .ref('/site/safeZone')
+  .once('value')
+  .then(data => data);
 
-exports.getBuilding = () =>
-  database()
-    .ref('/site/building')
-    .once('value')
-    .then(data => data);
+exports.getBuilding = () => database()
+  .ref('/site/building')
+  .once('value')
+  .then(data => data);
 
-exports.saveSafeZone = (Zone, zoneName) =>
-  database()
-    .ref('/site')
-    .update({
-      [zoneName]: Zone
-    });
+exports.saveSafeZone = (Zone, zoneName) => database()
+  .ref('/site')
+  .update({
+    [zoneName]: Zone,
+  });
 
 exports.userInBuilding = uid => database()
   .ref(`/users/${uid}`)
@@ -201,17 +197,15 @@ exports.userExitSafeZone = uid => database()
   .ref(`/users/${uid}`)
   .update({ inSafeZone: false });
 
-exports.getAllUsers = () =>
-  database()
-    .ref('/users')
-    .once('value')
-    .then(userData => userData.val());
+exports.getAllUsers = () => database()
+  .ref('/users')
+  .once('value')
+  .then(userData => userData.val());
 
-exports.updateUser = (uid, entriesToUpdateObj) =>
-  database()
-    .ref(`/users/${uid}`)
-    .update(entriesToUpdateObj)
-    .then(updatedData => updatedData.val());
+exports.updateUser = (uid, entriesToUpdateObj) => database()
+  .ref(`/users/${uid}`)
+  .update(entriesToUpdateObj)
+  .then(updatedData => updatedData.val());
 
 // exports.userInBuilding = (uid) => {
 //   console.log(uid);
