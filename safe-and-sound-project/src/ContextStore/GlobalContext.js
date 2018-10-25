@@ -42,7 +42,10 @@ class GlobalProvider extends Component {
       getUserId(auth.authenticated);
     }
 
-    if (this.props.appState.latitude && (this.props.appState.latitude !== prevProps.appState.latitude)) {
+    if (
+      this.props.appState.latitude
+      && this.props.appState.latitude !== prevProps.appState.latitude
+    ) {
       this.setMyLocation(this.props.appState);
     }
   }

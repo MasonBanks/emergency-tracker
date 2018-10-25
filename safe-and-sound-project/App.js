@@ -42,8 +42,8 @@ export default class App extends React.Component {
         dbEmergencyStatus: snapshot.val(),
         inSafeZone: false,
         inBuilding: false,
-latitude:'',
-latitude:'',
+        latitude:'',
+        latitude:'',
         user: '',
 
       })

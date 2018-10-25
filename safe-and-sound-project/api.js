@@ -214,3 +214,8 @@ exports.updateUser = (uid, entriesToUpdateObj) => database()
 
 exports.getSafeList = adminId => this.getEvacList(adminId)
   .then(list => list);
+
+
+exports.sendLocation = (location) => {
+  console.log(location);
+};
