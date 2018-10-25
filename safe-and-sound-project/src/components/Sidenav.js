@@ -7,12 +7,14 @@ import {
   endCurrentEvacuation,
   resetAllUsersStatus,
   updateUser,
-  getAllUsers
+  getAllUsers,
 } from '../../api';
 
 const animation = { type: 'right', duration: 1100 };
 
-export default ({ router, closeDrawer, setAuth, state }) => (
+export default ({
+  router, closeDrawer, setAuth, state,
+}) => (
   <Screen backgroundColor={state.mode.emergency ? '#EE5353' : '#A575E3'}>
     {state.isAdmin.admin && (
       <Button
@@ -22,7 +24,7 @@ export default ({ router, closeDrawer, setAuth, state }) => (
             createNewEvacuation(state.auth.authenticated, timestamp);
           } else {
             endCurrentEvacuation(state.auth.authenticated, timestamp).then(
-              resetAllUsersStatus(getAllUsers, updateUser)
+              resetAllUsersStatus(getAllUsers, updateUser),
             );
           }
           toggleEmergencyStatus(state.mode.emergency);

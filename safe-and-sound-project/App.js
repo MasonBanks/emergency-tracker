@@ -25,9 +25,9 @@ export default class App extends React.Component {
       dbEmergencyStatus: true,
       inSafeZone: false,
       inBuilding: false,
-      latitude: 53.483959,
-      longitude: -2.244644,
-      user: 'fffffffff'
+      latitude: 0,
+      longitude: 0,
+      user: ''
     };
   }
 
@@ -47,6 +47,8 @@ export default class App extends React.Component {
           dbEmergencyStatus: snapshot.val(),
           inSafeZone: false,
           inBuilding: false,
+          latitude: '',
+          latitude: '',
           user: ''
         });
       });

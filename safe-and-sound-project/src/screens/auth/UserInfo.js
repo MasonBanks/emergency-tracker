@@ -15,7 +15,7 @@ export default ({ router }) => (
         backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'}
         title="Roster"
       >
-        {!state.mode.emergency ? <LiveList /> : <EmergencyList />}
+        {!state.mode.emergency ? <LiveList /> : <EmergencyList auth={state.auth.authenticated} />}
         <Button
           onPress={() => {
             router.pop();

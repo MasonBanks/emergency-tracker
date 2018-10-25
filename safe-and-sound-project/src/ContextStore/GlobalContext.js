@@ -7,58 +7,80 @@ class GlobalProvider extends Component {
     super(props);
     this.state = {
       auth: {
-        authenticated: false,
+        authenticated: false
       },
       mode: {
-        emergency: false,
+        emergency: false
       },
       isAdmin: {
-        admin: false,
+        admin: false
       },
+
+      myCoordinates: {
+        latitude: 0,
+        longitude: 0
+      }
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { appState, getUserId } = this.props;
     const { auth } = this.state;
+    // console.log(this.props.appState.latitude);
 
     if (
-      prevProps.appState !== null
-      && prevProps.appState.dbEmergencyStatus !== appState.dbEmergencyStatus
+      prevProps.appState !== null &&
+      prevProps.appState.dbEmergencyStatus !== appState.dbEmergencyStatus
     ) {
       this.setMode(appState.dbEmergencyStatus);
     } else if (prevProps.appState === null) {
       this.setMode(appState.dbEmergencyStatus);
     }
     if (
-      auth.authenticated
-      && auth.authenticated !== prevState.auth.authenticated
+      auth.authenticated &&
+      auth.authenticated !== prevState.auth.authenticated
     ) {
       getUserId(auth.authenticated);
     }
+
+    if (
+      this.props.appState.latitude &&
+      this.props.appState.latitude !== prevProps.appState.latitude
+    ) {
+      this.setMyLocation(this.props.appState);
+    }
   }
 
-  setAuth = (authenticated) => {
+  setMyLocation = location => {
+    this.setState(() => ({
+      myCoordinates: {
+        longitude: location.longitude,
+        latitude: location.latitude
+      }
+    }));
+  };
+
+  setAuth = authenticated => {
     this.setState(() => ({
       auth: {
-        authenticated,
-      },
+        authenticated
+      }
     }));
   };
 
-  setMode = (emergency) => {
+  setMode = emergency => {
     this.setState(() => ({
       mode: {
-        emergency,
-      },
+        emergency
+      }
     }));
   };
 
-  setAdmin = (admin) => {
+  setAdmin = admin => {
     this.setState(() => ({
       isAdmin: {
-        admin,
-      },
+        admin
+      }
     }));
   };
 
@@ -69,7 +91,7 @@ class GlobalProvider extends Component {
           state: this.state,
           setAuth: this.setAuth,
           setMode: this.setMode,
-          setAdmin: this.setAdmin,
+          setAdmin: this.setAdmin
         }}
       >
         {this.props.children}

@@ -42,14 +42,14 @@ class LiveList extends Component {
     let users = this.state.liveUsers;
     users = users.sort((a, b) => b.isAdmin - a.isAdmin || b.isFirstAider - a.isFirstAider);
     return (
-      <ScrollView style={styles.list}>
+      <ScrollView key="idle_roster" style={styles.list}>
         {
           users.map(user => (
             <ListItem
               titleStyle={{ color: 'black' }}
               containerStyle={{ backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: 'grey' }}
               subtitleStyle={{ color: 'grey' }}
-              key={user.uid}
+              key={`${user.uid}+${user.fName}`}
               title={`${user.lName}, ${user.fName}`
               }
               leftAvatar={{ rounded: true, source: { uri: `${user.avatar}` } }}
