@@ -20,8 +20,12 @@ export default class Login extends React.Component {
 
   handleSubmit(fName, lName, email, password) {
     return createUser(fName, lName, email, password)
-      .then((uid) => {
-        console.log(uid);
+      .then((data) => {
+        if (data) {
+          console.log(data);
+          alert('Account created!');
+          this.props.router.pop();
+        }
       });
   }
 
@@ -81,7 +85,8 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                this.handleSubmit(this.state.fName, this.state.lastName, this.state.email, this.state.password);
+                const [values] = Object.keys(this.state);
+                this.handleSubmit(this.state.fName, this.state.lName, this.state.email, this.state.password);
               }}
               text="Register"
             />
