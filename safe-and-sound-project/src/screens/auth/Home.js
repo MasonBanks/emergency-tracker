@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 import FireEscapeMap from '../../components/FireEscapeMap';
 import EmergencyUserMap from '../../components/EmergencyUserMap';
 import { GlobalContext } from '../../ContextStore/GlobalContext';
-import { updateUser } from '../../../api';
+import { updateUser, addMeToEvacSafeList } from '../../../api';
 
 const animation = { type: 'top', duration: 1000 };
 const styles = StyleSheet.create({
@@ -58,14 +58,15 @@ export default (Home = ({ router }) => (
                   updateUser(state.auth.authenticated, {
                     markedInDanger: true,
                   });
+                  addMeToEvacSafeList(state.auth.authenticated)
                 }}
                 text="Im in Danger"
               />
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>

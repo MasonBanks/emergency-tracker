@@ -5,82 +5,158 @@ const { config, adminConfig } = require('../../config/firebase-config');
 const { safeZone, buildingZone } = require('./zoneData');
 
 const { database } = firebase;
-firebase.initializeApp(config);
-admin.initializeApp(adminConfig);
+// firebase.initializeApp(config);
+// admin.initializeApp(adminConfig);
 
 const allAuthUID = [];
 
-function seedTestAdmin() {
-  const email = 'admin@gmail.com';
-  return firebase.auth().createUserWithEmailAndPassword(email, 'password')
-    .then(({ user }) => {
-      const { uid } = user;
-      const newUser = {
-        uid,
-        email,
-        fName: 'Test',
-        lName: 'Admin',
-        inBuilding: false,
-        inSafeZone: true,
-        markedSafe: null,
-        markedInDanger: null,
-        isAdmin: true,
-        avatar: faker.image.avatar(),
-        location: null,
-        isFirstAider: true,
-      };
-      return database().ref(`/users/${uid}`)
-        .set(newUser)
-        .then(() => database().ref('/users').orderByKey().equalTo(uid)
-          .once('value')
-          .then((data) => {
-            console.log(data.val(), '<<< User added to realtime db');
-            return data;
-          })
-          .catch(err => console.log(err)))
-    });
+function eraseDb() {
+  database().ref('users').set({})
+    .then(() => {
+      admin.auth().listUsers(100)
+        .then((listUsersResult) => {
+          listUsersResult.users.forEach((userRecord) => {
+            const { uid } = userRecord;
+            allAuthUID.push(uid);
+            admin.auth().deleteUser(userRecord.uid);
+          });
+        })
+    })
 }
 
-function seedTestUser() {
-  const email = 'user@gmail.com';
-  return firebase.auth().createUserWithEmailAndPassword(email, 'password')
-    .then(({ user }) => {
-      const { uid } = user;
-      const newUser = {
-        uid,
-        email,
-        fName: 'Test',
-        lName: 'User',
-        inBuilding: true,
-        inSafeZone: false,
-        markedSafe: null,
-        avatar: faker.image.avatar(),
-        markedInDanger: null,
-        isAdmin: false,
-        location: null,
-        isFirstAider: false,
-      };
-      return database().ref(`/users/${uid}`)
-        .set(newUser)
-        .then(() => database().ref('/users').orderByKey().equalTo(uid)
-          .once('value')
-          .then((data) => {
-            console.log(data.val());
-            return data;
-          })
-          .catch(err => console.log(err)))
-    })
+function seedTestAdmins() {
+  let admins = [
+    {
+      email: 'mason@admin.com',
+      fName: 'Mason',
+      lName: 'Admin'
+    },
+    {
+      email: 'will@admin.com',
+      fName: 'Will',
+      lName: 'Admin'
+    },
+    {
+      email: 'rui@admin.com',
+      fName: 'Rui',
+      lName: 'Admin'
+    },
+    {
+      email: 'danny@admin.com',
+      fName: 'Danny',
+      lName: 'Admin'
+    },
+    {
+      email: 'turiya@admin.com',
+      fName: 'Turiya',
+      lName: 'Admin'
+    },
+  ];
+  admins.forEach((admin) => {
+    return firebase.auth().createUserWithEmailAndPassword(admin.email, 'password')
+      .then(({ user }) => {
+        const { uid } = user;
+        const newUser = {
+          uid,
+          email: admin.email,
+          fName: admin.fName,
+          lName: admin.lName,
+          inBuilding: false,
+          inSafeZone: true,
+          markedSafe: null,
+          markedInDanger: null,
+          isAdmin: true,
+          avatar: faker.image.avatar(),
+          location: null,
+          isFirstAider: true,
+        };
+        return database().ref(`/users/${uid}`)
+          .set(newUser)
+          .then(() => database().ref('/users').orderByKey().equalTo(uid)
+            .once('value')
+            .then((data) => {
+              console.log(data.val(), '<<< User added to realtime db');
+              return data;
+            })
+            .catch(err => console.log(err)))
+      });
+  })
+
+}
+
+function seedTestUsers() {
+
+  let testUsers = [
+    {
+      email: 'mason@user.com',
+      fName: 'Mason',
+      lName: 'User'
+    },
+    {
+      email: 'will@user.com',
+      fName: 'Will',
+      lName: 'User'
+    },
+    {
+      email: 'rui@user.com',
+      fName: 'Rui',
+      lName: 'User'
+    },
+    {
+      email: 'danny@user.com',
+      fName: 'Danny',
+      lName: 'User'
+    },
+    {
+      email: 'turiya@user.com',
+      fName: 'Turiya',
+      lName: 'User'
+    },
+  ];
+
+  testUsers.forEach((testUser) => {
+    return firebase.auth().createUserWithEmailAndPassword(testUser.email, 'password')
+      .then(({ user }) => {
+        const { uid } = user;
+
+        const newUser = {
+          uid,
+          email: testUser.email,
+          fName: testUser.fName,
+          lName: testUser.lName,
+          inBuilding: true,
+          inSafeZone: false,
+          markedSafe: null,
+          avatar: faker.image.avatar(),
+          markedInDanger: null,
+          isAdmin: false,
+          location: null,
+          isFirstAider: false,
+        };
+        return database().ref(`/users/${uid}`)
+          .set(newUser)
+          .then(() => database().ref('/users').orderByKey().equalTo(uid)
+            .once('value')
+            .then((data) => {
+              console.log(data.val());
+              return data;
+            })
+            .catch(err => console.log(err)))
+      })
+  })
 }
 
 function seedUsers(n) {
   for (let i = 0; i < n; i++) {
-    firebase.auth().createUserWithEmailAndPassword(faker.internet.email(), "password")
+    let email = faker.internet.email()
+    firebase.auth().createUserWithEmailAndPassword(email, "password")
       .then(({ user }) => {
         const { uid } = user;
         const newUser = {
           uid,
           fName: faker.name.firstName(),
           lName: faker.name.lastName(),
+          email,
           location: null,
           markedSafe: null,
           markedInDanger: null,
@@ -110,6 +186,19 @@ function seedSite(safeZone, building) {
     isEmergency: false
   })
 }
+
+function seedEvacs() {
+  let adminId = faker.finance.bitcoinAddress();
+  let startTime = moment(faker.date.recent(2, '2018-10-20'), 'x');
+  let finishTime = startTime + Math.floor(Math.random * 2100000);
+  let inBuildingUsers = Array.apply(faker.finance.bitcoinAddress(), new Array(100 - Math.floor(Math.random() * 70)))
+
+  evacs.forEach((evac) => {
+    return database().ref(`evacuations/${Object.keys(evac)[0]}`).set(Object.values(evac)[0])
+  })
+}
+
+
 
 function eraseAndReseed(n) {
   database().ref('users').set({})
@@ -148,5 +237,10 @@ function eraseAndReseed(n) {
 }
 
 
-// eraseAndReseed(48)
-seedSite(safeZone, buildingZone)
+
+// eraseDb()
+// seedSite(safeZone, buildingZone)
+// seedTestAdmins();
+// seedTestUsers();
+// seedUsers(40)
+seedEvacs()

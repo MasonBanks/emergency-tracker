@@ -214,3 +214,10 @@ exports.updateUser = (uid, entriesToUpdateObj) => database()
 
 exports.getSafeList = adminId => this.getEvacList(adminId)
   .then(list => list);
+
+exports.addMeToEvacSafeList = userId => database().ref('evacuations').orderByChild('adminId').equalTo(adminId)
+  .once('value')
+  .then((data) => {
+    mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
+    return database().ref(`evacuations/${mostRecentStamp}/markedSafe`).push(Date.now())
+  })
