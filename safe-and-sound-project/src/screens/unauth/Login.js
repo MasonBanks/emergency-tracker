@@ -1,12 +1,9 @@
 import React from 'react';
 import { TextInput } from 'react-native';
 import { GlobalContext } from '../../ContextStore/GlobalContext';
-
 import { login } from '../../../api';
-
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
-import styles from '../../components/styles';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -17,14 +14,21 @@ export default class Login extends React.Component {
     };
   }
 
-  handleSignIn(email, password) {
-    return login(email, password).then(data => data);
+  handleChange = (value, stateKey) => {
+    this.setState({
+      [stateKey]: value,
+    });
   }
 
+  handleSignIn = (email, password) => login(email, password).then(data => data)
+
+
   render() {
+    const { email, password } = this.state;
+    const { router } = this.props;
     return (
       <GlobalContext.Consumer>
-        {({ setAuth, setAdmin, state }) => (
+        {({ setAuth, setAdmin }) => (
           <Screen backgroundColor="#155e63" title="Login">
             <TextInput
               style={{
@@ -35,8 +39,8 @@ export default class Login extends React.Component {
                 backgroundColor: '#FFFFFF',
               }}
               placeholder="email"
-              onChangeText={email => this.setState({ email })}
-              value={this.state.email}
+              onChangeText={value => this.handleChange(value, 'email')}
+              value={email}
               autoCapitalize="none"
             />
             <TextInput
@@ -48,14 +52,14 @@ export default class Login extends React.Component {
                 backgroundColor: '#FFFFFF',
               }}
               placeholder="password"
-              onChangeText={password => this.setState({ password })}
-              value={this.state.password}
+              onChangeText={value => this.handleChange(value, 'password')}
+              value={password}
               secureTextEntry
               autoCapitalize="none"
             />
             <Button
               onPress={() => {
-                this.handleSignIn(this.state.email, this.state.password).then(
+                this.handleSignIn(email, password).then(
                   (data) => {
                     if (data) {
                       const object = data.val();
@@ -65,7 +69,6 @@ export default class Login extends React.Component {
                       setAuth(uid);
                     } else {
                       alert('Incorrect login details');
-                      console.log('incorrect login details');
                     }
                   },
                 );
@@ -74,7 +77,7 @@ export default class Login extends React.Component {
             />
             <Button
               onPress={() => {
-                this.props.router.pop();
+                router.pop();
               }}
               text="↩Back"
             />

@@ -38,7 +38,6 @@ class Routes extends React.Component {
       animation: undefined,
       from: undefined,
       to: undefined,
-      email: undefined,
     };
     this.drawer = React.createRef();
   }
@@ -74,6 +73,9 @@ class Routes extends React.Component {
   };
 
   render() {
+    const {
+      router, animation, from, to,
+    } = this.state;
     return (
       <GlobalContext.Consumer>
         {({
@@ -91,8 +93,8 @@ class Routes extends React.Component {
               animations={animations}
               onStackChange={this.onStackChange}
               onBeforeStackChange={this.onBeforeStackChange}
-              router={(router) => {
-                this.setRouter(router);
+              router={(route) => {
+                this.setRouter(route);
               }}
             />
             )}
@@ -104,7 +106,7 @@ class Routes extends React.Component {
                   state={state}
                   setAuth={setAuth}
                   setMode={setMode}
-                  router={this.state.router}
+                  router={router}
                   closeDrawer={this.closeDrawer}
                 />
               )}
@@ -112,11 +114,11 @@ class Routes extends React.Component {
             >
               <Tabs
                 state={state}
-                router={this.state.router}
+                router={router}
                 openDrawer={this.openDrawer}
-                from={this.state.from}
-                to={this.state.to}
-                transition={this.state.animation}
+                from={from}
+                to={to}
+                transition={animation}
               >
                 <EasyRouter
                   routes={{
@@ -129,8 +131,8 @@ class Routes extends React.Component {
                   animations={animations}
                   onStackChange={this.onStackChange}
                   onBeforeStackChange={this.onBeforeStackChange}
-                  router={(router) => {
-                    this.setRouter(router);
+                  router={(route) => {
+                    this.setRouter(route);
                   }}
                 />
               </Tabs>
