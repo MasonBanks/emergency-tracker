@@ -77,7 +77,8 @@ export default class App extends React.Component {
   };
 
   handleSubmit = (zone) => {
-    api.saveSafeZone(this.state.currentArea, zone);
+    const { currentArea } = this.state;
+    api.saveSafeZone(currentArea, zone);
     this.setState({
       currentArea: [],
     });
