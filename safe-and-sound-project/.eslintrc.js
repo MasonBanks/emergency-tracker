@@ -26,6 +26,8 @@ module.exports = {
         "react/no-unescaped-entities": "warn",
         "no-nested-ternary": "warn",
         "no-alert": "off",
-        "global-require": "off"
+        "global-require": "off",
+        "no-param-reassign": "warn",
+        "no-shadow": "warn",
     }
 };
