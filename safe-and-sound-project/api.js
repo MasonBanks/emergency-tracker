@@ -5,6 +5,7 @@ const { database } = firebase;
 firebase.initializeApp(config);
 
 // these two functions will need to change to accept a userID
+
 exports.enterBuilding = bool =>
   database()
     .ref('/users/0')
