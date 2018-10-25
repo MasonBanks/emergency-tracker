@@ -58,15 +58,15 @@ export default (Home = ({ router }) => (
                   updateUser(state.auth.authenticated, {
                     markedInDanger: true,
                   });
-                  addMeToEvacSafeList(state.auth.authenticated)
+                  addMeToEvacSafeList(state.auth.authenticated);
                 }}
                 text="Im in Danger"
               />
             </View>
           </View>
         ) : (
-            <FireEscapeMap />
-          )}
+          <FireEscapeMap />
+        )}
       </Screen>
     )}
   </GlobalContext.Consumer>
