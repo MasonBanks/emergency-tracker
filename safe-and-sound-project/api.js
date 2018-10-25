@@ -29,7 +29,8 @@ exports.createUser = (fname, lName, email, password) => firebase
       inSafeZone: false,
       markedSafe: null,
       markedInDanger: null,
-      avatar: 'https://commons.wikimedia.org/wiki/File:Profile_avatar_placeholder_large.png',
+      avatar:
+          'https://commons.wikimedia.org/wiki/File:Profile_avatar_placeholder_large.png',
       isAdmin: false,
       isFirstAider: false,
     };
@@ -134,36 +135,50 @@ exports.toggleEmergencyStatus = () => database()
         }));
   });
 
-exports.createNewEvacuation = (adminId, startTime) => database().ref('users').orderByChild('inBuilding').equalTo(true)
+exports.createNewEvacuation = (adminId, startTime) => database()
+  .ref('users')
+  .orderByChild('inBuilding')
+  .equalTo(true)
   .once('value', (snapshot) => {
     const inBuildingUsers = snapshot.val();
-    return database().ref(`evacuations/${startTime}`).set({
-      adminId,
-      startTime,
-      finishTime: null,
-      inBuildingUsers,
-    });
+    return database()
+      .ref(`evacuations/${startTime}`)
+      .set({
+        adminId,
+        startTime,
+        finishTime: null,
+        inBuildingUsers,
+      });
   });
 
-exports.getEvacList = adminId => database().ref('evacuations').orderByChild('adminId').equalTo(adminId)
+exports.getEvacList = adminId => database()
+  .ref('evacuations')
+  .orderByChild('adminId')
+  .equalTo(adminId)
   .once('value')
   .then((data) => {
     mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
-    return database().ref(`evacuations/${mostRecentStamp}/inBuildingUsers`).once('value')
+    return database()
+      .ref(`evacuations/${mostRecentStamp}/inBuildingUsers`)
+      .once('value')
       .then((users) => {
         const evacList = Object.values(users.val());
         return evacList;
       });
   });
 
-
-exports.endCurrentEvacuation = adminId => database().ref('evacuations').orderByChild('adminId').equalTo(adminId)
+exports.endCurrentEvacuation = adminId => database()
+  .ref('evacuations')
+  .orderByChild('adminId')
+  .equalTo(adminId)
   .once('value')
   .then((data) => {
     mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
-    return database().ref(`evacuations/${mostRecentStamp}`).update({
-      finishTime: Date.now(),
-    });
+    return database()
+      .ref(`evacuations/${mostRecentStamp}`)
+      .update({
+        finishTime: Date.now(),
+      });
   });
 
 exports.getSafeZone = () => database()
@@ -213,5 +228,15 @@ exports.updateUser = (uid, entriesToUpdateObj) => database()
 //   database().ref(`/inBuildingUsers/${uid}`).set(null);
 // };
 
-exports.getSafeList = adminId => this.getEvacList(adminId)
-  .then(list => list);
+exports.resetAllUsersStatus = (getAllUsersFunc, updateUserFunc) => {
+  getAllUsersFunc().then((allUsers) => {
+    Object.keys(allUsers).forEach((user) => {
+      updateUserFunc(user, {
+        markedSafe: false,
+        markedInDanger: false,
+      });
+    });
+  });
+};
+
+exports.getSafeList = adminId => this.getEvacList(adminId).then(list => list);
