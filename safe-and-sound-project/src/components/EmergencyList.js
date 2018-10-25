@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 class EmergencyList extends Component {
   state = {
     liveUsers: [],
-    user: [],
+    snapshot: [],
   }
 
   componentDidMount() {
@@ -51,18 +51,23 @@ class EmergencyList extends Component {
   }
 
   render() {
-    const users = this.state.liveUsers;
+    const uid = this.state.snapshot.reduce((acc, user) => {
+      acc.push(user.uid);
+      return acc;
+    }, []);
+    const users = this.state.liveUsers.filter((user) => {
+      if (uid.includes(user.uid)) return user;
+    });
     const user = users.map(x => ({
       ...x,
       sortValue:
-          (x.markedInDanger) ? 1
-            : (x.markedSafe) ? 5
-              : (x.inBuilding) ? 2
-                : (x.inSafeZone) ? 4
-                  : 3,
+        (x.markedInDanger) ? 1
+          : (x.markedSafe) ? 5
+            : (x.inBuilding) ? 2
+              : (x.inSafeZone) ? 4
+                : 3,
     }));
     userSorted = _.sortBy(user, x => x.sortValue);
-
     total = userSorted.reduce((acc) => {
       if (userSorted) {
         acc++;
@@ -73,6 +78,20 @@ class EmergencyList extends Component {
         acc++;
       } return acc;
     }, 0);
+    if (this.state.snapshot.length < 1) {
+      return (
+        <View style={{
+          width: '75%',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'justify',
+        }}
+        >
+          <Text style={{ fontSize: 30, color: 'white' }}>This is an emergency.</Text>
+          <Text style={{ fontSize: 20, color: 'white' }}>Please calmly make your way to the designated safe zone area.</Text>
+        </View>
+      );
+    }
     return (
       <View
         style={{
@@ -86,26 +105,26 @@ class EmergencyList extends Component {
         <Text key="emergency_count">{`${safe}/${total}`}</Text>
         <ScrollView style={styles.list}>
           {
-            userSorted.map(user => (
-              <ListItem
-                titleStyle={{ color: (user.markedInDanger || user.markedSafe) ? 'white' : 'black' }}
-                containerStyle={{
-                  backgroundColor: (user.markedInDanger) ? '#d32121' : (user.markedSafe) ? '#35d220' : (user.inBuilding) ? '#ffe0e0' : (user.inSafeZone) ? '#e7ffe0' : (!user.inBuilding && !user.inSafeZone) ? '#e0f5fc' : '#ccefff',
-                  borderWidth: 1,
-                  borderColor:
-                    '#c1c1c1',
-                  marginBottom: 2,
-                }}
-                subtitleStyle={{ color: (user.markedInDanger || user.markedSafe) ? 'white' : 'grey' }}
-                key={`${user.uid}+${user.fName}`}
-                title={`${user.lName}, ${user.fName}`
-                }
-                leftAvatar={{ rounded: true, source: { uri: `${user.avatar}` } }}
-                subtitle={user.isFirstAider ? 'First Aider' : null}
-                rightSubtitle={user.isAdmin ? 'Admin' : 'Personnel'}
-              />
-            ))
-          }
+              userSorted.map(user => (
+                <ListItem
+                  titleStyle={{ color: (user.markedInDanger || user.markedSafe) ? 'white' : 'black' }}
+                  containerStyle={{
+                    backgroundColor: (user.markedInDanger) ? '#d32121' : (user.markedSafe) ? '#35d220' : (user.inBuilding) ? '#ffe0e0' : (user.inSafeZone) ? '#e7ffe0' : (!user.inBuilding && !user.inSafeZone) ? '#e0f5fc' : '#ccefff',
+                    borderWidth: 1,
+                    borderColor:
+                      '#c1c1c1',
+                    marginBottom: 2,
+                  }}
+                  subtitleStyle={{ color: (user.markedInDanger || user.markedSafe) ? 'white' : 'grey' }}
+                  key={`${user.uid}+${user.fName}`}
+                  title={`${user.lName}, ${user.fName}`
+                  }
+                  leftAvatar={{ rounded: true, source: (user.avatar.length > 1) ? { uri: `${user.avatar}` } : { uri: 'https://cdn0.iconfinder.com/data/icons/ui-essence/32/_68ui-512.png' } }}
+                  subtitle={user.isFirstAider ? 'First Aider' : null}
+                  rightSubtitle={user.isAdmin ? 'Admin' : 'Personnel'}
+                />
+              ))
+            }
         </ScrollView>
       </View>
     );

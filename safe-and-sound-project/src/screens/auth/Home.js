@@ -51,6 +51,7 @@ export default (Home = ({ router }) => (
                     markedInDanger: false,
                   });
                   addMeToEvacSafeList(state.auth.authenticated);
+                  alert('You have been marked safe. Please wait patiently within the safe zone until given further instructions from the fire warden or emergency services. Thank you!');
                 }}
                 text="Mark Safe"
               />
@@ -60,15 +61,15 @@ export default (Home = ({ router }) => (
                   api.updateUser(state.auth.authenticated, {
                     markedInDanger: true,
                   });
-                  api.sendLocation(state.myCoordinates);
+                  alert('An alert has been signaled to the fire warden and your location will be relayed to the emergency services. Please remain calm, help is on the way!');
                 }}
-                text="Im in Danger"
+                text="I am in danger!"
               />
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>
