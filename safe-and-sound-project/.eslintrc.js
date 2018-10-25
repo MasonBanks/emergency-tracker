@@ -29,5 +29,6 @@ module.exports = {
         "global-require": "off",
         "no-param-reassign": "warn",
         "no-shadow": "warn",
+        "array-callback-return": "warn",
     }
 };

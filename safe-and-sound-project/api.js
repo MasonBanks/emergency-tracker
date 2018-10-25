@@ -15,14 +15,14 @@ exports.enterSafeZone = bool => database()
   .ref('/users/0')
   .update({ inSafeZone: bool });
 
-exports.createUser = (fname, lName, email, password) => firebase
+exports.createUser = (fName, lName, email, password) => firebase
   .auth()
   .createUserWithEmailAndPassword(email, password)
   .then(({ user }) => {
     const { uid } = user;
     const newUser = {
       uid,
-      fname,
+      fName,
       lName,
       email,
       inBuilding: false,
@@ -30,7 +30,7 @@ exports.createUser = (fname, lName, email, password) => firebase
       markedSafe: null,
       markedInDanger: null,
       avatar:
-          'https://commons.wikimedia.org/wiki/File:Profile_avatar_placeholder_large.png',
+        '',
       isAdmin: false,
       isFirstAider: false,
     };

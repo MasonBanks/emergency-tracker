@@ -47,12 +47,14 @@ class LiveList extends Component {
           users.map(user => (
             <ListItem
               titleStyle={{ color: 'black' }}
-              containerStyle={{ backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: 'grey' }}
+              containerStyle={{
+                backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: 'grey', marginBottom: 2,
+              }}
               subtitleStyle={{ color: 'grey' }}
               key={`${user.uid}+${user.fName}`}
               title={`${user.lName}, ${user.fName}`
               }
-              leftAvatar={{ rounded: true, source: { uri: `${user.avatar}` } }}
+              leftAvatar={{ rounded: true, source: (user.avatar.length > 1) ? { uri: `${user.avatar}` } : { uri: 'https://cdn0.iconfinder.com/data/icons/ui-essence/32/_68ui-512.png' } }}
               subtitle={user.isFirstAider ? 'First Aider' : null}
               rightSubtitle={user.isAdmin ? 'Admin' : 'Personnel'}
             />
