@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, View, Text } from 'react-native';
+import { Animated, View } from 'react-native';
 import easingFunctions from 'react-native-animatable-promise/easing';
 import baseStyles from './styles';
 import Button from './Button';
@@ -69,11 +69,12 @@ export default class Tabs extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { animation } = this.state;
     const { from, to, transition: { easing, duration } = {} } = this.props;
     if (from && to && from !== to && (from !== prevProps.from || to !== prevProps.to)) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ animation: new Animated.Value(0) }, () => {
-        Animated.timing(this.state.animation, {
+        Animated.timing(animation, {
           toValue: 1,
           easing: easingFunctions[easing],
           duration,
@@ -185,7 +186,9 @@ export default class Tabs extends React.Component {
             />
           </View>
           <View>
-            <Animated.View style={[styles.underline, { transform: [{ translateX }, { scaleX }] }]} />
+            <Animated.View
+              style={[styles.underline, { transform: [{ translateX }, { scaleX }] }]}
+            />
           </View>
         </View>
       </View>
