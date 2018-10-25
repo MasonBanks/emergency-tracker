@@ -51,11 +51,9 @@ export default class EmergencyUserMap extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log(!prevState.myLocation[0]);
-    console.log(this.state.myLocation[0]);
-    if (this.state.myLocation[0] && !prevState.myLocation[0]) {
+    const { myLocation } = this.state;
+    if (myLocation[0] && !prevState.myLocation[0]) {
       this.findEdges();
-      console.log('loaded');
     }
   }
 
@@ -110,7 +108,7 @@ export default class EmergencyUserMap extends React.Component {
   };
 
   render() {
-    const { region, safezone } = this.state;
+    const { region, safezone, myLocation } = this.state;
 
     return (
       <MapView
@@ -124,15 +122,13 @@ export default class EmergencyUserMap extends React.Component {
         region={region}
         zoomControlEnabled={false}
       >
-        {this.state.myLocation[0]
+        {myLocation[0]
           && (
             <MapView.Marker
-              coordinate={this.state.myLocation[0]}
+              coordinate={myLocation[0]}
             >
               <Image source={require('../assets/images/mapmarker.png')} style={{ width: 40, height: 40 }} />
             </MapView.Marker>
-
-
           )
         }
 
