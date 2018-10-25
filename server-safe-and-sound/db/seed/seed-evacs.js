@@ -7,22 +7,31 @@ const { database } = firebase;
 firebase.initializeApp(config);
 admin.initializeApp(adminConfig);
 
+
 const generateMarkedSafe = (timestamp, duration, n) => {
-  let markedSafe = [];
+  let markedSafe = {};
   for (let i = 0; i < n; i++) {
-    markedSafe.push(timestamp + Math.floor(Math.random() * duration))
+    markedSafe[generateFakeUID()] = timestamp + Math.floor(Math.random() * duration)
   }
   return markedSafe
 }
 
 const generateInBuildingUsers = (n) => {
-  let inBuildingUsers = [];
+  let inBuildingUsers = {};
   for (let i = 0; i < n; i++) {
-    inBuildingUsers.push(Math.random().toString(36).substring(2, 28))
+    inBuildingUsers[generateFakeUID()] = {
+      fName: 'person'
+    }
   }
   return inBuildingUsers
 }
 
+const generateFakeUID = () => {
+  const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let result = '';
+  for (let i = 28; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+  return result;
+}
 
 function seedEvacuation(timestamp, duration, n) {
   const admins = [
@@ -38,6 +47,7 @@ function seedEvacuation(timestamp, duration, n) {
   let markedSafe = generateMarkedSafe(timestamp, duration, n);
   let drill = Math.random() * 100 > 50 ? true : false;
   let newEvac = {
+    startTime,
     adminId,
     finishTime,
     inBuildingUsers,

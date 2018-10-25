@@ -50,6 +50,7 @@ export default (Home = ({ router }) => (
                     markedSafe: true,
                     markedInDanger: false,
                   });
+                  addMeToEvacSafeList(state.auth.authenticated);
                 }}
                 text="Mark Safe"
               />
@@ -59,7 +60,6 @@ export default (Home = ({ router }) => (
                   api.updateUser(state.auth.authenticated, {
                     markedInDanger: true,
                   });
-                  addMeToEvacSafeList(state.auth.authenticated);
                   api.sendLocation(state.myCoordinates);
                 }}
                 text="Im in Danger"
@@ -67,8 +67,8 @@ export default (Home = ({ router }) => (
             </View>
           </View>
         ) : (
-            <FireEscapeMap />
-          )}
+          <FireEscapeMap />
+        )}
       </Screen>
     )}
   </GlobalContext.Consumer>
