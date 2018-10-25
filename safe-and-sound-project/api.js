@@ -222,3 +222,4 @@ exports.addMeToEvacSafeList = userId => database().ref('evacuations').orderByChi
     mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
     return database().ref(`evacuations/${mostRecentStamp}/markedSafe`).push(Date.now());
   });
+

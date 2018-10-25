@@ -187,18 +187,6 @@ function seedSite(safeZone, building) {
   })
 }
 
-function seedEvacs() {
-  let adminId = faker.finance.bitcoinAddress();
-  let startTime = moment(faker.date.recent(2, '2018-10-20'), 'x');
-  let finishTime = startTime + Math.floor(Math.random * 2100000);
-  let inBuildingUsers = Array.apply(faker.finance.bitcoinAddress(), new Array(100 - Math.floor(Math.random() * 70)))
-
-  evacs.forEach((evac) => {
-    return database().ref(`evacuations/${Object.keys(evac)[0]}`).set(Object.values(evac)[0])
-  })
-}
-
-
 
 function eraseAndReseed(n) {
   database().ref('users').set({})
@@ -243,4 +231,3 @@ function eraseAndReseed(n) {
 // seedTestAdmins();
 // seedTestUsers();
 // seedUsers(40)
-seedEvacs()
