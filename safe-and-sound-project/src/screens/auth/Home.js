@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
 export default (Home = ({ router }) => (
   <GlobalContext.Consumer>
     {({ state, setMode }) => (
+      // console.log(state.myCoordinates);
       <Screen
         backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'}
         title="Home"
@@ -55,18 +56,19 @@ export default (Home = ({ router }) => (
               <Button
                 style={styles.redButton}
                 onPress={() => {
-                  updateUser(state.auth.authenticated, {
+                  api.updateUser(state.auth.authenticated, {
                     markedInDanger: true,
                   });
                   addMeToEvacSafeList(state.auth.authenticated);
+                  api.sendLocation(state.myCoordinates);
                 }}
                 text="Im in Danger"
               />
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>
