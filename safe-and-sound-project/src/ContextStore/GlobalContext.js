@@ -7,58 +7,70 @@ class GlobalProvider extends Component {
     super(props);
     this.state = {
       auth: {
-        authenticated: false,
+        authenticated: false
       },
       mode: {
-        emergency: false,
+        emergency: false
       },
       isAdmin: {
-        admin: false,
-      },
+        admin: false
+      }
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { appState, getUserId } = this.props;
     const { auth } = this.state;
-    if (prevProps.appState !== null && prevProps.appState.dbEmergencyStatus !== appState.dbEmergencyStatus) {
+
+    if (
+      prevProps.appState !== null &&
+      prevProps.appState.dbEmergencyStatus !== appState.dbEmergencyStatus
+    ) {
+      this.setMode(appState.dbEmergencyStatus);
+    } else if (prevProps.appState === null) {
       this.setMode(appState.dbEmergencyStatus);
     }
-    if (auth.authenticated && auth.authenticated !== prevState.auth.authenticated) {
+    if (
+      auth.authenticated &&
+      auth.authenticated !== prevState.auth.authenticated
+    ) {
       getUserId(auth.authenticated);
     }
   }
 
-  setAuth = (authenticated) => {
+  setAuth = authenticated => {
     this.setState(() => ({
       auth: {
-        authenticated,
-      },
+        authenticated
+      }
     }));
   };
 
-  setMode = (emergency) => {
+  setMode = emergency => {
     this.setState(() => ({
       mode: {
-        emergency,
-      },
+        emergency
+      }
     }));
-  }
+  };
 
-  setAdmin = (admin) => {
+  setAdmin = admin => {
     this.setState(() => ({
       isAdmin: {
-        admin,
-      },
+        admin
+      }
     }));
-  }
-
+  };
 
   render() {
     return (
-      <GlobalContext.Provider value={{
-        state: this.state, setAuth: this.setAuth, setMode: this.setMode, setAdmin: this.setAdmin,
-      }}
+      <GlobalContext.Provider
+        value={{
+          state: this.state,
+          setAuth: this.setAuth,
+          setMode: this.setMode,
+          setAdmin: this.setAdmin
+        }}
       >
         {this.props.children}
       </GlobalContext.Provider>
@@ -66,6 +78,4 @@ class GlobalProvider extends Component {
   }
 }
 
-export {
-  GlobalContext, GlobalProvider,
-};
+export { GlobalContext, GlobalProvider };
