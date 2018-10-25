@@ -25,6 +25,7 @@ export default class App extends React.Component {
       dbEmergencyStatus: true,
       inSafeZone: false,
       inBuilding: false,
+
       latitude: 0,
       longitude: 0,
       user: ''

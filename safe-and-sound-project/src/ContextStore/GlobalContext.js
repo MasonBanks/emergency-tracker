@@ -15,7 +15,6 @@ class GlobalProvider extends Component {
       isAdmin: {
         admin: false
       },
-
       myCoordinates: {
         latitude: 0,
         longitude: 0
