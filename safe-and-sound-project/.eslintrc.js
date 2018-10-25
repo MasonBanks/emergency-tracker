@@ -24,7 +24,10 @@ module.exports = {
         "no-plusplus": "warn",
         "no-useless-escape": "warn",
         "react/no-unescaped-entities": "warn",
-        "no-alert":"off",
-        "global-require": "off"
+        "no-nested-ternary": "warn",
+        "no-alert": "off",
+        "global-require": "off",
+        "no-param-reassign": "warn",
+        "no-shadow": "warn",
     }
 };

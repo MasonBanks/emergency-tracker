@@ -25,10 +25,11 @@ export default class App extends React.Component {
       dbEmergencyStatus: true,
       inSafeZone: false,
       inBuilding: false,
-      latitude: 53.483959,
-      longitude: -2.244644,
-      user: 'fffffffff'
-    };
+
+      latitude: 0,
+      longitude: 0,
+      user: '',
+    }
   }
 
   componentWillUnmount() {
@@ -36,20 +37,19 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    database()
-      .ref('site')
-      .child('isEmergency')
-      .on('value', snapshot => {
-        console.log(
-          `DB connected: Site status: ${snapshot.val() ? 'Emergency' : 'IDLE'}`
-        );
-        this.setState({
-          dbEmergencyStatus: snapshot.val(),
-          inSafeZone: false,
-          inBuilding: false,
-          user: ''
-        });
-      });
+
+    database().ref('site').child('isEmergency').on('value', (snapshot) => {
+      console.log(`DB connected: Site status: ${snapshot.val() ? 'Emergency' : 'IDLE'}`)
+      this.setState({
+        dbEmergencyStatus: snapshot.val(),
+        inSafeZone: false,
+        inBuilding: false,
+latitude:'',
+latitude:'',
+        user: '',
+
+      })
+    });
 
     const build = this.getBuilding();
     const safe = this.getSafeZone();
