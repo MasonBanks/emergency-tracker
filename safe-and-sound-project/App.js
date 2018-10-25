@@ -37,22 +37,20 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    database()
-      .ref('site')
-      .child('isEmergency')
-      .on('value', snapshot => {
-        console.log(
-          `DB connected: Site status: ${snapshot.val() ? 'Emergency' : 'IDLE'}`
-        );
-        this.setState({
-          dbEmergencyStatus: snapshot.val(),
-          inSafeZone: false,
-          inBuilding: false,
-          latitude: '',
-          latitude: '',
-          user: ''
-        });
-      });
+
+    database().ref('site').child('isEmergency').on('value', (snapshot) => {
+      console.log(`DB connected: Site status: ${snapshot.val() ? 'Emergency' : 'IDLE'}`)
+      this.setState({
+        dbEmergencyStatus: snapshot.val(),
+        inSafeZone: false,
+        inBuilding: false,
+        latitude:'',
+        latitude:'',
+        user: '',
+
+      })
+    });
+
 
     const build = this.getBuilding();
     const safe = this.getSafeZone();
