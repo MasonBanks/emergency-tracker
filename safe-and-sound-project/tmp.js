@@ -6,7 +6,4 @@ const { database } = firebase;
 // firebase.initializeApp(config);
 
 
-
-
 // api.getUserById('pI1EYTutWqZNSMTBFjTwF7hAdfC2');
-
