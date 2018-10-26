@@ -7,6 +7,8 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 5,
+    paddingVertical: 15,
   },
   button: {
     backgroundColor: 'rgba(0,0,0,.4)',

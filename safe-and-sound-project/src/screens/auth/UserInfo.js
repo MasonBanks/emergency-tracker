@@ -13,7 +13,7 @@ export default ({ router }) => (
     {({ state, setMode }) => (
       <Screen
         backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'}
-        title="Roster"
+        title={(!state.mode.emergency) ? "Roster" : "Alarm Signaled"}
       >
         {!state.mode.emergency ? <LiveList /> : <EmergencyList auth={state.auth.authenticated} />}
         <Button
@@ -24,5 +24,5 @@ export default ({ router }) => (
         />
       </Screen>
     )}
-  </GlobalContext.Consumer>
+  </GlobalContext.Consumer >
 );
