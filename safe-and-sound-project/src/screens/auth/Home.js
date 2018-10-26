@@ -46,7 +46,7 @@ export default (Home = ({ router }) => (
               <Button
                 style={styles.greenButton}
                 onPress={() => {
-                  updateUser(state.auth.authenticated, {
+                  api.updateUser(state.auth.authenticated, {
                     markedSafe: true,
                     markedInDanger: false,
                   });
@@ -67,8 +67,8 @@ export default (Home = ({ router }) => (
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>
