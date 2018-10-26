@@ -1,5 +1,6 @@
 const firebase = require('firebase');
 const { config } = require('./config/firebase-config');
+const { sToMins, getAverageTimes } = require('./src/utils/timeUtils')
 
 const { database } = firebase;
 firebase.initializeApp(config);
@@ -231,11 +232,9 @@ exports.getSafeList = adminId => this.getEvacList(adminId)
   .then(list => list);
 
 exports.addMeToEvacSafeList = (uid) => {
-  console.log('reached api function');
   return database().ref('/evacuations')
     .once('value')
     .then((data) => {
-      console.log(data.val());
       mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
       currentTimestamp = Date.now();
       return database().ref(`evacuations/${mostRecentStamp}/markedSafe/${uid}`).set(currentTimestamp);
@@ -257,8 +256,53 @@ exports.resetAllUsersStatus = (getAllUsersFunc, updateUserFunc) => {
   });
 };
 
-exports.getEvacReports = cb => database().ref('/evacuations').once('value')
+getAllEvacReports = cb => database().ref('/evacuations').once('value')
   .then((data) => {
     const evacReports = data.val();
     cb(evacReports);
   });
+
+getLatestEvacReport = (cb) => {
+  return database().ref('/evacuations')
+    .once('value')
+    .then((data) => {
+      mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
+      database().ref(`evacuations/${mostRecentStamp}`).once('value')
+        .then((data) => {
+          const evacReport = data.val();
+          cb(evacReport)
+        })
+    })
+}
+
+exports.generateAllEvacReports = () => {
+  return getAllEvacReports((reports) => {
+    const humanReadableReports = Object.values(reports).reduce((acc, val) => {
+      const report = {
+        alertingAdmin: val.adminId,
+        date: moment.unix(val.startTime).format('llll'),
+        headCount: Object.keys(val.inBuildingUsers).length,
+        totalDuration: sToMins(val.finishTime - val.startTime),
+        averageEvacTime: getAverageTimes(val.markedSafe, val.startTime),
+        drill: val.drill,
+      };
+      acc.push(report);
+      return acc;
+    }, []);
+    return humanReadableReports;
+  });
+}
+
+exports.generateLatestEvacReport = () => {
+  return getLatestEvacReport((report) => {
+    const humanReadableReport = {
+      alertingAdmin: report.adminId,
+      date: moment.unix(report.startTime).format('llll'),
+      headCount: Object.keys(report.inBuildingUsers).length,
+      totalDuration: sToMins(report.finishTime - report.startTime),
+      averageEvacTime: getAverageTimes(report.markedSafe, report.startTime),
+      drill: report.drill,
+    };
+    return humanReadableReport;
+  });
+}
