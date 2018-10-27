@@ -84,7 +84,7 @@ class EmergencyList extends Component {
           width: '75%',
           flex: 1,
           justifyContent: 'center',
-          alignItems: 'justify',
+          // alignItems: 'justify',
         }}
         >
           <Text style={{ fontSize: 30, color: 'white' }}>This is an emergency.</Text>
@@ -105,26 +105,26 @@ class EmergencyList extends Component {
         <Text key="emergency_count">{`${safe}/${total}`}</Text>
         <ScrollView style={styles.list}>
           {
-              userSorted.map(user => (
-                <ListItem
-                  titleStyle={{ color: (user.markedInDanger || user.markedSafe) ? 'white' : 'black' }}
-                  containerStyle={{
-                    backgroundColor: (user.markedInDanger) ? '#d32121' : (user.markedSafe) ? '#35d220' : (user.inBuilding) ? '#ffe0e0' : (user.inSafeZone) ? '#e7ffe0' : (!user.inBuilding && !user.inSafeZone) ? '#e0f5fc' : '#ccefff',
-                    borderWidth: 1,
-                    borderColor:
-                      '#c1c1c1',
-                    marginBottom: 2,
-                  }}
-                  subtitleStyle={{ color: (user.markedInDanger || user.markedSafe) ? 'white' : 'grey' }}
-                  key={`${user.uid}+${user.fName}`}
-                  title={`${user.lName}, ${user.fName}`
-                  }
-                  leftAvatar={{ rounded: true, source: (user.avatar.length > 1) ? { uri: `${user.avatar}` } : { uri: 'https://cdn0.iconfinder.com/data/icons/ui-essence/32/_68ui-512.png' } }}
-                  subtitle={user.isFirstAider ? 'First Aider' : null}
-                  rightSubtitle={user.isAdmin ? 'Admin' : 'Personnel'}
-                />
-              ))
-            }
+            userSorted.map(user => (
+              <ListItem
+                titleStyle={{ color: (user.markedInDanger || user.markedSafe) ? 'white' : 'black' }}
+                containerStyle={{
+                  backgroundColor: (user.markedInDanger) ? '#d32121' : (user.markedSafe) ? '#35d220' : (user.inBuilding) ? '#ffe0e0' : (user.inSafeZone) ? '#e7ffe0' : (!user.inBuilding && !user.inSafeZone) ? '#e0f5fc' : '#ccefff',
+                  borderWidth: 1,
+                  borderColor:
+                    '#c1c1c1',
+                  marginBottom: 2,
+                }}
+                subtitleStyle={{ color: (user.markedInDanger || user.markedSafe) ? 'white' : 'grey' }}
+                key={`${user.uid}+${user.fName}`}
+                title={`${user.lName}, ${user.fName}`
+                }
+                leftAvatar={{ rounded: true, source: (user.avatar.length > 1) ? { uri: `${user.avatar}` } : { uri: 'https://cdn0.iconfinder.com/data/icons/ui-essence/32/_68ui-512.png' } }}
+                subtitle={user.isFirstAider ? 'First Aider' : null}
+                rightSubtitle={user.isAdmin ? 'Admin' : 'Personnel'}
+              />
+            ))
+          }
         </ScrollView>
       </View>
     );

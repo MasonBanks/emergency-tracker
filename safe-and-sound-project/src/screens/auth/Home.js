@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
   outterContainer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    padding: 5
   },
   buttonContainer: {
     flex: 1,
@@ -46,7 +47,7 @@ export default (Home = ({ router }) => (
               <Button
                 style={styles.greenButton}
                 onPress={() => {
-                  updateUser(state.auth.authenticated, {
+                  api.updateUser(state.auth.authenticated, {
                     markedSafe: true,
                     markedInDanger: false,
                   });
@@ -68,8 +69,8 @@ export default (Home = ({ router }) => (
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>
