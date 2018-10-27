@@ -66,7 +66,18 @@ export default class Sidenav extends React.Component {
               } else {
                 endCurrentEvacuation(state.auth.authenticated, timestamp).then(
                   resetAllUsersStatus(getAllUsers, updateUser),
-                );
+                )
+                  .then(() => {
+                    this.setState({
+                      evacReport: generateLatestEvacReport(),
+                    })
+                      .then(() => {
+                        console.log(this.state.evacReport);
+                      });
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
               }
               toggleEmergencyStatus(state.mode.emergency);
             }}
