@@ -5,8 +5,8 @@ const { config, adminConfig } = require('../../config/firebase-config');
 const { safeZone, buildingZone } = require('./zoneData');
 
 const { database } = firebase;
-// firebase.initializeApp(config);
-// admin.initializeApp(adminConfig);
+firebase.initializeApp(config);
+admin.initializeApp(adminConfig);
 
 const allAuthUID = [];
 
@@ -185,43 +185,36 @@ function seedSite(safeZone, building) {
     safeZone,
     isEmergency: false
   })
+    .then(() => {
+      console.log('Site seeded with zone coordinates')
+    })
 }
 
 
-function eraseAndReseed(n) {
-  database().ref('users').set({})
+function eraseAndReseed(n) { // n = no of users to seed
+  eraseDb()
     .then(() => {
-      admin.auth().listUsers(100)
-        .then((listUsersResult) => {
-          listUsersResult.users.forEach((userRecord) => {
-            const { uid } = userRecord;
-            allAuthUID.push(uid);
-            admin.auth().deleteUser(userRecord.uid);
-          });
-        })
-        .then(() => {
-          console.log('DB erased');
-          return seedTestAdmin();
-        })
-        .then(() => {
-          console.log('Test Admin seeded');
-          return seedTestUser();
-        })
-        .then(() => {
-          console.log('Test User seeded');
-          return seedUsers(n);
-        })
-        .then(() => {
-          console.log(`${n} random users seeded`)
-          return seedSite(safeZone, buildingZone);
-        })
-        .then(() => {
-          console.log('Site information seeded')
-        })
-        .catch((error) => {
-          console.log('Error erasing authenticated users:', error);
-        })
-    });
+      console.log('DB erased');
+      return seedTestAdmins();
+    })
+    .then(() => {
+      console.log('Test Admin seeded');
+      return seedTestUsers();
+    })
+    .then(() => {
+      console.log('Test User seeded');
+      return seedUsers(n);
+    })
+    .then(() => {
+      console.log(`${n} random users seeded`)
+      return seedSite(safeZone, buildingZone);
+    })
+    .then(() => {
+      console.log('Site information seeded')
+    })
+    .catch((error) => {
+      console.log('Error erasing authenticated users:', error);
+    })
 }
 
 
@@ -231,3 +224,5 @@ function eraseAndReseed(n) {
 // seedTestAdmins();
 // seedTestUsers();
 // seedUsers(40)
+
+eraseAndReseed()

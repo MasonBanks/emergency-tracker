@@ -58,7 +58,7 @@ export default (Home = ({ router }) => (
               <Button
                 style={styles.redButton}
                 onPress={() => {
-                  api.updateUser(state.auth.authenticated, {
+                  updateUser(state.auth.authenticated, {
                     markedInDanger: true,
                   });
                   alert('An alert has been signaled to the fire warden and your location will be relayed to the emergency services. Please remain calm, help is on the way!');
