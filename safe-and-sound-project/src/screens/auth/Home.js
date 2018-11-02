@@ -37,45 +37,44 @@ const styles = StyleSheet.create({
 });
 
 export default class Home extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       token: null,
-      uid: null
+      uid: null,
     };
-    this.router = this.props.router
+    this.router = this.props.router;
     // console.log('Constructor')
   }
 
   componentWillMount() {
     if (!this.state.uid) {
       return this.setState({
-        uid: state.auth.authenticated
-      })
-    } else return;
+        uid: state.auth.authenticated,
+      });
+    }
   }
 
   componentDidMount() {
-    console.log('Component did mount! These are the props:', this.props, 'This is the state: ', this.state)
-    this.getPushTokenAsync()
+    console.log('Component did mount! These are the props:', this.props, 'This is the state: ', this.state);
+    this.getPushTokenAsync();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('Should component update', this.state.uid, nextState.uid)
-    if (this.state.uid !== nextState.uid) return false
-    else return true
+    console.log('Should component update', this.state.uid, nextState.uid);
+    if (this.state.uid !== nextState.uid) return false;
+    return true;
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log('Component will update!', nextProps, nextState)
+    console.log('Component will update!', nextProps, nextState);
     this.registerForPushNotificationsAsync()
-      .then()
+      .then();
   }
 
   getPushTokenAsync = async () => {
     const { status: existingStatus } = await Permissions.getAsync(
-      Permissions.NOTIFICATIONS
+      Permissions.NOTIFICATIONS,
     );
     let finalStatus = existingStatus;
 
@@ -88,11 +87,11 @@ export default class Home extends React.Component {
       return;
     }
 
-    let token = await Notifications.getExpoPushTokenAsync();
+    const token = await Notifications.getExpoPushTokenAsync();
 
     return this.setState({
-      token
-    })
+      token,
+    });
   }
 
   registerForPushNotificationsAsync() {
@@ -126,7 +125,7 @@ export default class Home extends React.Component {
           >
             {!this.state.uid && (
               this.setState({
-                uid: state.auth.authenticated
+                uid: state.auth.authenticated,
               })
             )}
             {state.mode.emergency ? (
@@ -158,13 +157,11 @@ export default class Home extends React.Component {
                 </View>
               </View>
             ) : (
-                <FireEscapeMap />
-              )}
+              <FireEscapeMap />
+            )}
           </Screen>
         )}
       </GlobalContext.Consumer>
-    )
+    );
   }
-
-
 }
