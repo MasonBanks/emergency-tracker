@@ -1,6 +1,5 @@
 const firebase = require('firebase');
 const { config } = require('./config/firebase-config');
-
 const { database } = firebase;
 firebase.initializeApp(config);
 
@@ -219,7 +218,10 @@ exports.getAllUsers = () => database()
 exports.updateUser = (uid, entriesToUpdateObj) => database()
   .ref(`/users/${uid}`)
   .update(entriesToUpdateObj)
-  .then(updatedData => updatedData.val());
+  .then((updatedData) => {
+    console.log(updatedData.val(), 'updated!')
+    return updatedData.val()
+  })
 
 // exports.userInBuilding = (uid) => {
 //   console.log(uid);

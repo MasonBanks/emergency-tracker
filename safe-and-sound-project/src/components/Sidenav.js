@@ -2,14 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import Screen from './Screen';
 import Button from './Button';
-import {
-  toggleEmergencyStatus,
-  createNewEvacuation,
-  endCurrentEvacuation,
-  resetAllUsersStatus,
-  updateUser,
-  getAllUsers,
-} from '../../api';
+import * as api from '../../api';
 
 const animation = { type: 'right', duration: 1100 };
 
@@ -17,8 +10,16 @@ export default class Sidenav extends React.Component {
   constructor(props) {
     super(props);
     state = {
-      drill: 1,
+      drill: null,
+      evacReport: {}
     };
+  }
+
+  componentWillMount() {
+    console.log('componentWillMount')
+    this.setState({
+      drill: false
+    })
   }
 
   render() {
@@ -75,13 +76,13 @@ export default class Sidenav extends React.Component {
               });
               const timestamp = Date.now();
               if (!state.mode.emergency) {
-                createNewEvacuation(state.auth.authenticated, timestamp, false);
+                api.createNewEvacuation(state.auth.authenticated, timestamp, false);
               } else {
-                endCurrentEvacuation(state.auth.authenticated, timestamp).then(
-                  resetAllUsersStatus(getAllUsers, updateUser),
+                api.endCurrentEvacuation(state.auth.authenticated, timestamp).then(
+                  api.resetAllUsersStatus(getAllUsers, updateUser),
                 );
               }
-              toggleEmergencyStatus(state.mode.emergency);
+              api.toggleEmergencyStatus(state.mode.emergency);
             }}
             text={
               state.mode.emergency ? 'Quit Emergency Mode' : 'Enter Emergency Mode'
@@ -91,14 +92,23 @@ export default class Sidenav extends React.Component {
                 drill: true,
               });
               const timestamp = Date.now();
+              api.toggleEmergencyStatus(state.mode.emergency);
               if (!state.mode.emergency) {
-                createNewEvacuation(state.auth.authenticated, timestamp, true);
+                api.createNewEvacuation(state.auth.authenticated, timestamp, true);
               } else {
-                endCurrentEvacuation(state.auth.authenticated, timestamp).then(
-                  resetAllUsersStatus(getAllUsers, updateUser),
-                );
+                api.endCurrentEvacuation(state.auth.authenticated, timestamp)
+                  .then(() => {
+                    console.log('ended current evacuation')
+                    return api.resetAllUsersStatus(api.getAllUsers, api.updateUser)
+                  })
+                  .then(() => {
+                    console.log('reset all users statuses')
+                    return api.getEvacReports()
+                  })
+                  .then(() => {
+                    console.log('called api.getEvacReports')
+                  })
               }
-              toggleEmergencyStatus(state.mode.emergency);
             }}
             text={
               state.mode.emergency ? 'Quit Emergency Mode' : 'Enter Emergency Mode'
