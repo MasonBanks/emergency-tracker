@@ -224,5 +224,6 @@ function eraseAndReseed(n) { // n = no of users to seed
 // seedTestAdmins();
 // seedTestUsers();
 // seedUsers(40)
+seedGuestAccounts()
 
-eraseAndReseed()
+// eraseAndReseed()

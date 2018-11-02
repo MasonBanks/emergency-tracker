@@ -3,3 +3,4 @@ package-lock.json
 .expo/*
 config/
 npm-debug.*
+tmp.js
