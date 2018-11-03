@@ -156,8 +156,8 @@ export default class Home extends React.Component {
                 </View>
               </View>
             ) : (
-                <FireEscapeMap />
-              )}
+              <FireEscapeMap />
+            )}
           </Screen>
         )}
       </GlobalContext.Consumer>
