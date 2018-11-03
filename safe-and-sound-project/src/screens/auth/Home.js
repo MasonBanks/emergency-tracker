@@ -25,14 +25,14 @@ const styles = StyleSheet.create({
     width: '40%',
     height: 40,
     margin: 8,
-    paddingTop: 7,
+    paddingTop: 7
   },
   redButton: {
     backgroundColor: 'red',
     width: '40%',
     height: 40,
     margin: 8,
-    paddingTop: 7,
+    paddingTop: 7
   },
 });
 
@@ -57,23 +57,24 @@ export default (Home = ({ router }) => (
                   api.addMeToEvacSafeList(state.auth.authenticated);
                   alert('You have been marked safe. Please wait patiently within the safe zone until given further instructions from the fire warden or emergency services. Thank you!');
                 }}
-                text="Mark Safe"
+                text="I'm Safe"
               />
               <Button
                 style={styles.redButton}
                 onPress={() => {
                   api.updateUser(state.auth.authenticated, {
+                    markedSafe: false,
                     markedInDanger: true,
                   });
                   alert('An alert has been signaled to the fire warden and your location will be relayed to the emergency services. Please remain calm, help is on the way!');
                 }}
-                text="I am in danger!"
+                text="I'm in Danger"
               />
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>
