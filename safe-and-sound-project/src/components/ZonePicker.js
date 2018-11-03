@@ -38,79 +38,79 @@ export default class App extends React.Component {
     clearInterval(this.interval);
   }
 
-checkLocation=() => {
-  const polygon = safeZoneGeoJSON.features[0].geometry.coordinates[0]
-    .map(coordinates => [coordinates[1], coordinates[0]]);
+  checkLocation = () => {
+    const polygon = safeZoneGeoJSON.features[0].geometry.coordinates[0]
+      .map(coordinates => [coordinates[1], coordinates[0]]);
 
-  const buildingPolygon = buildingGeoJSON.features[0].geometry.coordinates[0]
-    .map(coordinates => [coordinates[1], coordinates[0]]);
+    const buildingPolygon = buildingGeoJSON.features[0].geometry.coordinates[0]
+      .map(coordinates => [coordinates[1], coordinates[0]]);
 
 
-  const options = {
-    enableHighAccuracy: false,
-    timeout: 5000,
-    maximumAge: 0,
-  };
+    const options = {
+      enableHighAccuracy: false,
+      timeout: 5000,
+      maximumAge: 0,
+    };
 
-  const { latitude, longitude } = this.state;
+    const { latitude, longitude } = this.state;
 
-  navigator.geolocation.watchPosition(
-    (position) => {
-      this.setState({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      }, () => {
+    navigator.geolocation.watchPosition(
+      (position) => {
         this.setState({
-          inSafeZone: inside([latitude, longitude], polygon),
-          inBuilding: inside([latitude, longitude], buildingPolygon),
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        }, () => {
+          this.setState({
+            inSafeZone: inside([latitude, longitude], polygon),
+            inBuilding: inside([latitude, longitude], buildingPolygon),
+          });
         });
-      });
-    }, error => alert(error.message), options,
-  );
-}
+      }, error => alert(error.message), options,
+    );
+  }
 
 
-render() {
-  const {
-    latitude, longitude, inSafeZone, inBuilding,
-  } = this.state;
-  return (
-    <View
-      style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}
-    >
-      <Text>{!latitude && 'Loading...'}</Text>
-      <Text>safezone!!!!!!</Text>
-      {!inSafeZone ? (
-        <Image
-          source={require('../assets/images/cross.png')}
-          height="40"
-          weight="40"
-        />
-      ) : (
-        <Image
-          source={require('../assets/images/tick.png')}
-          height="40"
-          weight="40"
-        />
-      )}
-      <Text>building</Text>
-      {!inBuilding ? (
-        <Image
-          source={require('../assets/images/cross.png')}
-          height="40"
-          weight="40"
-        />
-      ) : (
-        <Image
-          source={require('../assets/images/tick.png')}
-          height="40"
-          weight="40"
-        />
-      )}
+  render() {
+    const {
+      latitude, longitude, inSafeZone, inBuilding,
+    } = this.state;
+    return (
+      <View
+        style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}
+      >
+        <Text>{!latitude && 'Loading...'}</Text>
+        <Text>safezone!!!!!!</Text>
+        {!inSafeZone ? (
+          <Image
+            source={require('../assets/images/cross.png')}
+            height="40"
+            weight="40"
+          />
+        ) : (
+            <Image
+              source={require('../assets/images/tick.png')}
+              height="40"
+              weight="40"
+            />
+          )}
+        <Text>building</Text>
+        {!inBuilding ? (
+          <Image
+            source={require('../assets/images/cross.png')}
+            height="40"
+            weight="40"
+          />
+        ) : (
+            <Image
+              source={require('../assets/images/tick.png')}
+              height="40"
+              weight="40"
+            />
+          )}
 
-      <Text>{latitude}</Text>
-      <Text>{longitude}</Text>
-    </View>
-  );
-}
+        <Text>{latitude}</Text>
+        <Text>{longitude}</Text>
+      </View>
+    );
+  }
 }
