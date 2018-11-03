@@ -3,15 +3,8 @@ import { Text, View } from 'react-native';
 import moment from 'moment';
 import Screen from './Screen';
 import Button from './Button';
-import {
-  toggleEmergencyStatus,
-  createNewEvacuation,
-  endCurrentEvacuation,
-  resetAllUsersStatus,
-  updateUser,
-  getAllUsers,
-  generateLatestEvacReport,
-} from '../../api';
+import * as api from '../../api';
+import { generateEvacReports } from '../utils/generateEvacReports';
 
 const animation = { type: 'right', duration: 1100 };
 
@@ -19,8 +12,27 @@ export default class Sidenav extends React.Component {
   constructor(props) {
     super(props);
     state = {
-      evacReport: {},
+      drill: null,
+      evacReport: null,
     };
+  }
+
+  componentWillMount() {
+    this.setState({
+      drill: false,
+    });
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (!this.state.evacReport && nextState.evacReport) {
+      alert(`Emergency procedure complete! Report: 
+      Date: ${nextState.evacReport.date}, 
+      Head count: ${nextState.evacReport.headCount}, 
+      Marked Safe: ${nextState.evacReport.markedSafe},
+      Total duration: ${nextState.evacReport.totalDuration}, 
+      Avg evacuation time: ${nextState.evacReport.averageEvacTime}, 
+      Drill: ${nextState.evacReport.drill}`);
+    }
   }
 
   render() {
@@ -62,50 +74,37 @@ export default class Sidenav extends React.Component {
             onLongPress={() => { // start real emergency procedure
               const timestamp = Math.floor(Date.now() / 1000);
               if (!state.mode.emergency) {
-                createNewEvacuation(state.auth.authenticated, timestamp, false);
+                api.createNewEvacuation(state.auth.authenticated, timestamp, false);
               } else {
-                endCurrentEvacuation(state.auth.authenticated, timestamp).then(
-                  resetAllUsersStatus(getAllUsers, updateUser),
-                )
-                  .then(() => {
-                    this.setState({
-                      evacReport: generateLatestEvacReport(),
-                    })
-                      .then(() => {
-                        console.log(this.state.evacReport);
-                      });
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
+                api.endCurrentEvacuation(state.auth.authenticated, timestamp).then(
+                  api.resetAllUsersStatus(getAllUsers, updateUser),
+                );
               }
-              toggleEmergencyStatus(state.mode.emergency);
+              api.toggleEmergencyStatus(state.mode.emergency);
             }}
             text={
               state.mode.emergency ? 'Quit Emergency Mode' : 'Enter Emergency Mode'
             }
-            onPress={() => { // start mock emergency procedure
-              const timestamp = Math.floor(Date.now() / 1000);
+            onPress={() => {
+              this.setState({
+                drill: true,
+              });
+              const timestamp = Date.now();
+              api.toggleEmergencyStatus(state.mode.emergency);
               if (!state.mode.emergency) {
-                createNewEvacuation(state.auth.authenticated, timestamp, true);
+                api.createNewEvacuation(state.auth.authenticated, timestamp, true);
               } else {
-                endCurrentEvacuation(state.auth.authenticated, timestamp)
-                  .then(() => resetAllUsersStatus(getAllUsers, updateUser))
-                  .then(() => {
+                let evacReport;
+                api.endCurrentEvacuation(state.auth.authenticated, timestamp)
+                  .then(() => api.resetAllUsersStatus(api.getAllUsers, api.updateUser))
+                  .then(() => api.getLatestEvacReport(generateEvacReports))
+                  .then((evacReport) => {
                     this.setState({
-                      evacReport: generateLatestEvacReport(),
-                    })
-                      .then(() => {
-                        console.log(this.state.evacReport);
-                      });
-                  })
-                  .catch((err) => {
-                    console.log(err);
+                      evacReport,
+                    });
                   });
               }
-              toggleEmergencyStatus(state.mode.emergency);
-            }
-            }
+            }}
             text={
               state.mode.emergency ? 'Quit Emergency Mode' : 'Enter Emergency Mode'
             }

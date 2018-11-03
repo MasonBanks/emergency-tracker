@@ -220,14 +220,7 @@ exports.getAllUsers = () => database()
 
 exports.updateUser = (uid, entriesToUpdateObj) => database()
   .ref(`/users/${uid}`)
-  .update(entriesToUpdateObj)
-  .then(updatedData => updatedData.val());
-
-// exports.userInBuilding = (uid) => {
-//   console.log(uid);
-//   database().ref(`/inBuildingUsers/${uid}`).set(null);
-// };
-
+  .update(entriesToUpdateObj);
 
 exports.getSafeList = adminId => this.getEvacList(adminId)
   .then(list => list);
@@ -255,10 +248,18 @@ exports.resetAllUsersStatus = (getAllUsersFunc, updateUserFunc) => {
   });
 };
 
-getAllEvacReports = cb => database().ref('/evacuations').once('value')
+exports.getEvacReports = cb => database().ref('/evacuations').orderByChild('startTime').once('value')
   .then((data) => {
     const evacReports = data.val();
-    cb(evacReports);
+    const humanReadableReports = cb(evacReports);
+    return humanReadableReports;
+  });
+
+exports.getLatestEvacReport = cb => database().ref('/evacuations').orderByChild('startTime').once('value')
+  .then((data) => {
+    const latestEvacReport = Object.values(data.val())[Object.values(data.val()).length - 1];
+    const [humanReadableReport] = cb({ [latestEvacReport.startTime]: latestEvacReport });
+    return humanReadableReport;
   });
 
 getLatestEvacReport = cb => database().ref('/evacuations')
