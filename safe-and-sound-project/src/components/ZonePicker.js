@@ -87,12 +87,12 @@ export default class App extends React.Component {
             weight="40"
           />
         ) : (
-            <Image
-              source={require('../assets/images/tick.png')}
-              height="40"
-              weight="40"
-            />
-          )}
+          <Image
+            source={require('../assets/images/tick.png')}
+            height="40"
+            weight="40"
+          />
+        )}
         <Text>building</Text>
         {!inBuilding ? (
           <Image
@@ -101,12 +101,12 @@ export default class App extends React.Component {
             weight="40"
           />
         ) : (
-            <Image
-              source={require('../assets/images/tick.png')}
-              height="40"
-              weight="40"
-            />
-          )}
+          <Image
+            source={require('../assets/images/tick.png')}
+            height="40"
+            weight="40"
+          />
+        )}
 
         <Text>{latitude}</Text>
         <Text>{longitude}</Text>

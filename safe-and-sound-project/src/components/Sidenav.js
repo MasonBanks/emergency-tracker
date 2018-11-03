@@ -69,6 +69,18 @@ export default class Sidenav extends React.Component {
             </View>
           )
         }
+        {state.mode.emergency && this.state.drill === true
+          && (
+            <View>
+              <Text style={{
+                fontSize: 20, backgroundColor: '#ff7f7f', textAlign: 'center', fontWeight: 'bold', color: 'white', marginLeft: 4, marginRight: 4,
+              }}
+              >
+                DRILL MODE
+              </Text>
+            </View>
+          )
+        }
         {state.isAdmin.admin && (
           <Button
             onLongPress={() => {
@@ -78,6 +90,7 @@ export default class Sidenav extends React.Component {
                 api.createNewEvacuation(state.auth.authenticated, timestamp, false);
               } else {
                 api.endCurrentEvacuation(state.auth.authenticated, timestamp)
+                  .then(() => api.addMeToEvacSafeList(state.auth.authenticated))
                   .then(() => api.resetAllUsersStatus(api.getAllUsers, api.updateUser))
                   .then(() => api.getLatestEvacReport(generateEvacReports))
                   .then((evacReport) => {
@@ -100,6 +113,7 @@ export default class Sidenav extends React.Component {
                 api.createNewEvacuation(state.auth.authenticated, timestamp, true);
               } else {
                 api.endCurrentEvacuation(state.auth.authenticated, timestamp)
+                  .then(() => api.addMeToEvacSafeList(state.auth.authenticated))
                   .then(() => api.resetAllUsersStatus(api.getAllUsers, api.updateUser))
                   .then(() => api.getLatestEvacReport(generateEvacReports))
                   .then((evacReport) => {

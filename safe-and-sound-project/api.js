@@ -1,7 +1,6 @@
 const moment = require('moment');
 const firebase = require('firebase');
 const { config } = require('./config/firebase-config');
-const { HHMMSS, getAverageTimes } = require('./src/utils/timeUtils');
 
 const { database } = firebase;
 firebase.initializeApp(config);
@@ -177,7 +176,7 @@ exports.endCurrentEvacuation = adminId => database()
     return database()
       .ref(`evacuations/${mostRecentStamp}`)
       .update({
-        finishTime: Math.floor(Date.now() / 1000),
+        finishTime: Date.now(),
       });
   });
 
@@ -228,6 +227,7 @@ exports.getSafeList = adminId => this.getEvacList(adminId)
 exports.addMeToEvacSafeList = uid => database().ref('/evacuations')
   .once('value')
   .then((data) => {
+    console.log(uid, 'addMeToEvacSafeList api function reached');
     mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
     currentTimestamp = Date.now();
     return database().ref(`evacuations/${mostRecentStamp}/markedSafe/${uid}`).set(currentTimestamp);
@@ -261,44 +261,3 @@ exports.getLatestEvacReport = cb => database().ref('/evacuations').orderByChild(
     const [humanReadableReport] = cb({ [latestEvacReport.startTime]: latestEvacReport });
     return humanReadableReport;
   });
-
-getLatestEvacReport = cb => database().ref('/evacuations')
-  .once('value')
-  .then((data) => {
-    mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
-    database().ref(`evacuations/${mostRecentStamp}`).once('value')
-      .then((data) => {
-        const evacReport = data.val();
-        cb(evacReport);
-      });
-  });
-
-exports.generateAllEvacReports = () => getAllEvacReports((reports) => {
-  const humanReadableReports = Object.values(reports).reduce((acc, val) => {
-    const report = {
-      alertingAdmin: val.adminId,
-      date: moment.unix(val.startTime).format('llll'),
-      headCount: Object.keys(val.inBuildingUsers).length,
-      totalDuration: HHMMSS(val.finishTime - val.startTime),
-      averageEvacTime: getAverageTimes(val.markedSafe, val.startTime),
-      drill: val.drill,
-    };
-    acc.push(report);
-    return acc;
-  }, []);
-  console.log(humanReadableReports);
-  return humanReadableReports;
-});
-
-exports.generateLatestEvacReport = () => getLatestEvacReport((report) => {
-  const humanReadableReport = {
-    alertingAdmin: report.adminId,
-    date: moment.unix(report.startTime).format('llll'),
-    headCount: Object.keys(report.inBuildingUsers).length,
-    totalDuration: HHMMSS(report.finishTime - report.startTime),
-    averageEvacTime: getAverageTimes(report.markedSafe, report.startTime),
-    drill: report.drill,
-  };
-  console.log(humanReadableReport);
-  return humanReadableReport;
-});

@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 import FireEscapeMap from '../../components/FireEscapeMap';
 import EmergencyUserMap from '../../components/EmergencyUserMap';
 import { GlobalContext } from '../../ContextStore/GlobalContext';
-import { updateUser, addMeToEvacSafeList } from '../../../api';
+import * as api from '../../../api';
 
 const animation = { type: 'top', duration: 1000 };
 const styles = StyleSheet.create({
@@ -50,7 +50,7 @@ export default (Home = ({ router }) => (
                     markedSafe: true,
                     markedInDanger: false,
                   });
-                  addMeToEvacSafeList(state.auth.authenticated);
+                  api.addMeToEvacSafeList(state.auth.authenticated);
                   alert('You have been marked safe. Please wait patiently within the safe zone until given further instructions from the fire warden or emergency services. Thank you!');
                 }}
                 text="Mark Safe"
@@ -58,7 +58,7 @@ export default (Home = ({ router }) => (
               <Button
                 style={styles.redButton}
                 onPress={() => {
-                  updateUser(state.auth.authenticated, {
+                  api.updateUser(state.auth.authenticated, {
                     markedInDanger: true,
                   });
                   alert('An alert has been signaled to the fire warden and your location will be relayed to the emergency services. Please remain calm, help is on the way!');
