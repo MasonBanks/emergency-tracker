@@ -71,16 +71,21 @@ export default class Sidenav extends React.Component {
         }
         {state.isAdmin.admin && (
           <Button
-            onLongPress={() => { // start real emergency procedure
-              const timestamp = Math.floor(Date.now() / 1000);
+            onLongPress={() => {
+              api.toggleEmergencyStatus(state.mode.emergency);
+              const timestamp = Date.now();
               if (!state.mode.emergency) {
                 api.createNewEvacuation(state.auth.authenticated, timestamp, false);
               } else {
-                api.endCurrentEvacuation(state.auth.authenticated, timestamp).then(
-                  api.resetAllUsersStatus(getAllUsers, updateUser),
-                );
+                api.endCurrentEvacuation(state.auth.authenticated, timestamp)
+                  .then(() => api.resetAllUsersStatus(api.getAllUsers, api.updateUser))
+                  .then(() => api.getLatestEvacReport(generateEvacReports))
+                  .then((evacReport) => {
+                    this.setState({
+                      evacReport,
+                    });
+                  });
               }
-              api.toggleEmergencyStatus(state.mode.emergency);
             }}
             text={
               state.mode.emergency ? 'Quit Emergency Mode' : 'Enter Emergency Mode'
@@ -89,12 +94,11 @@ export default class Sidenav extends React.Component {
               this.setState({
                 drill: true,
               });
-              const timestamp = Date.now();
               api.toggleEmergencyStatus(state.mode.emergency);
+              const timestamp = Date.now();
               if (!state.mode.emergency) {
                 api.createNewEvacuation(state.auth.authenticated, timestamp, true);
               } else {
-                let evacReport;
                 api.endCurrentEvacuation(state.auth.authenticated, timestamp)
                   .then(() => api.resetAllUsersStatus(api.getAllUsers, api.updateUser))
                   .then(() => api.getLatestEvacReport(generateEvacReports))
