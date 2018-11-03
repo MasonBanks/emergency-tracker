@@ -1,9 +1,7 @@
 const moment = require('moment');
 
 const msToMins = (ms) => {
-  console.log(ms, 'ms <<<<<<')
   const d = new Date(ms);
-  console.log(d, '************')
   return `${d.getUTCMinutes()}:${d.getUTCSeconds()}`;
 };
 
@@ -14,15 +12,15 @@ getAverageTimes = (markedSafe, startTime) => {
       acc += time;
       return acc;
     }, 0);
-    return msToMins(totalTime / Object.keys(markedSafe).length)
-  } else return 'No data'
-}
+    return msToMins(totalTime / Object.keys(markedSafe).length);
+  } return 'No data';
+};
 
 exports.generateEvacReports = ((reports) => {
   const humanReadableReports = Object.values(reports).reduce((acc, val, index) => {
     const report = {
       fireMarshall: val.adminId,
-      date: moment.unix(val.startTime).format('llll'),
+      date: moment.unix(val.startTime / 1000).format('llll'),
       headCount: Object.keys(val.inBuildingUsers).length,
       totalDuration: msToMins(val.finishTime - val.startTime),
       averageEvacTime: getAverageTimes(val.markedSafe, val.startTime),
@@ -31,6 +29,6 @@ exports.generateEvacReports = ((reports) => {
     acc.push(report);
     return acc;
   }, []);
-  console.log(humanReadableReports)
+  console.log(humanReadableReports);
   return humanReadableReports;
 });

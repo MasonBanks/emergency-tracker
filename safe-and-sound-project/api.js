@@ -1,5 +1,6 @@
 const firebase = require('firebase');
 const { config } = require('./config/firebase-config');
+
 const { database } = firebase;
 firebase.initializeApp(config);
 
@@ -219,9 +220,9 @@ exports.updateUser = (uid, entriesToUpdateObj) => database()
   .ref(`/users/${uid}`)
   .update(entriesToUpdateObj)
   .then((updatedData) => {
-    console.log(updatedData.val(), 'updated!')
-    return updatedData.val()
-  })
+    console.log(updatedData.val(), 'updated!');
+    return updatedData.val();
+  });
 
 // exports.userInBuilding = (uid) => {
 //   console.log(uid);
@@ -259,8 +260,14 @@ exports.resetAllUsersStatus = (getAllUsersFunc, updateUserFunc) => {
   });
 };
 
-exports.getEvacReports = cb => database().ref('/evacuations').once('value')
+exports.getEvacReports = cb => database().ref('/evacuations').orderByChild('startTime').once('value')
   .then((data) => {
     const evacReports = data.val();
     cb(evacReports);
+  });
+
+exports.getLatestEvacReport = cb => database().ref('/evacuations').orderByChild('startTime').once('value')
+  .then((data) => {
+    const latestEvacReport = Object.values(data.val())[Object.values(data.val()).length - 1];
+    cb({ [latestEvacReport.startTime]: latestEvacReport });
   });

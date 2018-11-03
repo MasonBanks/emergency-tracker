@@ -11,15 +11,15 @@ export default class Sidenav extends React.Component {
     super(props);
     state = {
       drill: null,
-      evacReport: {}
+      evacReport: {},
     };
   }
 
   componentWillMount() {
-    console.log('componentWillMount')
+    console.log('componentWillMount');
     this.setState({
-      drill: false
-    })
+      drill: false,
+    });
   }
 
   render() {
@@ -98,16 +98,16 @@ export default class Sidenav extends React.Component {
               } else {
                 api.endCurrentEvacuation(state.auth.authenticated, timestamp)
                   .then(() => {
-                    console.log('ended current evacuation')
-                    return api.resetAllUsersStatus(api.getAllUsers, api.updateUser)
+                    console.log('ended current evacuation');
+                    return api.resetAllUsersStatus(api.getAllUsers, api.updateUser);
                   })
                   .then(() => {
-                    console.log('reset all users statuses')
-                    return api.getEvacReports()
+                    console.log('reset all users statuses');
+                    return api.getEvacReports();
                   })
                   .then(() => {
-                    console.log('called api.getEvacReports')
-                  })
+                    console.log('called api.getEvacReports');
+                  });
               }
             }}
             text={

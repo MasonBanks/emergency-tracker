@@ -65,11 +65,11 @@ function seedEvacuation(timestamp, duration, n) {
 
 function seedXRandomEvacs(x) {
   for (let i = 0; i < x; i++) {
-    let randomTimestamp = moment(faker.date.recent(2, '2018-10-20')).valueOf();
+    let randomTimestamp = moment(faker.date.recent(2000, '2018-10-20')).valueOf();
     let duration = Math.floor(1140000 - Math.random() * 840000)
     let n = 50 - Math.floor(Math.random() * 30)
     seedEvacuation(randomTimestamp, duration, n)
   }
 }
 
-seedXRandomEvacs(5)
+seedXRandomEvacs(10)
