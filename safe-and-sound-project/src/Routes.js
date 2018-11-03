@@ -16,6 +16,7 @@ import EditZones from './screens/auth/EditZones';
 import UserInfo from './screens/auth/UserInfo';
 import Settings from './screens/auth/Settings';
 
+
 const animations = {
   effect: [
     {
@@ -81,53 +82,15 @@ class Routes extends React.Component {
         {({
           setAuth, setMode, state,
         }) => (
-          <View style={{ backgroundColor: 'black', flex: 1 }}>
-            {!state.auth.authenticated && (
-            <EasyRouter
-              routes={{
-                Intro,
-                Login,
-                Register,
-              }}
-              initialRoute="Intro"
-              animations={animations}
-              onStackChange={this.onStackChange}
-              onBeforeStackChange={this.onBeforeStackChange}
-              router={(route) => {
-                this.setRouter(route);
-              }}
-            />
-            )}
-
-            {state.auth.authenticated && (
-            <Drawer
-              renderNavigationView={() => (
-                <Sidenav
-                  state={state}
-                  setAuth={setAuth}
-                  setMode={setMode}
-                  router={router}
-                  closeDrawer={this.closeDrawer}
-                />
-              )}
-              ref={this.drawer}
-            >
-              <Tabs
-                state={state}
-                router={router}
-                openDrawer={this.openDrawer}
-                from={from}
-                to={to}
-                transition={animation}
-              >
+            <View style={{ backgroundColor: 'black', flex: 1 }}>
+              {!state.auth.authenticated && (
                 <EasyRouter
                   routes={{
-                    Home,
-                    EditZones,
-                    Settings,
-                    UserInfo,
+                    Intro,
+                    Login,
+                    Register,
                   }}
-                  initialRoute="Home"
+                  initialRoute="Intro"
                   animations={animations}
                   onStackChange={this.onStackChange}
                   onBeforeStackChange={this.onBeforeStackChange}
@@ -135,11 +98,49 @@ class Routes extends React.Component {
                     this.setRouter(route);
                   }}
                 />
-              </Tabs>
-            </Drawer>
-            )}
-          </View>
-        )
+              )}
+
+              {state.auth.authenticated && (
+                <Drawer
+                  renderNavigationView={() => (
+                    <Sidenav
+                      state={state}
+                      setAuth={setAuth}
+                      setMode={setMode}
+                      router={router}
+                      closeDrawer={this.closeDrawer}
+                    />
+                  )}
+                  ref={this.drawer}
+                >
+                  <Tabs
+                    state={state}
+                    router={router}
+                    openDrawer={this.openDrawer}
+                    from={from}
+                    to={to}
+                    transition={animation}
+                  >
+                    <EasyRouter
+                      routes={{
+                        Home,
+                        EditZones,
+                        Settings,
+                        UserInfo
+                      }}
+                      initialRoute="Home"
+                      animations={animations}
+                      onStackChange={this.onStackChange}
+                      onBeforeStackChange={this.onBeforeStackChange}
+                      router={(route) => {
+                        this.setRouter(route);
+                      }}
+                    />
+                  </Tabs>
+                </Drawer>
+              )}
+            </View>
+          )
         }
       </GlobalContext.Consumer>
     );
