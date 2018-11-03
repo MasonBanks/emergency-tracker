@@ -218,20 +218,18 @@ exports.getAllUsers = () => database()
 
 exports.updateUser = (uid, entriesToUpdateObj) => database()
   .ref(`/users/${uid}`)
-  .update(entriesToUpdateObj)
+  .update(entriesToUpdateObj);
 
 exports.getSafeList = adminId => this.getEvacList(adminId)
   .then(list => list);
 
-exports.addMeToEvacSafeList = (uid) => {
-  return database().ref('/evacuations')
-    .once('value')
-    .then((data) => {
-      mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
-      currentTimestamp = Date.now();
-      return database().ref(`evacuations/${mostRecentStamp}/markedSafe/${uid}`).set(currentTimestamp);
-    });
-};
+exports.addMeToEvacSafeList = uid => database().ref('/evacuations')
+  .once('value')
+  .then((data) => {
+    mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
+    currentTimestamp = Date.now();
+    return database().ref(`evacuations/${mostRecentStamp}/markedSafe/${uid}`).set(currentTimestamp);
+  });
 
 exports.sendLocation = (location) => {
   console.log(location);
@@ -259,5 +257,5 @@ exports.getLatestEvacReport = cb => database().ref('/evacuations').orderByChild(
   .then((data) => {
     const latestEvacReport = Object.values(data.val())[Object.values(data.val()).length - 1];
     const [humanReadableReport] = cb({ [latestEvacReport.startTime]: latestEvacReport });
-    return humanReadableReport
+    return humanReadableReport;
   });

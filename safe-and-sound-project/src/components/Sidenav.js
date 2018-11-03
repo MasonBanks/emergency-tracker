@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import Screen from './Screen';
 import Button from './Button';
 import * as api from '../../api';
-import { generateEvacReports } from '../utils/generateEvacReports'
+import { generateEvacReports } from '../utils/generateEvacReports';
 
 const animation = { type: 'right', duration: 1100 };
 
@@ -30,7 +30,7 @@ export default class Sidenav extends React.Component {
       Marked Safe: ${nextState.evacReport.markedSafe},
       Total duration: ${nextState.evacReport.totalDuration}, 
       Avg evacuation time: ${nextState.evacReport.averageEvacTime}, 
-      Drill: ${nextState.evacReport.drill}`)
+      Drill: ${nextState.evacReport.drill}`);
     }
   }
 
@@ -110,17 +110,13 @@ export default class Sidenav extends React.Component {
               } else {
                 let evacReport;
                 api.endCurrentEvacuation(state.auth.authenticated, timestamp)
-                  .then(() => {
-                    return api.resetAllUsersStatus(api.getAllUsers, api.updateUser);
-                  })
-                  .then(() => {
-                    return api.getLatestEvacReport(generateEvacReports)
-                  })
+                  .then(() => api.resetAllUsersStatus(api.getAllUsers, api.updateUser))
+                  .then(() => api.getLatestEvacReport(generateEvacReports))
                   .then((evacReport) => {
                     this.setState({
-                      evacReport
+                      evacReport,
                     });
-                  })
+                  });
               }
             }}
             text={

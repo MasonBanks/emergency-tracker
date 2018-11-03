@@ -1,8 +1,8 @@
 const moment = require('moment');
 
 const HHMMSS = (ms) => {
-  const HHMMSS = moment(ms).format('H:mm:ss')
-  return HHMMSS
+  const formatted = moment(ms).format('H:mm:ss');
+  return formatted;
 };
 
 getAverageTimes = (markedSafe, startTime) => {
