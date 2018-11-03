@@ -17,7 +17,7 @@ getAverageTimes = (markedSafe, startTime) => {
 };
 
 exports.generateEvacReports = ((reports) => {
-  const humanReadableReports = Object.values(reports).reduce((acc, val, index) => {
+  const humanReadableReports = Object.values(reports).reduce((acc, val) => {
     const report = {
       fireMarshall: val.adminId,
       date: moment.unix(val.startTime / 1000).format('llll'),

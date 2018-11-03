@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
 
 export default (Home = ({ router }) => (
   <GlobalContext.Consumer>
-    {({ state, setMode }) => (
-      // console.log(state.myCoordinates);
+    {({ state }) => (
       <Screen
         backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'}
         title="Home"
@@ -69,8 +68,8 @@ export default (Home = ({ router }) => (
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>
