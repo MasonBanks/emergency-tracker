@@ -78,8 +78,8 @@ export default (Home = ({ router }) => (
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>

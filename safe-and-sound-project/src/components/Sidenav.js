@@ -45,7 +45,6 @@ export default class Sidenav extends React.Component {
         {!state.mode.emergency && state.isAdmin.admin
           && (
             <View>
-              <Button text="Evacuation Reports" />
               <Text style={{ fontSize: 20 }} />
               <Text style={{
                 fontSize: 20, textAlign: 'center', fontWeight: 'bold', color: '#F08080', marginLeft: 4, marginRight: 4,

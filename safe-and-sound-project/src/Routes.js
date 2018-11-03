@@ -16,6 +16,7 @@ import EditZones from './screens/auth/EditZones';
 import UserInfo from './screens/auth/UserInfo';
 import Settings from './screens/auth/Settings';
 
+
 const animations = {
   effect: [
     {
