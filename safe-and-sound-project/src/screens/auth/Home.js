@@ -24,13 +24,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     width: '40%',
     height: 40,
-    margin: 8
+    margin: 8,
+    paddingTop: 10
   },
   redButton: {
     backgroundColor: 'red',
     width: '40%',
     height: 40,
-    margin: 8
+    margin: 8,
+    paddingTop: 10
   },
 });
 
@@ -61,11 +63,12 @@ export default (Home = ({ router }) => (
                 style={styles.redButton}
                 onPress={() => {
                   api.updateUser(state.auth.authenticated, {
+                    markedSafe: false,
                     markedInDanger: true,
                   });
                   alert('An alert has been signaled to the fire warden and your location will be relayed to the emergency services. Please remain calm, help is on the way!');
                 }}
-                text="I'm in Danger!"
+                text="I'm in Danger"
               />
             </View>
           </View>
