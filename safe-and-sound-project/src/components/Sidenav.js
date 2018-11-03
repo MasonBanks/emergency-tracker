@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import Screen from './Screen';
 import Button from './Button';
 import * as api from '../../api';
+import { generateEvacReports } from '../utils/generateEvacReports'
 
 const animation = { type: 'right', duration: 1100 };
 
@@ -11,15 +12,26 @@ export default class Sidenav extends React.Component {
     super(props);
     state = {
       drill: null,
-      evacReport: {},
+      evacReport: null,
     };
   }
 
   componentWillMount() {
-    console.log('componentWillMount');
     this.setState({
       drill: false,
     });
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (!this.state.evacReport && nextState.evacReport) {
+      alert(`Emergency procedure complete! Report: 
+      Date: ${nextState.evacReport.date}, 
+      Head count: ${nextState.evacReport.headCount}, 
+      Marked Safe: ${nextState.evacReport.markedSafe},
+      Total duration: ${nextState.evacReport.totalDuration}, 
+      Avg evacuation time: ${nextState.evacReport.averageEvacTime}, 
+      Drill: ${nextState.evacReport.drill}`)
+    }
   }
 
   render() {
@@ -96,18 +108,19 @@ export default class Sidenav extends React.Component {
               if (!state.mode.emergency) {
                 api.createNewEvacuation(state.auth.authenticated, timestamp, true);
               } else {
+                let evacReport;
                 api.endCurrentEvacuation(state.auth.authenticated, timestamp)
                   .then(() => {
-                    console.log('ended current evacuation');
                     return api.resetAllUsersStatus(api.getAllUsers, api.updateUser);
                   })
                   .then(() => {
-                    console.log('reset all users statuses');
-                    return api.getEvacReports();
+                    return api.getLatestEvacReport(generateEvacReports)
                   })
-                  .then(() => {
-                    console.log('called api.getEvacReports');
-                  });
+                  .then((evacReport) => {
+                    this.setState({
+                      evacReport
+                    });
+                  })
               }
             }}
             text={

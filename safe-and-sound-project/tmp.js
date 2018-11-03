@@ -3,9 +3,9 @@ const api = require('./api');
 const { config } = require('./config/firebase-config');
 
 const { database } = firebase;
-const { generateEvacReports } = require('./src/utils/generateReport');
+const { generateEvacReports } = require('./src/utils/generateEvacReports');
 // firebase.initializeApp(config);
 
-// api.getEvacReports(generateEvacReports);
+api.getEvacReports(generateEvacReports);
 
-api.getLatestEvacReport(generateEvacReports);
+// api.getLatestEvacReport(generateEvacReports);

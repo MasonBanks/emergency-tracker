@@ -219,26 +219,14 @@ exports.getAllUsers = () => database()
 exports.updateUser = (uid, entriesToUpdateObj) => database()
   .ref(`/users/${uid}`)
   .update(entriesToUpdateObj)
-  .then((updatedData) => {
-    console.log(updatedData.val(), 'updated!');
-    return updatedData.val();
-  });
-
-// exports.userInBuilding = (uid) => {
-//   console.log(uid);
-//   database().ref(`/inBuildingUsers/${uid}`).set(null);
-// };
-
 
 exports.getSafeList = adminId => this.getEvacList(adminId)
   .then(list => list);
 
 exports.addMeToEvacSafeList = (uid) => {
-  console.log('reached api function');
   return database().ref('/evacuations')
     .once('value')
     .then((data) => {
-      console.log(data.val());
       mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
       currentTimestamp = Date.now();
       return database().ref(`evacuations/${mostRecentStamp}/markedSafe/${uid}`).set(currentTimestamp);
@@ -263,11 +251,13 @@ exports.resetAllUsersStatus = (getAllUsersFunc, updateUserFunc) => {
 exports.getEvacReports = cb => database().ref('/evacuations').orderByChild('startTime').once('value')
   .then((data) => {
     const evacReports = data.val();
-    cb(evacReports);
+    const humanReadableReports = cb(evacReports);
+    return humanReadableReports;
   });
 
 exports.getLatestEvacReport = cb => database().ref('/evacuations').orderByChild('startTime').once('value')
   .then((data) => {
     const latestEvacReport = Object.values(data.val())[Object.values(data.val()).length - 1];
-    cb({ [latestEvacReport.startTime]: latestEvacReport });
+    const [humanReadableReport] = cb({ [latestEvacReport.startTime]: latestEvacReport });
+    return humanReadableReport
   });
