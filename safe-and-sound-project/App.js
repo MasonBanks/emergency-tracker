@@ -63,7 +63,6 @@ export default class App extends React.Component {
       })
     });
 
-
     const build = this.getBuilding();
     const safe = this.getSafeZone();
     Promise.all([build, safe]).then(([building, safezone]) => {

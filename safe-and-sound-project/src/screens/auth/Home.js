@@ -6,7 +6,8 @@ import Button from '../../components/Button';
 import FireEscapeMap from '../../components/FireEscapeMap';
 import EmergencyUserMap from '../../components/EmergencyUserMap';
 import { GlobalContext } from '../../ContextStore/GlobalContext';
-import { updateUser, addMeToEvacSafeList } from '../../../api';
+import * as api from '../../../api';
+
 import apiUrl from '../../../config/config';
 
 const PUSH_ENDPOINT = `${apiUrl}/users/push`;
@@ -44,7 +45,6 @@ export default class Home extends React.Component {
       uid: null,
     };
     this.router = this.props.router;
-    // console.log('Constructor')
   }
 
   componentWillMount() {
@@ -96,7 +96,6 @@ export default class Home extends React.Component {
 
   registerForPushNotificationsAsync() {
     // POST the token to your backend server from where you can retrieve it to send push notifications.
-
     return fetch(`PUSH_ENDPOINT/${this.state.uid}/${this.state.token}`, {
       method: 'POST',
       headers: {
@@ -157,8 +156,8 @@ export default class Home extends React.Component {
                 </View>
               </View>
             ) : (
-              <FireEscapeMap />
-            )}
+                <FireEscapeMap />
+              )}
           </Screen>
         )}
       </GlobalContext.Consumer>
