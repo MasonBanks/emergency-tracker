@@ -5,7 +5,6 @@ usersRouter.route('/push/:uid/:token')
   .post(assignPushToken)
 
 usersRouter.route('/test')
-  .post(pushTestNode)
   .get(getAllUsers)
 
 module.exports = {
