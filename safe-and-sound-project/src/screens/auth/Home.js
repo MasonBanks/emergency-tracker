@@ -24,11 +24,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     width: '40%',
     height: 40,
+    margin: 8,
+    paddingTop: 7,
   },
   redButton: {
     backgroundColor: 'red',
     width: '40%',
     height: 40,
+    margin: 8,
+    paddingTop: 7,
   },
 });
 
@@ -68,8 +72,8 @@ export default (Home = ({ router }) => (
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>
