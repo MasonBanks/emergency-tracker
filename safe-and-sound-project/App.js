@@ -8,9 +8,8 @@ import { YellowBox } from 'react-native';
 import _ from 'lodash';
 import * as api from './api';
 import inside from 'point-in-polygon';
-import apiUrl from '../../../config/config';
-
-const TEST_ENDPOINT = `${apiUrl}/users/test`;
+// import apiUrl from './config/config';
+// const TEST_ENDPOINT = `${apiUrl}/users/test`;
 
 YellowBox.ignoreWarnings(['Setting a timer']); // makes app ignore yellow warnings
 const _console = _.clone(console);
@@ -41,14 +40,6 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-
-    axios.get('TEST_ENDPOINT')
-      .then((response) => {
-        console.log(response)
-      })
-
-    axios.push('TEST_ENDPOINT')
-      .then((reponse))
 
     database().ref('site').child('isEmergency').on('value', (snapshot) => {
       console.log(`DB connected: Site status: ${snapshot.val() ? 'Emergency' : 'IDLE'}`)
