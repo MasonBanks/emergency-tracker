@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: 5
+    padding: 5,
   },
   buttonContainer: {
     flex: 1,
@@ -68,8 +68,8 @@ export default (Home = ({ router }) => (
             </View>
           </View>
         ) : (
-            <FireEscapeMap />
-          )}
+          <FireEscapeMap />
+        )}
       </Screen>
     )}
   </GlobalContext.Consumer>
