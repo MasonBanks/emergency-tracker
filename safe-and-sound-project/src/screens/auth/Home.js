@@ -8,7 +8,7 @@ import EmergencyUserMap from '../../components/EmergencyUserMap';
 import { GlobalContext } from '../../ContextStore/GlobalContext';
 import * as api from '../../../api';
 
-import apiUrl from '../../../config/config';
+import apiUrl from '../../../config/firebase-config';
 
 const PUSH_ENDPOINT = `${apiUrl}/users/push`;
 
@@ -78,8 +78,8 @@ export default (Home = ({ router }) => (
             </View>
           </View>
         ) : (
-          <FireEscapeMap />
-        )}
+            <FireEscapeMap />
+          )}
       </Screen>
     )}
   </GlobalContext.Consumer>
