@@ -7,9 +7,10 @@ import FireEscapeMap from '../../components/FireEscapeMap';
 import EmergencyUserMap from '../../components/EmergencyUserMap';
 import { GlobalContext } from '../../ContextStore/GlobalContext';
 import * as api from '../../../api';
+import { config } from '../../../config/config';
 
-import apiUrl from '../../../config/config';
-
+const apiUrl = config;
+const TEST_ENDPOINT = `${apiUrl}/users/test`;
 const PUSH_ENDPOINT = `${apiUrl}/users/push`;
 
 const animation = { type: 'top', duration: 1000 };
@@ -41,46 +42,63 @@ const styles = StyleSheet.create({
   },
 });
 
-export default (Home = ({ router }) => (
-  <GlobalContext.Consumer>
-    {({ state }) => (
-      <Screen
-        backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'}
-        title="Home"
-      >
-        {state.mode.emergency ? (
-          <View style={styles.outterContainer}>
-            <EmergencyUserMap />
-            <View style={styles.buttonContainer}>
-              <Button
-                style={styles.greenButton}
-                onPress={() => {
-                  api.updateUser(state.auth.authenticated, {
-                    markedSafe: true,
-                    markedInDanger: false,
-                  });
-                  api.addMeToEvacSafeList(state.auth.authenticated);
-                  alert('You have been marked safe. Please wait patiently within the safe zone until given further instructions from the fire warden or emergency services. Thank you!');
-                }}
-                text="I'm Safe"
-              />
-              <Button
-                style={styles.redButton}
-                onPress={() => {
-                  api.updateUser(state.auth.authenticated, {
-                    markedSafe: false,
-                    markedInDanger: true,
-                  });
-                  alert('An alert has been signaled to the fire warden and your location will be relayed to the emergency services. Please remain calm, help is on the way!');
-                }}
-                text="I'm in Danger"
-              />
-            </View>
-          </View>
-        ) : (
-          <FireEscapeMap />
+export default class Home extends React.Component() {
+  constructor(props) {
+    super(props);
+    state = {
+      token: ''
+    }
+  }
+
+  componentDidMount() {
+    console.log(config, '<<<config')
+  }
+
+
+  render() {
+    return (
+      <GlobalContext.Consumer>
+        {({ state }) => (
+          <Screen
+            backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'}
+            title="Home"
+          >
+            {state.mode.emergency ? (
+              <View style={styles.outterContainer}>
+                <EmergencyUserMap />
+                <View style={styles.buttonContainer}>
+                  <Button
+                    style={styles.greenButton}
+                    onPress={() => {
+                      api.updateUser(state.auth.authenticated, {
+                        markedSafe: true,
+                        markedInDanger: false,
+                      });
+                      api.addMeToEvacSafeList(state.auth.authenticated);
+                      alert('You have been marked safe. Please wait patiently within the safe zone until given further instructions from the fire warden or emergency services. Thank you!');
+                    }}
+                    text="I'm Safe"
+                  />
+                  <Button
+                    style={styles.redButton}
+                    onPress={() => {
+                      api.updateUser(state.auth.authenticated, {
+                        markedSafe: false,
+                        markedInDanger: true,
+                      });
+                      alert('An alert has been signaled to the fire warden and your location will be relayed to the emergency services. Please remain calm, help is on the way!');
+                    }}
+                    text="I'm in Danger"
+                  />
+                </View>
+              </View>
+            ) : (
+                <FireEscapeMap />
+              )}
+          </Screen>
         )}
-      </Screen>
-    )}
-  </GlobalContext.Consumer>
-));
+      </GlobalContext.Consumer>
+    );
+  }
+
+}
