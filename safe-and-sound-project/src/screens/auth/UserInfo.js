@@ -10,7 +10,7 @@ const animation = { type: 'top', duration: 1000 };
 
 export default ({ router }) => (
   <GlobalContext.Consumer>
-    {({ state, setMode }) => (
+    {({ state }) => (
       <Screen
         backgroundColor={state.mode.emergency ? '#F05555' : '#4ec3c9'}
         title={(!state.mode.emergency) ? 'Roster' : 'Alarm Signaled'}

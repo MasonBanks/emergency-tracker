@@ -34,7 +34,6 @@ export default class Login extends React.Component {
     }
     return createUser(fName, lName, email, password).then((data) => {
       if (data) {
-        console.log(data);
         alert('Account created!');
         this.props.router.pop();
       }

@@ -1,16 +1,14 @@
+const moment = require('moment');
 const firebase = require('firebase');
 const { config } = require('./config/firebase-config');
 
 const { database } = firebase;
 firebase.initializeApp(config);
 
-// these two functions will need to change to accept a userID
-
 exports.enterBuilding = bool => database()
   .ref('/users/0')
   .update({ inBuilding: bool });
 
-// these two functions will need to change to accept a userID
 exports.enterSafeZone = bool => database()
   .ref('/users/0')
   .update({ inSafeZone: bool });
@@ -135,7 +133,7 @@ exports.toggleEmergencyStatus = () => database()
         }));
   });
 
-exports.createNewEvacuation = (adminId, startTime) => database()
+exports.createNewEvacuation = (adminId, startTime, drill) => database()
   .ref('users')
   .orderByChild('inBuilding')
   .equalTo(true)
@@ -148,6 +146,7 @@ exports.createNewEvacuation = (adminId, startTime) => database()
         startTime,
         finishTime: null,
         inBuildingUsers,
+        drill,
       });
   });
 
@@ -220,18 +219,19 @@ exports.getAllUsers = () => database()
 
 exports.updateUser = (uid, entriesToUpdateObj) => database()
   .ref(`/users/${uid}`)
-  .update(entriesToUpdateObj)
-  .then(updatedData => updatedData.val());
-
-// exports.userInBuilding = (uid) => {
-//   console.log(uid);
-//   database().ref(`/inBuildingUsers/${uid}`).set(null);
-// };
-
+  .update(entriesToUpdateObj);
 
 exports.getSafeList = adminId => this.getEvacList(adminId)
   .then(list => list);
 
+exports.addMeToEvacSafeList = uid => database().ref('/evacuations')
+  .once('value')
+  .then((data) => {
+    console.log(uid, 'addMeToEvacSafeList api function reached');
+    mostRecentStamp = Object.keys(data.val()).sort((a, b) => b - a)[0];
+    currentTimestamp = Date.now();
+    return database().ref(`evacuations/${mostRecentStamp}/markedSafe/${uid}`).set(currentTimestamp);
+  });
 
 exports.sendLocation = (location) => {
   console.log(location);
@@ -241,11 +241,23 @@ exports.resetAllUsersStatus = (getAllUsersFunc, updateUserFunc) => {
   getAllUsersFunc().then((allUsers) => {
     Object.keys(allUsers).forEach((user) => {
       updateUserFunc(user, {
-        markedSafe: false,
-        markedInDanger: false,
+        markedSafe: null,
+        markedInDanger: null,
       });
     });
   });
 };
 
-exports.getSafeList = adminId => this.getEvacList(adminId).then(list => list);
+exports.getEvacReports = cb => database().ref('/evacuations').orderByChild('startTime').once('value')
+  .then((data) => {
+    const evacReports = data.val();
+    const humanReadableReports = cb(evacReports);
+    return humanReadableReports;
+  });
+
+exports.getLatestEvacReport = cb => database().ref('/evacuations').orderByChild('startTime').once('value')
+  .then((data) => {
+    const latestEvacReport = Object.values(data.val())[Object.values(data.val()).length - 1];
+    const [humanReadableReport] = cb({ [latestEvacReport.startTime]: latestEvacReport });
+    return humanReadableReport;
+  });
