@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "safe-and-sound-project",
-    "description": "This project is really great.",
-    "slug": "safe-and-sound-project",
+    "name": "Team Safe and Sound",
+    "description": "The Emergency Evacuation App - \nHelp, when you need it",
+    "slug": "teamsafeandsound",
     "privacy": "public",
     "sdkVersion": "30.0.0",
     "platforms": [
@@ -24,6 +24,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "githubUrl": "https://github.com/MasonBanks/emergency-tracker"
   }
 }
