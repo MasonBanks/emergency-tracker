@@ -6,3 +6,6 @@ firebase-config.js
 npm-debug.*
 .DS_Store
 tmp.js
+dockerfile
+.dockerignore
+push-api.js
