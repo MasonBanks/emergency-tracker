@@ -2,8 +2,7 @@ node_modules/**
 package-lock.json
 .expo/*
 /config/
-firebase\-config.js
+firebase-config.js
 npm-debug.*
 .DS_Store
 tmp.js
-.vscode/
