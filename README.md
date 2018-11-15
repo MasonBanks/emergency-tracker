@@ -2,7 +2,7 @@
 
  *Safe + Sound* is a app for mobile devices that allows fire marshalls to monitor the safety of personnel in an emergency evacuation scenario.
 
- *Safe + Sound* is built with React-Native in the Expo XDE, and the 
+ *Safe + Sound* is built with React-Native in the Expo XDE, and is served by Firebase Realtime Database.
 
 ### Demo
  
