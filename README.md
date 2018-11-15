@@ -62,7 +62,7 @@ $ npm install <node_module>
 ```
 
 
-### Available Node Scripts
+## Development Mode
 
 In the project directory, you can run:
 ```https
@@ -73,18 +73,20 @@ If you are working on a mac, this launches the app (in debugging mode) within th
 
 If you are using Linux you can connect an Android phone in USB debugging mode to test.
 
-The simulator will reload if you make edits.<br>
+The simulator will auto-reload if you make edits.<br>
+
+### Testing
+
+To run the Jest test suite, use the following command:
+
+```https
+$ npm test
+```
+
+### Deployment
 
 If you wish to launch your own production demo of the app, you will need to create and log in to an Expo account, and then run
 
 ```https
 $ expo publish
-```
-
-### Testing 
-
-To run the Jest test suite, you will need to [set up a Firebase account](https://firebase.google.com/) and create a new Firebase Realtime database. Copy the 
-
-```https
-$ npm test
 ```
