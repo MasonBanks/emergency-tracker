@@ -1,7 +1,11 @@
-node_modules/**/*
+node_modules/**
 package-lock.json
 .expo/*
-config/*
+/config/
+firebase-config.js
 npm-debug.*
 .DS_Store
 tmp.js
+Dockerfile
+.dockerignore
+push-api.js
