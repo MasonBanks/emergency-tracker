@@ -6,7 +6,7 @@
 
 ### Demo
  
- You can view a demo video of the *Safe + Sound* app in action [here](www.youtube.com).
+ You can view a demo video of the *Safe + Sound* app in action [here](https://youtu.be/MGlWLQoZ8Z8?t=6384).
 
 The iOS version is deployed as an Expo publication [here](https://exp.host/@novik71/teamsafeandsound). You can run the app on any iPhone with the Expo app installed.
 
